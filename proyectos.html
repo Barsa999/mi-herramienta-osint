@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Proyectos - Portafolio OSINT</title>
+    <style> 
+        body {
+            background-color: #1e1e2f;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Permite dividir la pantalla en barra lateral y contenido */
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- 📌 BARRA LATERAL IZQUIERDA (ESTILO INTEL X / OSINT TOOL) --- */
+        .sidebar {
+            width: 280px;
+            background-color: #151522;
+            border-right: 2px solid #3b3b54;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .sidebar-titulo {
+            color: #4af626;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 10px 25px;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #3b3b54;
+            text-align: left;
+        }
+
+        /* Categorías OSINT del lado izquierdo */
+        .menu-osint {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-osint li {
+            padding: 12px 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #b3b3cc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+            text-align: left;
+        }
+
+        .menu-osint li:hover {
+            background-color: #252538;
+            color: #4af626;
+            border-left: 3px solid #4af626;
+        }
+
+        /* Indicador activo para simular la herramienta */
+        .menu-osint li.activo {
+            background-color: #1a1a26;
+            color: #4af626;
+            border-left: 3px solid #4af626;
+        }
+
+        /* Enlace de salida seguro */
+        .btn-logout {
+            margin-top: auto; /* Lo empuja al fondo de la barra lateral */
+            padding: 15px 25px;
+            color: #ff5555;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            border-top: 1px solid #3b3b54;
+            transition: 0.3s;
+            text-align: left;
+        }
+        .btn-logout:hover {
+            background-color: rgba(255, 85, 85, 0.1);
+        }
+
+        /* --- 🖥️ CONTENIDO PRINCIPAL (LADO DERECHO) --- */
+        .contenido-principal {
+            flex: 1; /* Ocupa todo el espacio restante de la pantalla */
+            overflow-y: auto;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #4af626;
+            margin-top: 10px;
+            font-size: 32px;
+        }
+
+        .descripcion-top {
+            color: #b3b3cc;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Contenedor de las tarjetas en el lado derecho */
+        .contenedor-proyectos {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto 40px auto;
+            flex-wrap: wrap;
+        }
+
+        .tarjeta-proyecto {
+            background-color: #252538;
+            border: 2px solid #3b3b54;
+            border-radius: 12px;
+            padding: 25px;
+            width: 45%; /* Cuadrícula simétrica perfecta de 2x2 */
+            min-width: 280px;
+            text-align: left;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        .tarjeta-proyecto:hover {
+            transform: translateY(-5px);
+            border-color: #4af626;
+            box-shadow: 0 0 15px rgba(74, 246, 38, 0.3);
+        }
+
+        .tarjeta-proyecto h3 {
+            color: #4af626;
+            margin-top: 0;
+            font-size: 18px;
+            border-bottom: 1px solid #3b3b54;
+            padding-bottom: 8px;
+        }
+
+        .tarjeta-proyecto p {
+            color: #e2e2e2;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* --- VENTANAS EMERGENTES (MODALES) --- */
+        .modal-proyecto {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .contenido-modal-proyecto {
+            background-color: #252538;
+            border: 2px solid #4af626;
+            border-radius: 12px;
+            width: 600px;
+            max-width: 90%;
+            padding: 30px;
+            box-shadow: 0 0 25px rgba(74, 246, 38, 0.4);
+            text-align: left;
+            position: relative;
+            animation: zoomIn 0.3s ease-in-out;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .cerrar-modal-proyecto {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: transparent;
+            color: #b3b3cc;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+        }
+        .cerrar-modal-proyecto:hover {
+            color: #4af626;
+        }
+        .modal-proyecto h3 {
+            color: #4af626;
+            margin-top: 0;
+            border-bottom: 1px solid #3b3b54;
+            padding-bottom: 10px;
+            font-size: 22px;
+        }
+        .modal-proyecto p {
+            color: #e2e2e2;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .lista-detalles {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        .lista-detalles li {
+            margin-bottom: 10px;
+            color: #b3b3cc;
+        }
+        .lista-detalles li strong {
+            color: #4af626;
+        }
+    </style>
+</head>
+<body>
+       <div class="sidebar">
+        
+        <div class="sidebar-titulo" style="margin-top: 20px;">Third Party Search:</div>
+        <ul class="menu-osint">
+            <li onclick="mostrarHerramienta('tp-general')">🔍 General</li>
+            <li onclick="mostrarHerramienta('tp-email')">📧 Email</li>
+            <li onclick="mostrarHerramienta('tp-domain')">🌐 Domain</li>
+            <li onclick="mostrarHerramienta('tp-ip')">🖥️ IP</li>
+            <li onclick="mostrarHerramienta('tp-image')">🖼️ Image</li>
+            <li onclick="mostrarHerramienta('tp-username')">👤 Username</li>
+            <li onclick="mostrarHerramienta('tp-person')">👥 Person</li>
+            <li onclick="mostrarHerramienta('tp-phone')">📞 Phone Number</li>
+            <li onclick="mostrarHerramienta('tp-location')">🗺️ Location 2 Map</li>
+            <li onclick="mostrarHerramienta('tp-file')">📁 File</li>
+            <li onclick="mostrarHerramienta('tp-vin')">🚗 VIN</li>
+            <li onclick="mostrarHerramienta('tp-hash')">🔑 Hash</li>
+            <li onclick="mostrarHerramienta('tp-analytics')">📊 Google Analytics</li>
+        </ul>
+
+        <div class="sidebar-titulo" style="margin-top: 20px;">Data Tools:</div>
+        <ul class="menu-osint">
+            <li onclick="mostrarHerramienta('dt-magic')">🪄 Magic File Tool</li>
+            <li onclick="mostrarHerramienta('dt-validate')">✅ Validate Emails</li>
+            <li onclick="mostrarHerramienta('dt-geoip')">🌍 GeoIP Lookup</li>
+            <li onclick="mostrarHerramienta('dt-encoding')">🔣 Encoding</li>
+            <li onclick="mostrarHerramienta('dt-urls')">🔗 URLs</li>
+        </ul>
+
+        <div class="sidebar-titulo" style="margin-top: 20px;">Social Media Tools:</div>
+        <ul class="menu-osint">
+            <li onclick="mostrarHerramienta('sm-facebook')">🔷 Facebook</li>
+            <li onclick="mostrarHerramienta('sm-twitter')">🐦 Twitter</li>
+            <li onclick="mostrarHerramienta('sm-linkedin')">💼 LinkedIn</li>
+            <li onclick="mostrarHerramienta('sm-telegram')">✈️ Telegram</li>
+            <li onclick="mostrarHerramienta('sm-instagram')">📸 Instagram</li>
+        </ul>
+
+        <a href="base web.html" class="btn-logout">🚪 LOG OUT</a>
+    </div>
+
+        <div class="contenido-principal">
+        
+        <div id="vista-inicio" class="panel-herramienta">
+            <h1 style="color: #4af626; margin-bottom: 10px;">System Core: Panel Central</h1>
+            <p style="color: #b3b3cc;">Selecciona un módulo del menú lateral para auditar los detalles y registros técnicos.</p>
+        </div>
+
+        <div id="tp-general" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Third Party: General Search</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce palabras clave o términos globales para indexar registros públicos:</p>
+            <input type="text" placeholder="Buscar término, ID, metadatos..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-email" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">📧 Forense de Correos Electrónicos</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Análisis de reputación de dominio, registros MX y filtraciones asociadas:</p>
+            <input type="email" placeholder="ejemplo@target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-domain" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🌐 Rastreo de Dominios</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Consulta de registros WHOIS, subdominios e infraestructura DNS:</p>
+            <input type="text" placeholder="target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-ip" class="panel-herramienta" style="display: none;">
+    <h1>🖥️ Auditoría de Direcciones IP</h1>
+    <input type="text" id="input-ip" placeholder="8.8.8.8" style="...">
+    <br>
+    <button onclick="ejecutarBusquedaIP()">Search</button>
+    <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
+</div>
+
+        <div id="tp-image" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🖼️ Análisis Forense de Imágenes</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Carga un archivo de imagen para extraer metadatos EXIF ocultos o búsqueda inversa:</p>
+            <input type="file" style="color: #fff; margin-bottom: 15px;"><br>
+            <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-username" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">👤 Búsqueda de Username</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Rastreo de alias y nombres de usuario en múltiples plataformas simultáneamente:</p>
+            <input type="text" placeholder="ejemplo_user123" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-person" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">👥 Búsqueda de Personas</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Búsqueda por nombres, apellidos o identificaciones oficiales:</p>
+            <input type="text" placeholder="Nombre completo del objetivo..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-phone" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">📞 Phone Number Lookup</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Identificación de operador, país y reputación de líneas telefónicas:</p>
+            <input type="text" placeholder="+51 999999999" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-location" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🗺️ Location 2 Map</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Correlación de coordenadas geográficas o direcciones físicas:</p>
+            <input type="text" placeholder="Latitud, Longitud o Dirección..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-file" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">📁 File Analytics</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Indexación de documentos expuestos públicamente (PDF, DOCX, XLSX):</p>
+            <input type="text" placeholder="Nombre del archivo o extensión..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-vin" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🚗 VIN Decoder</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Búsqueda de registros vehiculares mediante Número de Identificación de Vehículo (VIN):</p>
+            <input type="text" placeholder="Introduce el código VIN..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-hash" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🔑 Hash Cracker / Search</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Verificación de firmas de bases de datos comprometidas (MD5, SHA-1, SHA-256):</p>
+            <input type="text" placeholder="Pega el Hash aquí..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="tp-analytics" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">📊 Google Analytics OSINT</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Correlación de sitios web mediante códigos de seguimiento UA-/G-:</p>
+            <input type="text" placeholder="UA-XXXXX o G-XXXXXX" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="dt-magic" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🪄 Magic File Tool</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Verificación de firmas de archivos (Magic Bytes) para auditoría de formato:</p>
+            <input type="file" style="color: #fff; margin-bottom: 15px;"><br>
+            <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="dt-validate" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">✅ Validate Emails</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Verificación sintáctica avanzada de buzones en lote:</p>
+            <textarea placeholder="Lista de correos (uno por línea)..." rows="4" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;"></textarea>
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="dt-geoip" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🌍 GeoIP Lookup</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Extracción de ISP, ASN y geolocalización estimada de red:</p>
+            <input type="text" placeholder="Dirección IP o Dominio..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="dt-encoding" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🔣 Encoding Decoder</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Conversión de cadenas en Base64, Hexadecimal, URL Encode y binarios:</p>
+            <input type="text" placeholder="Texto a codificar/decodificar..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="dt-urls" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🔗 URLs Parser</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Análisis de cadenas de URL y extracción de variables y parámetros estructurados:</p>
+            <input type="text" placeholder="https://ejemplo.com/path?param=value" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="sm-facebook" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🔷 Módulo de Inteligencia: Facebook</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Correlación y extracción de perfiles mediante Facebook ID o URLs estáticas:</p>
+            <input type="text" placeholder="ID de Perfil o URL..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="sm-twitter" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">🐦 Módulo de Inteligencia: Twitter / X</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Búsqueda avanzada de Tweets históricos, menciones y registros de cuentas:</p>
+            <input type="text" placeholder="@usuario o término..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="sm-linkedin" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">💼 Módulo de Inteligencia: LinkedIn</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Mapeo de estructuras organizacionales corporativas y perfiles profesionales:</p>
+            <input type="text" placeholder="Empresa o nombre de empleado..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="sm-telegram" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">✈️ Módulo de Inteligencia: Telegram</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Rastreo de canales públicos, bots, IDs de chat e información de cuentas:</p>
+            <input type="text" placeholder="@alias_telegram o ID..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+        <div id="sm-instagram" class="panel-herramienta" style="display: none;">
+            <h1 style="color: #4af626; margin-bottom: 15px;">📸 Módulo de Inteligencia: Instagram</h1>
+            <p style="color: #b3b3cc; margin-bottom: 15px;">Extracción de metadatos públicos, identificadores internos de cuentas y hashtags:</p>
+            <input type="text" placeholder="@usuario_instagram" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
+            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        </div>
+
+    </div>
+
+    <script> 
+        async function ejecutarBusquedaIP() {
+    var ipTarget = document.getElementById('input-ip').value;
+    var resultadoDiv = document.getElementById('resultado-ip');
+    
+    if (!ipTarget) { alert("Escribe una IP"); return; }
+    
+    resultadoDiv.innerHTML = "Consultando base de datos...";
+
+    try {
+        // Esta línea es la que hace la conexión real a tu servidor que está corriendo en la consola
+        const response = await fetch(`http://192.168.100.93:3000/api/ip/${ipTarget}`);
+        const data = await response.json();
+        
+        // Aquí mostramos los datos que vienen desde internet
+        resultadoDiv.innerHTML = `
+            <p><strong>País:</strong> ${data.country}</p>
+            <p><strong>Ciudad:</strong> ${data.city}</p>
+            <p><strong>ISP:</strong> ${data.isp}</p>
+        `;
+    } catch (err) {
+        resultadoDiv.innerHTML = "Error: Asegúrate de que el servidor (node server.js) esté encendido.";
+    }
+}
+
+    function mostrarHerramienta(idHerramienta) {
+    
+    var vistaInicio = document.getElementById('vista-inicio');
+    if (vistaInicio) {
+        vistaInicio.style.display = 'none';
+    }
+
+    var paneles = document.querySelectorAll('.panel-herramienta');
+    paneles.forEach(function(panel) {
+        panel.style.display = 'none';
+    });
+
+    
+    var panelDestino = document.getElementById(idHerramienta);
+    if (panelDestino) {
+        panelDestino.style.display = 'block';
+    } else {
+        console.warn("Módulo de infraestructura en desarrollo o ID no encontrado: " + idHerramienta);
+    }
+}
+        
+        if (localStorage.getItem("sesionActiva") !== "true") {
+            alert("⛔ ACCESO DENEGADO\nNo cuentas con un token de autenticación activo. Regresando al portal de seguridad.");
+            window.location.href = "base web.html";
+        }
+
+        
+        var btnLogout = document.querySelector('.btn-logout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', function() {
+                localStorage.removeItem("sesionActiva");
+            });
+        }
+
+        // Funciones para controlar la apertura y cierre de las ventanas emergentes
+        function abrirProyecto(idModal) {
+            document.getElementById(idModal).style.display = 'flex';
+        }
+
+        function cerrarProyecto(idModal) {
+            document.getElementById(idModal).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
