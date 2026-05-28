@@ -15,216 +15,31 @@
             position: relative;
             min-height: 100vh;
         }
-        h1 {
-            color: #4af626;
-            margin-top: 25px;
-            font-size: 28px;
-            letter-spacing: 1px;
-        }
-        p.subtitulo {
-            color: #b3b3cc;
-            font-size: 16px;
-            margin-top: -10px;
-            margin-bottom: 30px;
-        }
-        /* --- ESTILOS DEL MENÚ --- */
-        nav {
-            margin-bottom: 40px;
-        }
-        nav a {
-            color: #4af626;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        /* Ocultamos la pestaña de proyectos por defecto */
-        #menu-proyectos {
-            display: none;
-            color: #4af626;
-            animation: aparecerBrillo 0.5s ease-in-out;
-        }
-        @keyframes aparecerBrillo {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        /* --- ESTILOS DE LA IMAGEN --- */
-        .mi-foto {
-            width: 500px;
-            max-width: 85%;
-            height: auto;
-            border-radius: 12px;
-            border: 3px solid #4af626;
-            display: inline-block;
-            box-shadow: 0 0 15px rgba(74, 246, 38, 0.3);
-        }
+        h1 { color: #4af626; margin-top: 25px; font-size: 28px; letter-spacing: 1px; }
+        .subtitulo { color: #b3b3cc; font-size: 16px; margin-top: -10px; margin-bottom: 30px; }
         
-        /* --- TARJETA DE SOPORTE FLOTANTE --- */
-        .tarjeta-soporte-flotante {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            background-color: #252538;
-            border: 2px solid #4af626;
-            border-radius: 10px;
-            padding: 15px 20px;
-            width: 250px;
-            text-align: left;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .tarjeta-soporte-flotante:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 15px rgba(74, 246, 38, 0.4);
-            background-color: #2b2b42;
-        }
-        .tarjeta-soporte-flotante h3 {
-            color: #4af626;
-            margin: 0 0 10px 0;
-            font-size: 16px;
-            border-bottom: 1px solid #3b3b54;
-            padding-bottom: 5px;
-        }
-        .tarjeta-soporte-flotante p {
-            color: #b3b3cc;
-            font-size: 13px;
-            margin: 5px 0;
-        }
-        .indicador-clic {
-            font-size: 11px !important;
-            color: #4af626 !important;
-            text-align: right;
-            margin-top: 8px !important;
-            display: block;
-            font-style: italic;
-        }
+        nav { margin-bottom: 40px; }
+        nav a { color: #4af626; text-decoration: none; margin: 0 15px; font-size: 18px; font-weight: bold; }
+        nav a:hover { text-decoration: underline; }
+        
+        #menu-proyectos { display: none; color: #4af626; }
+        
+        .mi-foto { width: 500px; max-width: 85%; height: auto; border-radius: 12px; border: 3px solid #4af626; box-shadow: 0 0 15px rgba(74, 246, 38, 0.3); }
+        
+        .tarjeta-soporte-flotante { position: absolute; top: 30px; right: 40px; background-color: #252538; border: 2px solid #4af626; border-radius: 10px; padding: 15px 20px; width: 250px; text-align: left; cursor: pointer; }
+        .indicador-clic { font-size: 11px; color: #4af626; text-align: right; margin-top: 8px; display: block; font-style: italic; }
 
-        /* --- PORTAL LOGIN --- */
-        .login-contenedor {
-            background-color: #252538;
-            border: 2px solid #3b3b54;
-            border-radius: 12px;
-            padding: 35px;
-            width: 340px;
-            margin: 40px auto 60px auto;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-            text-align: left;
-            transition: 0.3s;
-        }
-        .login-contenedor h2 {
-            color: #4af626;
-            font-size: 22px;
-            text-align: center;
-            margin-top: 0;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #3b3b54;
-            padding-bottom: 10px;
-        }
-        .grupo-campo {
-            margin-bottom: 20px;
-        }
-        .grupo-campo label {
-            display: block;
-            color: #4af626;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .grupo-campo input, .grupo-campo textarea {
-            width: 100%;
-            padding: 12px;
-            background-color: #1a1a26;
-            border: 1px solid #3b3b54;
-            border-radius: 6px;
-            color: #ffffff;
-            font-size: 15px;
-            box-sizing: border-box;
-            transition: 0.3s;
-        }
-        .grupo-campo textarea {
-            resize: none;
-            height: 80px;
-            font-family: inherit;
-        }
-        .grupo-campo input:focus, .grupo-campo textarea:focus {
-            outline: none;
-            border-color: #4af626;
-            box-shadow: 0 0 8px rgba(74, 246, 38, 0.5);
-        }
-        .btn-ingresar {
-            width: 100%;
-            background-color: #4af626;
-            color: #1e1e2f;
-            border: none;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-        .btn-ingresar:hover {
-            background-color: #3ee020;
-            box-shadow: 0 0 15px #4af626;
-        }
+        .login-contenedor { background-color: #252538; border: 2px solid #3b3b54; border-radius: 12px; padding: 35px; width: 340px; margin: 40px auto; text-align: left; }
+        .login-contenedor h2 { color: #4af626; font-size: 22px; text-align: center; margin-bottom: 25px; }
+        .grupo-campo { margin-bottom: 20px; }
+        .grupo-campo label { display: block; color: #4af626; font-size: 14px; margin-bottom: 8px; }
+        .grupo-campo input { width: 100%; padding: 12px; background-color: #1a1a26; border: 1px solid #3b3b54; border-radius: 6px; color: #fff; box-sizing: border-box; }
+        
+        .btn-ingresar { width: 100%; background-color: #4af626; color: #1e1e2f; border: none; padding: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; }
 
-        /* --- MODAL EMERGENTE DE SOPORTE --- */
-        .pantalla-oscura {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: 10;
-            justify-content: center;
-            align-items: center;
-        }
-        .ventana-modal {
-            background-color: #252538;
-            border: 2px solid #4af626;
-            border-radius: 12px;
-            width: 400px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            text-align: left;
-            position: relative;
-        }
-        .btn-cerrar {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: transparent;
-            color: #b3b3cc;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .btn-cerrar:hover {
-            color: #4af626;
-        }
-
-        /* --- ESTILOS DEL PIE DE PÁGINA --- */
-        footer {
-            background-color: #151522;
-            border-top: 2px solid #3b3b54;
-            padding: 30px 20px;
-            margin-top: 40px;
-            text-align: center;
-        }
-        footer p {
-            color: #b3b3cc;
-            font-size: 14px;
-            margin: 5px 0;
-        }
+        .pantalla-oscura { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.75); justify-content: center; align-items: center; }
+        .ventana-modal { background-color: #252538; border: 2px solid #4af626; border-radius: 12px; width: 400px; padding: 30px; position: relative; }
+        .btn-cerrar { position: absolute; top: 15px; right: 15px; background: none; color: #fff; border: none; font-size: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -237,7 +52,7 @@
     </div>
 
     <nav>
-        <a href="base web.html" style="color: white;">Inicio</a>
+        <a href="index.html" style="color: white;">Inicio</a>
         <span id="menu-proyectos"> | <a href="proyectos.html">Mis Proyectos</a></span>
     </nav>
 
@@ -250,15 +65,13 @@
         <h2>Acceso al Portal ID</h2>
         <form onsubmit="validarAcceso(event)">
             <div class="grupo-campo">
-                <label for="login">Login:</label>
+                <label>Login:</label>
                 <input type="text" id="usuario" placeholder="Ingresa tu usuario" required>
             </div>
-            
             <div class="grupo-campo">
-                <label for="password">Password:</label>
+                <label>Password:</label>
                 <input type="password" id="password" placeholder="••••••••" required>
             </div>
-            
             <button type="submit" class="btn-ingresar">Iniciar Sesión</button>
         </form>
     </div>
@@ -266,72 +79,33 @@
     <div id="miModal" class="pantalla-oscura">
         <div class="ventana-modal">
             <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
-            <h2 style="color: #4af626; margin-top: 0; border-bottom: 1px solid #3b3b54; padding-bottom: 10px;">Ticket de Soporte</h2>
-            <p style="color: #b3b3cc; font-size: 14px; margin-bottom: 20px;">Envía un reporte directo a los administradores del sistema:</p>
-            
+            <h2 style="color: #4af626;">Ticket de Soporte</h2>
             <form onsubmit="enviarTicket(event)">
-                <div class="grupo-campo">
-                    <label>Tu Correo:</label>
-                    <input type="email" placeholder="correo@ejemplo.com" required>
-                </div>
-                <div class="grupo-campo">
-                    <label>Asunto / Problema:</label>
-                    <input type="text" placeholder="Ej. Olvidé mi contraseña" required>
-                </div>
-                <div class="grupo-campo">
-                    <label>Detalle del Mensaje:</label>
-                    <textarea placeholder="Describe brevemente la incidencia técnica..." required></textarea>
-                </div>
-                <button type="submit" class="btn-ingresar">Enviar Reporte Técnico</button>
+                <div class="grupo-campo"><label>Tu Correo:</label><input type="email" required></div>
+                <div class="grupo-campo"><label>Asunto:</label><input type="text" required></div>
+                <button type="submit" class="btn-ingresar">Enviar Reporte</button>
             </form>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 BARSA.NET - Todos los derechos reservados.</p>
-        <p>Desarrollado con fines académicos y Ciberseguridad Ética.</p>
-    </footer>
-
     <script>
-   function validarAcceso(event) {
-    event.preventDefault();
-    
-    var userIn = document.getElementById('usuario').value;
-    var passIn = document.getElementById('password').value;
-    
-    if (userIn === "RFLORESCA3" && passIn === "Rafael20072008") {
-        alert("¡AUTENTICACIÓN EXITOSA!\nAcceso concedido al Servidor Central BARSA.NET.");
-        
-        
-        localStorage.setItem("sesionActiva", "true");
-        
-        
-        document.getElementById('menu-proyectos').style.display = 'inline';
-        
-        // Redirige automáticamente
-        setTimeout(function() {
-            window.location.href = "proyectos.html";
-        }, 1200);
-        
-    } else {
-        alert("❌ ERROR DE AUTENTICACIÓN\nUsuario o Password incorrectos. Acceso Denegado.");
-    }
-}
-
-        function abrirModal() {
-            document.getElementById('miModal').style.display = 'flex';
-        }
-
-        function cerrarModal() {
-            document.getElementById('miModal').style.display = 'none';
-        }
-
-        function enviarTicket(event) {
+        function validarAcceso(event) {
             event.preventDefault();
-            alert("¡Ticket Enviado Correctamente!");
-            cerrarModal();
+            var userIn = document.getElementById('usuario').value;
+            var passIn = document.getElementById('password').value;
+            
+            if (userIn === "RFLORESCA3" && passIn === "Rafael20072008") {
+                localStorage.setItem("sesionActiva", "true");
+                document.getElementById('menu-proyectos').style.display = 'inline';
+                alert("Acceso concedido.");
+                window.location.href = "proyectos.html";
+            } else {
+                alert("Acceso Denegado.");
+            }
         }
+        function abrirModal() { document.getElementById('miModal').style.display = 'flex'; }
+        function cerrarModal() { document.getElementById('miModal').style.display = 'none'; }
+        function enviarTicket(event) { event.preventDefault(); alert("Enviado."); cerrarModal(); }
     </script>
-
 </body>
 </html>
