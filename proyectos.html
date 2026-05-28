@@ -446,7 +446,7 @@
 
     try {
         // Esta línea es la que hace la conexión real a tu servidor que está corriendo en la consola
-        const response = await fetch(`http://192.168.100.93:3000/api/ip/${ipTarget}`);
+        const response = await fetch('https://mi-herramienta-osint.onrender.com/api/ip/' + ipTarget);
         const data = await response.json();
         
         // Aquí mostramos los datos que vienen desde internet
