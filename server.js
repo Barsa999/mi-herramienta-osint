@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 3000;
+
+const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -9,15 +10,14 @@ app.use(express.json());
 app.get('/api/ip/:targetIp', async (req, res) => {
     const ip = req.params.targetIp;
     try {
-        const respuesta = await fetch(`http://ip-api.com/json/${ip}`);
-        const datos = await respuesta.json();
-        res.json(datos);
+        const response = await fetch(`http://ip-api.com/json/${ip}`);
+        const data = await response.json();
+        res.json(data);
     } catch (error) {
         res.status(500).json({ error: "Error de conexión" });
     }
 });
 
-
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[SYSTEM READY] Servidor corriendo en http://192.168.100.93:${PORT}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
 });
