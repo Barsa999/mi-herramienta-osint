@@ -278,41 +278,67 @@
             <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
         </div>
 
-        <div id="tp-email" class="panel-herramienta" style="display: none;">
+<div id="tp-email" class="panel-herramienta" style="display: none;">
     <h1 style="color: #4af626; margin-bottom: 15px;">📧 Forense de Correos Electrónicos</h1>
     <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce el correo para auditar filtraciones:</p>
-    <input type="email" id="input-email" placeholder="ejemplo@target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br><button onclick="ejecutarBusquedaEmail()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
     
-    <div id="resultado-email" style="margin-top: 20px; color: #fff; border-top: 1px solid #3b3b54; padding-top: 15px;"></div>
+    <input type="email" id="input-email" placeholder="ejemplo@target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+    <br>
+    <button onclick="ejecutarBusquedaEmail()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+    
+    <div id="resultado-email" style="margin-top: 20px; color: #fff; border-top: 1px solid #3b3b54; padding-top: 15px;">
+        <!-- Los resultados se inyectarán aquí -->
+    </div>
+    
+    <!-- Botón de PDF inicialmente oculto -->
+    <button id="btn-pdf" onclick="generarPDF()" style="display: none; background: #3b3b54; color: #fff; border: none; padding: 10px 20px; cursor: pointer; margin-top: 15px; border-radius: 4px; font-weight: bold;">
+        📥 Descargar Reporte PDF
+    </button>
 </div>
 
 <script>
-    
     async function ejecutarBusquedaEmail() {
         var emailTarget = document.getElementById('input-email').value;
         var resultadoDiv = document.getElementById('resultado-email');
+        var btnPdf = document.getElementById('btn-pdf');
 
         if (!emailTarget) { alert("Escribe un correo electrónico"); return; }
 
         resultadoDiv.innerHTML = "Escaneando bases de datos (esto puede tardar)...";
+        btnPdf.style.display = 'none'; // Ocultar botón mientras busca
 
         try {
-            // Nota: Debes crear esta ruta en tu servidor.js
             const response = await fetch('https://mi-herramienta-osint.onrender.com/api/email/' + emailTarget);
             const data = await response.json();
 
-            // Aquí mostramos lo que nos devuelva el servidor
+            // Insertamos el contenido dentro de un div con ID para el reporte
             resultadoDiv.innerHTML = `
-                <p><strong>Estado:</strong> ${data.existe ? 'Correo Activo' : 'No verificado'}</p>
-                <p><strong>Filtraciones encontradas:</strong> ${data.breach_count || 0}</p>
-                <p><strong>Dominio detectado:</strong> ${data.domain || 'N/A'}</p>
+                <div id="contenido-reporte" style="padding: 10px;">
+                    <h2 style="color: #4af626;">Reporte de Auditoría: ${emailTarget}</h2>
+                    <p><strong>Estado:</strong> ${data.existe ? 'Correo Activo' : 'No verificado'}</p>
+                    <p><strong>Filtraciones encontradas:</strong> ${data.breach_count || 0}</p>
+                    <p><strong>Dominio detectado:</strong> ${data.domain || 'N/A'}</p>
+                    <p><strong>Fecha de Auditoría:</strong> ${new Date().toLocaleString()}</p>
+                </div>
             `;
+            btnPdf.style.display = 'block'; // Mostramos el botón tras el éxito
         } catch (err) {
             resultadoDiv.innerHTML = "Error: No se pudo conectar con el servidor de auditoría.";
         }
     }
 
+    // Función para convertir el div "contenido-reporte" a PDF
+    function generarPDF() {
+        const elemento = document.getElementById('contenido-reporte');
+        const opciones = {
+            margin: 1,
+            filename: 'reporte_osint.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opciones).from(elemento).save();
+    }
 </script>
         <div id="tp-domain" class="panel-herramienta" style="display: none;">
             <h1 style="color: #4af626; margin-bottom: 15px;">🌐 Rastreo de Dominios</h1>
@@ -321,12 +347,14 @@
             <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
         </div>
 
-        <div id="tp-ip" class="panel-herramienta" style="display: none;">
-    <h1>🖥️ Auditoría de Direcciones IP</h1>
-    <input type="text" id="input-ip" placeholder="8.8.8.8" style="...">
+       <div id="tp-ip" class="panel-herramienta" style="display: none;">
+    <h1 style="color: #4af626; margin-bottom: 15px;">🖥️ Auditoría de Direcciones IP</h1>
+    <input type="text" id="input-ip" placeholder="8.8.8.8" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px;">
     <br>
-    <button onclick="ejecutarBusquedaIP()">Search</button>
+    <button onclick="ejecutarBusquedaIP()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 4px; font-weight: bold;">Search</button>
+    
     <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
+    <div id="mapa-ip" style="height: 300px; width: 100%; margin-top: 20px; border: 2px solid #4af626; display: none;"></div>
 </div>
 
         <div id="tp-image" class="panel-herramienta" style="display: none;">
