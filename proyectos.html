@@ -270,21 +270,21 @@
     </div>
 
         <div class="contenido-principal">
-        
         <div id="vista-inicio" class="panel-herramienta">
             <h1 style="color: #4af626; margin-bottom: 10px;">System Core: Panel Central</h1>
             <p style="color: #b3b3cc;">Selecciona un módulo del menú lateral para auditar los detalles y registros técnicos.</p>
         </div>
 
-            <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Third Party: General Search</h1>
-            <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce palabras clave o términos globales para indexar registros públicos:</p>
-            <input type="text" placeholder="Buscar término, ID, metadatos..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-            <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-        </div>
+           <div id="tp-general" class="panel-herramienta" style="display: none;">
+    <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Third Party: General Search</h1>
+    <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce palabras clave o términos globales para indexar registros públicos:</p>
+    <input type="text" placeholder="Buscar término, ID, metadatos..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+    <br><button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+</div>
 
-<div id="tp-email" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">📧 Forense de Correos Electrónicos</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce el correo para auditar filtraciones:</p>
+    <div id="tp-email" class="panel-herramienta" style="display: none;">
+         <h1 style="color: #4af626; margin-bottom: 15px;">📧 Forense de Correos Electrónicos</h1>
+         <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce el correo para auditar filtraciones:</p>
     
     <input type="email" id="input-email" placeholder="ejemplo@target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
     <br>
