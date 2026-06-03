@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -275,7 +276,6 @@
             <p style="color: #b3b3cc;">Selecciona un módulo del menú lateral para auditar los detalles y registros técnicos.</p>
         </div>
 
-        <div id="tp-general" class="panel-herramienta" style="display: none;">
             <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Third Party: General Search</h1>
             <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce palabras clave o términos globales para indexar registros públicos:</p>
             <input type="text" placeholder="Buscar término, ID, metadatos..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
@@ -290,11 +290,13 @@
     <br>
     <button onclick="ejecutarBusquedaEmail()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
     
-    <div id="resultado-email" style="margin-top: 20px; color: #fff; border-top: 1px solid #3b3b54; padding-top: 15px;">
-        <!-- Los resultados se inyectarán aquí -->
+    <div id="resultado-email" style="margin-top: 20px; color: #fff; border-top: 1px solid #3b3b54; padding-top: 15px;">  
     </div>
+    <div style="width: 300px; height: 300px; margin-top: 20px;">
+        <canvas id="miGrafico"></canvas>
+    </div>
+</div>
     
-    <!-- Botón de PDF inicialmente oculto -->
     <button id="btn-pdf" onclick="generarPDF()" style="display: none; background: #3b3b54; color: #fff; border: none; padding: 10px 20px; cursor: pointer; margin-top: 15px; border-radius: 4px; font-weight: bold;">
         📥 Descargar Reporte PDF
     </button>
@@ -496,21 +498,21 @@
 
     </div>
 
-   <script>
-    var mapa; // Variable global para controlar el mapa
+  <script>
+    var mapa; // Variable para el mapa
+    var miChart; // Variable para el gráfico
 
+    // --- MÓDULO IP ---
     async function ejecutarBusquedaIP() {
         var ipTarget = document.getElementById('input-ip').value;
         var resultadoDiv = document.getElementById('resultado-ip');
         var divMapa = document.getElementById('mapa-ip');
 
         if (!ipTarget) { alert("Escribe una IP"); return; }
-
         resultadoDiv.innerHTML = "Geolocalizando...";
         divMapa.style.display = 'none';
 
         try {
-            // Usamos ipapi.co porque es más estable para mostrar mapas
             const response = await fetch('https://ipapi.co/' + ipTarget + '/json/');
             const data = await response.json();
 
@@ -520,11 +522,8 @@
                     <p><strong>Ciudad:</strong> ${data.city}</p>
                     <p><strong>ISP:</strong> ${data.org}</p>
                 `;
-                
-                // --- Lógica del Mapa ---
                 divMapa.style.display = 'block';
-                if (mapa) mapa.remove(); // Limpiar mapa previo
-                
+                if (mapa) mapa.remove();
                 mapa = L.map('mapa-ip').setView([data.latitude, data.longitude], 13);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
                 L.marker([data.latitude, data.longitude]).addTo(mapa).bindPopup("Ubicación: " + data.city).openPopup();
@@ -536,28 +535,64 @@
         }
     }
 
+    // --- MÓDULO EMAIL ---
+    async function ejecutarBusquedaEmail() {
+        var emailTarget = document.getElementById('input-email').value;
+        var resultadoDiv = document.getElementById('resultado-email');
+        if (!emailTarget) { alert("Escribe un correo"); return; }
+        resultadoDiv.innerHTML = "Escaneando...";
+
+        try {
+            const response = await fetch('https://mi-herramienta-osint.onrender.com/api/email/' + emailTarget);
+            const data = await response.json();
+
+            resultadoDiv.innerHTML = `
+                <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
+                <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
+                <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
+            `;
+
+            // Lógica del Gráfico
+            if (miChart) miChart.destroy();
+            var ctx = document.getElementById('miGrafico').getContext('2d');
+            miChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Filtraciones'],
+                    datasets: [{
+                        label: 'Nivel de Seguridad',
+                        data: [data.breach_count || 0],
+                        backgroundColor: '#4af626'
+                    }]
+                },
+                options: {
+                    plugins: { legend: { labels: { color: 'white' } } },
+                    scales: { y: { ticks: { color: 'white' }, beginAtZero: true }, x: { ticks: { color: 'white' } } }
+                }
+            });
+        } catch (err) {
+            resultadoDiv.innerHTML = "Error de conexión.";
+        }
+    }
+
+    // --- FUNCIONES GENERALES ---
     function mostrarHerramienta(idHerramienta) {
         var vistaInicio = document.getElementById('vista-inicio');
         if (vistaInicio) vistaInicio.style.display = 'none';
-
         var paneles = document.querySelectorAll('.panel-herramienta');
         paneles.forEach(function(panel) { panel.style.display = 'none'; });
-
         var panelDestino = document.getElementById(idHerramienta);
         if (panelDestino) panelDestino.style.display = 'block';
-        else console.warn("Módulo en desarrollo: " + idHerramienta);
     }
         
     if (localStorage.getItem("sesionActiva") !== "true") {
-        alert("⛔ ACCESO DENEGADO\nNo cuentas con un token de autenticación activo.");
+        alert("⛔ ACCESO DENEGADO");
         window.location.href = "base web.html";
     }
 
     var btnLogout = document.querySelector('.btn-logout');
     if (btnLogout) {
-        btnLogout.addEventListener('click', function() {
-            localStorage.removeItem("sesionActiva");
-        });
+        btnLogout.addEventListener('click', function() { localStorage.removeItem("sesionActiva"); });
     }
 
     function abrirProyecto(idModal) { document.getElementById(idModal).style.display = 'flex'; }
