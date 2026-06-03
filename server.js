@@ -18,17 +18,19 @@ app.get('/api/ip/:targetIp', async (req, res) => {
     }
 });
 
-app.get('/api/email/:email', (req, res) => {
+app.get('/api/email/:email', async (req, res) => {
     const email = req.params.email;
     
   
-    res.json({
-        existe: true,
-        breach_count: Math.floor(Math.random() * 10), // Número aleatorio para probar
-        domain: email.split('@')[1]
-    });
-});
-
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running on port ${port}`);
+    try {
+        const data = {
+            existe: true,
+            breach_count: 5, // Cambia esto por la llamada a la API
+            domain: email.split('@')[1],
+            fecha_auditoria: new Date().toISOString()
+        };
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: "No se pudo conectar al servicio de auditoría" });
+    }
 });
