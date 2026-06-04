@@ -518,17 +518,25 @@ async function ejecutarBusquedaEmail() {
     `;
 }).join('');
 
-      textosDiv.innerHTML = `
-            <div id="contenido-reporte">
-                <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
-                <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
-                <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
-                <div style="margin-top: 15px;">
-                    <p><strong>Servicios vinculados:</strong></p>
-                    ${botonesServicios}
-                </div>
-            </div>
-        `;
+     textosDiv.innerHTML = `
+    <div id="contenido-reporte">
+        <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
+        <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
+        <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
+        <div style="margin-top: 15px;">
+            <p><strong>Servicios vinculados:</strong></p>
+            ${botonesServicios}
+        </div>
+        
+        <button onclick="toggleJson()" style="margin-top: 20px; background: #333; color: #fff; border: 1px solid #4af626; padding: 5px 10px; cursor: pointer;">
+            Ver JSON de respuesta
+        </button>
+        
+        <pre id="json-view" style="display: none; background: #000; color: #4af626; padding: 10px; margin-top: 10px; font-size: 12px; overflow-x: auto; border: 1px solid #4af626;">
+            ${JSON.stringify(data, null, 2)}
+        </pre>
+    </div>
+`;
         
         setTimeout(() => {
             const canvasElement = document.getElementById('miGrafico');
