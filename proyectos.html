@@ -552,20 +552,28 @@
         if (!emailTarget) { alert("Escribe un correo"); return; }
         resultadoDiv.innerHTML = "Escaneando...";
 
-        try {
-            const response = await fetch('https://mi-herramienta-osint.onrender.com/api/email/' + emailTarget);
-            const data = await response.json();
+try {
+    const response = await fetch('https://mi-herramienta-osint.onrender.com/api/email/' + emailTarget);
+    const data = await response.json();
 
-            document.getElementById('textos-resultados').innerHTML = `
-           <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
-           <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
-           <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
-`;
+    // Asegúrate de que este ID coincida con el div de tu HTML
+    const contenedor = document.getElementById('resultado-email'); 
+    
+    if (contenedor) {
+        contenedor.innerHTML = `
+            <div style="padding: 10px;">
+                <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
+                <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
+                <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
+            </div>
+            <canvas id="miGrafico"></canvas>
+        `;
 
-            // Lógica del Gráfico
-            if (miChart) miChart.destroy();
+        // Lógica del Gráfico
+        if (typeof Chart !== 'undefined') {
+            if (window.miChartInstance) window.miChartInstance.destroy();
             var ctx = document.getElementById('miGrafico').getContext('2d');
-            miChart = new Chart(ctx, {
+            window.miChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['Filtraciones'],
@@ -580,10 +588,12 @@
                     scales: { y: { ticks: { color: 'white' }, beginAtZero: true }, x: { ticks: { color: 'white' } } }
                 }
             });
-        } catch (err) {
-            resultadoDiv.innerHTML = "Error de conexión.";
         }
     }
+} catch (err) {
+    console.error("Error capturado:", err);
+    document.getElementById('resultado-email').innerHTML = "Error al cargar los datos.";
+}
 
     // --- FUNCIONES GENERALES ---
     function mostrarHerramienta(idHerramienta) {
