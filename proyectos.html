@@ -533,7 +533,8 @@ async function ejecutarBusquedaIP() {
         resultadoDiv.innerHTML = "Error al conectar con el servicio de geolocalización.";
     }
 }
-  async function ejecutarBusquedaEmail() {
+      
+async function ejecutarBusquedaEmail() {
     const emailTarget = document.getElementById('input-email').value;
     const resultadoDiv = document.getElementById('resultado-email');
     const textosDiv = document.getElementById('textos-resultados');
@@ -543,6 +544,7 @@ async function ejecutarBusquedaIP() {
         return;
     }
 
+    textosDiv.innerHTML = "";
     resultadoDiv.innerHTML = "Escaneando...";
 
     try {
@@ -556,38 +558,45 @@ async function ejecutarBusquedaIP() {
                 <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
                 <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
                 <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
+                <div style="width: 100%; max-width: 400px; margin-top: 20px;">
+                    <canvas id="miGrafico"></canvas>
+                </div>
             </div>
         `;
+        resultadoDiv.innerHTML = ""; 
 
-        if (window.miChartInstance) {
-            window.miChartInstance.destroy();
-        }
-
-        const canvasElement = document.getElementById('miGrafico');
-        if (canvasElement) {
-            const ctx = canvasElement.getContext('2d');
-            window.miChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Filtraciones'],
-                    datasets: [{
-                        label: 'Nivel de Seguridad',
-                        data: [data.breach_count || 0],
-                        backgroundColor: '#4af626'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { labels: { color: 'white' } } },
-                    scales: { 
-                        y: { ticks: { color: 'white' }, beginAtZero: true }, 
-                        x: { ticks: { color: 'white' } } 
-                    }
+        setTimeout(() => {
+            const canvasElement = document.getElementById('miGrafico');
+            
+            if (canvasElement) {
+                if (window.miChartInstance) {
+                    window.miChartInstance.destroy();
                 }
-            });
-        } else {
-            console.error("No se encontró el canvas con ID: miGrafico");
-        }
+
+                const ctx = canvasElement.getContext('2d');
+                window.miChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Filtraciones'],
+                        datasets: [{
+                            label: 'Nivel de Seguridad',
+                            data: [data.breach_count || 0],
+                            backgroundColor: '#4af626'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: { legend: { labels: { color: 'white' } } },
+                        scales: { 
+                            y: { ticks: { color: 'white' }, beginAtZero: true }, 
+                            x: { ticks: { color: 'white' } } 
+                        }
+                    }
+                });
+            } else {
+                console.error("El elemento #miGrafico no se creó correctamente.");
+            }
+        }, 50); 
         
     } catch (err) {
         console.error("Error detallado:", err); 
