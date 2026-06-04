@@ -588,15 +588,25 @@ try {
     console.error("Error detallado:", err); 
     resultadoDiv.innerHTML = "Error al procesar: " + err.message;
 }
-    // --- FUNCIONES GENERALES ---
-    function mostrarHerramienta(idHerramienta) {
-        var vistaInicio = document.getElementById('vista-inicio');
-        if (vistaInicio) vistaInicio.style.display = 'none';
-        var paneles = document.querySelectorAll('.panel-herramienta');
-        paneles.forEach(function(panel) { panel.style.display = 'none'; });
-        var panelDestino = document.getElementById(idHerramienta);
-        if (panelDestino) panelDestino.style.display = 'block';
+   function mostrarHerramienta(herramienta) {
+    
+    const contenedor = document.getElementById('panel-central');
+
+   
+    if (!contenedor) {
+        console.error("Error: No encontré el elemento con ID 'panel-central' en tu HTML.");
+        return;
     }
+
+    if (herramienta === 'email') {
+        contenedor.innerHTML = `
+            <h2>Forense de Correos Electrónicos</h2>
+            <input type="text" id="input-email" placeholder="ejemplo@correo.com">
+            <button onclick="ejecutarBusquedaEmail()">Search</button>
+            <div id="resultado-email"></div>
+        `;
+    }
+}
         
     if (localStorage.getItem("sesionActiva") !== "true") {
         alert("⛔ ACCESO DENEGADO");
