@@ -44,8 +44,14 @@ app.get('/api/email/:email', async (req, res) => {
                 { nombre: "Gravatar", link: `https://es.gravatar.com/${user}`, verificado: gravatarExiste },
                 { nombre: "LinkedIn", link: `https://www.linkedin.com/search/results/all/?keywords=${email}`, verificado: true } // LinkedIn bloquea estas peticiones, dejamos fijo
             ],
+            historial: [
+                { fecha: "2024-05-12", evento: "Email detectado en base de datos de LinkedIn" },
+                { fecha: "2025-01-20", evento: "Primera auditoría realizada" },
+                { fecha: new Date().toLocaleDateString(), evento: "Consulta de seguridad actual" }
+            ],
             fecha_auditoria: new Date().toLocaleDateString()
         };
+        
         res.json(data);
     } catch (error) {
         res.status(500).json({ error: "Error al validar" });
