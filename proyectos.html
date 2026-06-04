@@ -556,44 +556,23 @@ try {
     const response = await fetch('https://mi-herramienta-osint.onrender.com/api/email/' + emailTarget);
     const data = await response.json();
 
-    // Asegúrate de que este ID coincida con el div de tu HTML
-    const contenedor = document.getElementById('resultado-email'); 
-    
-    if (contenedor) {
-        contenedor.innerHTML = `
-            <div style="padding: 10px;">
-                <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
-                <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
-                <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
+    // Verificamos que 'data' tenga contenido antes de mostrarlo
+    if (data) {
+        resultadoDiv.innerHTML = `
+            <div id="contenido-reporte" style="padding: 10px;">
+                <h2 style="color: #4af626;">Reporte de Auditoría: ${emailTarget}</h2>
+                <p><strong>Estado:</strong> ${data.existe ? 'Correo Activo' : 'No verificado'}</p>
+                <p><strong>Filtraciones encontradas:</strong> ${data.breach_count || 0}</p>
+                <p><strong>Dominio detectado:</strong> ${data.domain || 'N/A'}</p>
+                <p><strong>Fecha de Auditoría:</strong> ${data.fecha_auditoria || new Date().toLocaleString()}</p>
             </div>
-            <canvas id="miGrafico"></canvas>
         `;
-
-        // Lógica del Gráfico
-        if (typeof Chart !== 'undefined') {
-            if (window.miChartInstance) window.miChartInstance.destroy();
-            var ctx = document.getElementById('miGrafico').getContext('2d');
-            window.miChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Filtraciones'],
-                    datasets: [{
-                        label: 'Nivel de Seguridad',
-                        data: [data.breach_count || 0],
-                        backgroundColor: '#4af626'
-                    }]
-                },
-                options: {
-                    plugins: { legend: { labels: { color: 'white' } } },
-                    scales: { y: { ticks: { color: 'white' }, beginAtZero: true }, x: { ticks: { color: 'white' } } }
-                }
-            });
-        }
+        btnPdf.style.display = 'block'; // Volvemos a mostrar el botón si es necesario
     }
-} catch (err) {
-    console.error("Error capturado:", err);
-    document.getElementById('resultado-email').innerHTML = "Error al cargar los datos.";
-}
+} catch (error) {
+    console.error("Error detallado:", error); // Esto te dirá en la consola qué está fallando
+    resultadoDiv.innerHTML = "Error al procesar los datos.";
+} 
 
     // --- FUNCIONES GENERALES ---
     function mostrarHerramienta(idHerramienta) {
