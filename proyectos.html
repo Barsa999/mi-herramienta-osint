@@ -332,7 +332,6 @@
         }
     }
 
-    // Función para convertir el div "contenido-reporte" a PDF
     function generarPDF() {
         const elemento = document.getElementById('contenido-reporte');
         const opciones = {
@@ -590,23 +589,22 @@ try {
 }
    }
       
-   function mostrarHerramienta(herramienta) {
+  function mostrarHerramienta(id) {
+   
+    document.querySelectorAll('.panel-herramienta').forEach(div => {
+        div.style.display = 'none';
+    });
     
-    const contenedor = document.getElementById('panel-central');
+  
+    var vistaInicio = document.getElementById('vista-inicio');
+    if (vistaInicio) vistaInicio.style.display = 'none';
 
    
-    if (!contenedor) {
-        console.error("Error: No encontré el elemento con ID 'panel-central' en tu HTML.");
-        return;
-    }
-
-    if (herramienta === 'email') {
-        contenedor.innerHTML = `
-            <h2>Forense de Correos Electrónicos</h2>
-            <input type="text" id="input-email" placeholder="ejemplo@correo.com">
-            <button onclick="ejecutarBusquedaEmail()">Search</button>
-            <div id="resultado-email"></div>
-        `;
+    var seleccionado = document.getElementById(id);
+    if (seleccionado) {
+        seleccionado.style.display = 'block';
+    } else {
+        console.error("No existe el panel con ID: " + id);
     }
 }
         
