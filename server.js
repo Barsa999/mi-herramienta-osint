@@ -24,13 +24,19 @@ app.get('/api/email/:email', async (req, res) => {
     try {
         const data = {
             existe: true,
-            breach_count: 5, 
+            breach_count: email.length, 
             domain: email.split('@')[1],
-            fecha_auditoria: new Date().toISOString()
+            servicios_vinculados: [
+                { nombre: "Google Maps", link: `https://www.google.com/maps/contrib/${email}` },
+                { nombre: "Gravatar", link: `https://es.gravatar.com/${email.split('@')[0]}` },
+                { nombre: "LinkedIn", link: `https://www.linkedin.com/search/results/all/?keywords=${email}` }
+            ],
+            fecha_auditoria: new Date().toLocaleDateString()
         };
         res.json(data);
     } catch (error) {
-        res.status(500).json({ error: "No se pudo conectar al servicio de auditoría" });
+        console.error(error);
+        res.status(500).json({ error: "Error al consultar auditoría" });
     }
 });
 
