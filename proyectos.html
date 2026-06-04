@@ -553,30 +553,41 @@
     if (!emailTarget) { alert("Escribe un correo"); return; }
     resultadoDiv.innerHTML = "Escaneando...";
 
-    try {
-        const response = await fetch('https://mi-herramienta-osint.onrender.com/api/email/' + emailTarget);
-        const data = await response.json();
+try {
+    const response = await fetch('https://mi-herramienta-osint.onrender.com/api/email/' + emailTarget);
+    const data = await response.json();
 
-        // Actualizamos solo lo que sabemos que existe
-        resultadoDiv.innerHTML = `
-            <div style="padding: 10px;">
-                <h2 style="color: #4af626;">Reporte de Auditoría: ${emailTarget}</h2>
-                <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
-                <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
-                <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
-            </div>
-        `;
+    document.getElementById('textos-resultados').innerHTML = `
+        <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
+        <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
+        <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
+    `;
 
-        var btnPdf = document.getElementById('btn-pdf');
-        if (btnPdf) {
-            btnPdf.style.display = 'block';
-        }
-    } catch (error) {
-        console.error("Error capturado:", error);
-        resultadoDiv.innerHTML = "Error al mostrar resultados. Revisa la consola (F12).";
+    if (window.miChartInstance) {
+        window.miChartInstance.destroy();
     }
-}
+    
+    var ctx = document.getElementById('miGrafico').getContext('2d');
+    window.miChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Filtraciones'],
+            datasets: [{
+                label: 'Nivel de Seguridad',
+                data: [data.breach_count || 0],
+                backgroundColor: '#4af626'
+            }]
+        },
+        options: {
+            plugins: { legend: { labels: { color: 'white' } } },
+            scales: { y: { ticks: { color: 'white' }, beginAtZero: true }, x: { ticks: { color: 'white' } } }
+        }
+    });
 
+} catch (err) {
+    console.error("Error detallado:", err); 
+    resultadoDiv.innerHTML = "Error al procesar: " + err.message;
+}
     // --- FUNCIONES GENERALES ---
     function mostrarHerramienta(idHerramienta) {
         var vistaInicio = document.getElementById('vista-inicio');
