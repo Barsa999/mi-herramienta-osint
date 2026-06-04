@@ -545,9 +545,9 @@ async function ejecutarBusquedaEmail() {
                     Ver JSON de respuesta
                 </button>
                 
-                <button onclick="descargarReporte()" style="margin-top: 10px; background: #333; color: #fff; border: 1px solid #4af626; padding: 5px 10px; cursor: pointer; display: block;">
-                Descargar Reporte (.txt)
-            </button>
+              <button onclick="descargarReporte()" style="margin-top: 10px; background: #333; color: #fff; border: 1px solid #4af626; padding: 5px 10px; cursor: pointer; display: block; width: 100%; text-align: center;">
+                 Descargar Reporte (.txt)
+              </button>
                 
                 <pre id="json-view" style="display: none; background: #000; color: #4af626; padding: 10px; margin-top: 10px; font-size: 12px; overflow-x: auto; border: 1px solid #4af626;">
                     ${JSON.stringify(data, null, 2)}
@@ -630,15 +630,16 @@ async function ejecutarBusquedaEmail() {
         jsonView.style.display = 'none';
     }
 }
-      function descargarReporte() {
-    const contenido = document.getElementById('contenido-reporte').innerText;
-    const blob = new Blob([contenido], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'reporte_osint.txt';
-    a.click();
-}
+     function descargarReporte() {
+        const contenido = document.getElementById('contenido-reporte').innerText;
+        const blob = new Blob([contenido], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte_osint.txt';
+        a.click();
+        window.URL.revokeObjectURL(url); 
+    }
 </script>
 
 </body>
