@@ -605,6 +605,14 @@ async function ejecutarBusquedaEmail() {
         const modal = document.getElementById(idModal);
         if (modal) modal.style.display = 'none';
     }
+      function toggleJson() {
+    const jsonView = document.getElementById('json-view');
+    if (jsonView.style.display === 'none') {
+        jsonView.style.display = 'block';
+    } else {
+        jsonView.style.display = 'none';
+    }
+}
 </script>
 
 </body>
