@@ -507,11 +507,16 @@ async function ejecutarBusquedaEmail() {
         
         const data = await response.json();
         
-        let botonesServicios = data.servicios_vinculados.map(servicio => `
-            <a href="${servicio.link}" target="_blank" style="display: block; margin: 5px 0; color: #4af626; text-decoration: none;">
-                ➤ Ver en ${servicio.nombre}
-            </a>
-        `).join('');
+        let botonesServicios = data.servicios_vinculados.map(servicio => {
+    const color = servicio.verificado ? '#4af626' : '#888888';
+    const icono = servicio.verificado ? '✅' : '⚠️';
+    
+    return `
+        <a href="${servicio.link}" target="_blank" style="display: block; margin: 8px 0; color: ${color}; text-decoration: none; font-weight: bold;">
+            ${icono} ${servicio.nombre} ${servicio.verificado ? '(Verificado)' : '(No confirmado)'}
+        </a>
+    `;
+}).join('');
 
       textosDiv.innerHTML = `
             <div id="contenido-reporte">
