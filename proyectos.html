@@ -506,18 +506,25 @@ async function ejecutarBusquedaEmail() {
         }
         
         const data = await response.json();
+        
+        let botonesServicios = data.servicios_vinculados.map(servicio => `
+            <a href="${servicio.link}" target="_blank" style="display: block; margin: 5px 0; color: #4af626; text-decoration: none;">
+                ➤ Ver en ${servicio.nombre}
+            </a>
+        `).join('');
 
-        textosDiv.innerHTML = `
+      textosDiv.innerHTML = `
             <div id="contenido-reporte">
                 <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
                 <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
                 <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
-                <div style="width: 100%; max-width: 400px; margin-top: 20px;">
-                    <canvas id="miGrafico"></canvas>
+                <div style="margin-top: 15px;">
+                    <p><strong>Servicios vinculados:</strong></p>
+                    ${botonesServicios}
                 </div>
             </div>
         `;
-
+        
         setTimeout(() => {
             const canvasElement = document.getElementById('miGrafico');
             if (canvasElement) {
