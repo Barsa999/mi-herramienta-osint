@@ -54,6 +54,12 @@
     border-bottom: 1px dashed #3b3b54;
     text-align: left;
 }
+        
+.main-content {
+    flex-grow: 1; 
+    padding: 20px;
+    overflow-y: auto; 
+}
 
 .menu-osint {
     list-style: none;
@@ -558,27 +564,34 @@ async function ejecutarBusquedaIP() {
             window.miChartInstance.destroy();
         }
 
-        const ctx = document.getElementById('miGrafico').getContext('2d');
-        window.miChartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Filtraciones'],
-                datasets: [{
-                    label: 'Nivel de Seguridad',
-                    data: [data.breach_count || 0],
-                    backgroundColor: '#4af626'
-                }]
-            },
-            options: {
-                plugins: { legend: { labels: { color: 'white' } } },
-                scales: { 
-                    y: { ticks: { color: 'white' }, beginAtZero: true }, 
-                    x: { ticks: { color: 'white' } } 
+        const canvasElement = document.getElementById('miGrafico');
+        if (canvasElement) {
+            const ctx = canvasElement.getContext('2d');
+            window.miChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Filtraciones'],
+                    datasets: [{
+                        label: 'Nivel de Seguridad',
+                        data: [data.breach_count || 0],
+                        backgroundColor: '#4af626'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: 'white' } } },
+                    scales: { 
+                        y: { ticks: { color: 'white' }, beginAtZero: true }, 
+                        x: { ticks: { color: 'white' } } 
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            console.error("No se encontró el canvas con ID: miGrafico");
+        }
+        
     } catch (err) {
-        console.error("Error:", err);
+        console.error("Error detallado:", err); 
         resultadoDiv.innerHTML = "Error al procesar: " + err.message;
     }
 }
