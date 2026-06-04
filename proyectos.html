@@ -517,26 +517,39 @@ async function ejecutarBusquedaEmail() {
         </a>
     `;
 }).join('');
+        
+        let lineaTiempo = data.historial.map(item => `
+            <div style="border-left: 2px solid #4af626; margin-left: 10px; padding-left: 15px; margin-bottom: 10px;">
+                <span style="color: #888; font-size: 0.8em;">${item.fecha}</span>
+                <div style="color: #fff; font-size: 0.9em;">${item.evento}</div>
+            </div>
+        `).join('');
 
      textosDiv.innerHTML = `
-    <div id="contenido-reporte">
-        <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
-        <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
-        <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
-        <div style="margin-top: 15px;">
-            <p><strong>Servicios vinculados:</strong></p>
-            ${botonesServicios}
-        </div>
-        
-        <button onclick="toggleJson()" style="margin-top: 20px; background: #333; color: #fff; border: 1px solid #4af626; padding: 5px 10px; cursor: pointer;">
-            Ver JSON de respuesta
-        </button>
-        
-        <pre id="json-view" style="display: none; background: #000; color: #4af626; padding: 10px; margin-top: 10px; font-size: 12px; overflow-x: auto; border: 1px solid #4af626;">
-            ${JSON.stringify(data, null, 2)}
-        </pre>
-    </div>
-`;
+            <div id="contenido-reporte">
+                <p><strong>Estado:</strong> ${data.existe ? 'Activo' : 'No verificado'}</p>
+                <p><strong>Filtraciones:</strong> ${data.breach_count || 0}</p>
+                <p><strong>Dominio:</strong> ${data.domain || 'N/A'}</p>
+                
+                <div style="margin-top: 15px;">
+                    <p><strong>Servicios vinculados:</strong></p>
+                    ${botonesServicios}
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <p><strong>Historial de actividad:</strong></p>
+                    ${lineaTiempo}
+                </div>
+
+                <button onclick="toggleJson()" style="margin-top: 20px; background: #333; color: #fff; border: 1px solid #4af626; padding: 5px 10px; cursor: pointer;">
+                    Ver JSON de respuesta
+                </button>
+                
+                <pre id="json-view" style="display: none; background: #000; color: #4af626; padding: 10px; margin-top: 10px; font-size: 12px; overflow-x: auto; border: 1px solid #4af626;">
+                    ${JSON.stringify(data, null, 2)}
+                </pre>
+            </div>
+        `;
         
         setTimeout(() => {
             const canvasElement = document.getElementById('miGrafico');
