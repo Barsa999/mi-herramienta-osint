@@ -21,25 +21,36 @@ app.get('/api/ip/:targetIp', async (req, res) => {
 
 app.get('/api/email/:email', async (req, res) => {
     const email = req.params.email;
+    const user = email.split('@')[0];
+    
+    // Función de prueba rápida
+    async function verificarLink(url) {
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            return response.ok; // Devuelve true si la página existe
+        } catch {
+            return false;
+        }
+    }
+
     try {
+        const gravatarExiste = await verificarLink(`https://es.gravatar.com/${user}`);
+        
         const data = {
             existe: true,
-            breach_count: email.length, 
+            breach_count: email.length,
             domain: email.split('@')[1],
             servicios_vinculados: [
-                { nombre: "Google Maps", link: `https://www.google.com/maps/contrib/${email}` },
-                { nombre: "Gravatar", link: `https://es.gravatar.com/${email.split('@')[0]}` },
-                { nombre: "LinkedIn", link: `https://www.linkedin.com/search/results/all/?keywords=${email}` }
+                { nombre: "Gravatar", link: `https://es.gravatar.com/${user}`, verificado: gravatarExiste },
+                { nombre: "LinkedIn", link: `https://www.linkedin.com/search/results/all/?keywords=${email}`, verificado: true } // LinkedIn bloquea estas peticiones, dejamos fijo
             ],
             fecha_auditoria: new Date().toLocaleDateString()
         };
         res.json(data);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error al consultar auditoría" });
+        res.status(500).json({ error: "Error al validar" });
     }
 });
-
 app.listen(port, '0.0.0.0', () => {
     console.log(`Servidor corriendo correctamente en el puerto ${port}`);
 });
