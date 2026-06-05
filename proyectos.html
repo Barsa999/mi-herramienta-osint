@@ -301,13 +301,14 @@ h1 {
     <br>
     <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
 </div>
-      <div id="tp-phone" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">📞 Phone Number Lookup</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Identificación de operador, país y reputación de líneas telefónicas:</p>
-    <input type="text" placeholder="+51 999999999" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-</div>
+     <div id="tp-phone" class="panel-herramienta" style="display: none;">
+        <h1 style="color: #4af626; margin-bottom: 15px;">📞 Phone Number Lookup</h1>
+        <p style="color: #b3b3cc; margin-bottom: 15px;">Identificación de operador, país y reputación:</p>
+        <input type="text" id="phoneInput" placeholder="+51999999999" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+        <br>
+        <button onclick="buscarTelefono()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+        <div id="resultadoTelefono" style="margin-top: 20px; color: #fff; padding: 15px; background: #000; border: 1px solid #4af626;"></div>
+    </div>
 
 <div id="tp-location" class="panel-herramienta" style="display: none;">
     <h1 style="color: #4af626; margin-bottom: 15px;">🗺️ Location 2 Map</h1>
@@ -598,6 +599,30 @@ async function ejecutarBusquedaEmail() {
         seleccionado.style.display = 'block';
     } else {
         console.error("No existe el panel con ID: " + id);
+    }
+}
+      async function buscarTelefono() {
+    const numero = document.getElementById('phoneInput').value;
+    const resDiv = document.getElementById('resultadoTelefono');
+    
+    resDiv.innerHTML = "Consultando base de datos mundial...";
+
+    try {
+        const response = await fetch(`/api/phone/${numero}`);
+        const data = await response.json();
+
+        if (data.valido) {
+            resDiv.innerHTML = `
+                <p><strong>Número:</strong> ${data.numero}</p>
+                <p><strong>País:</strong> ${data.pais}</p>
+                <p><strong>Operador:</strong> ${data.operador || 'No especificado'}</p>
+                <p><strong>Tipo:</strong> ${data.tipo || 'No especificado'}</p>
+            `;
+        } else {
+            resDiv.innerHTML = "<p style='color: red;'>Número no encontrado o inválido.</p>";
+        }
+    } catch (error) {
+        resDiv.innerHTML = "<p style='color: red;'>Error de conexión con el servidor.</p>";
     }
 }
         
