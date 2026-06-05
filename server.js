@@ -13,9 +13,23 @@ app.get('/api/ip/:targetIp', async (req, res) => {
     try {
         const response = await fetch(`http://ip-api.com/json/${ip}`);
         const data = await response.json();
-        res.json(data);
+
+        if (data.status === 'fail') {
+            return res.status(400).json({ error: "No se pudo obtener información de esta IP" });
+        }
+
+        res.json({
+            existe: true,
+            ip: data.query,
+            pais: data.country,
+            region: data.regionName,
+            ciudad: data.city,
+            isp: data.isp,
+            latitud: data.lat,
+            longitud: data.lon
+        });
     } catch (error) {
-        res.status(500).json({ error: "Error de conexión" });
+        res.status(500).json({ error: "Error de conexión con el proveedor de datos" });
     }
 });
 
