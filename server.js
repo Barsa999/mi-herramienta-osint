@@ -5,6 +5,7 @@ const app = express();
 // Render asigna un puerto mediante process.env.PORT, si no, usamos el 10000
 const port = process.env.PORT || 10000;
 app.use(cors());
+
 app.use(express.json());
 
 app.get('/api/ip/:targetIp', async (req, res) => {
@@ -72,22 +73,19 @@ app.get('/api/email/:email', async (req, res) => {
 });
 app.get('/api/phone/:number', async (req, res) => {
     const number = req.params.number;
-    const apiKey = 'f69d5192d997c1630282d368282becf7'; 
-    
+    const apiKey = 'f69d5192d997c1630282d368282becf7'; // Tu API Key
     try {
         const response = await fetch(`http://apilayer.net/api/validate?access_key=${apiKey}&number=${number}&format=1`);
         const data = await response.json();
-
         res.json({
             valido: data.valid,
             numero: data.number,
             pais: data.country_name,
-            ubicacion: data.location,
             operador: data.carrier,
             tipo: data.line_type
         });
     } catch (error) {
-        res.status(500).json({ error: "Error al consultar la API de telefonía" });
+        res.status(500).json({ error: "Error al consultar la API" });
     }
 });
 app.listen(port, '0.0.0.0', () => {
