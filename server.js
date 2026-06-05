@@ -71,6 +71,26 @@ app.get('/api/email/:email', async (req, res) => {
         res.status(500).json({ error: "Error al validar" });
     }
 });
+app.get('/api/phone/:number', async (req, res) => {
+    const number = req.params.number;
+    const apiKey = 'f69d5192d997c1630282d368282becf7'; 
+    
+    try {
+        const response = await fetch(`http://apilayer.net/api/validate?access_key=${apiKey}&number=${number}&format=1`);
+        const data = await response.json();
+
+        res.json({
+            valido: data.valid,
+            numero: data.number,
+            pais: data.country_name,
+            ubicacion: data.location,
+            operador: data.carrier,
+            tipo: data.line_type
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al consultar la API de telefonía" });
+    }
+});
 app.listen(port, '0.0.0.0', () => {
     console.log(`Servidor corriendo correctamente en el puerto ${port}`);
 });
