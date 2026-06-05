@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+app.use(cors());
 const app = express();
 
 // Render asigna un puerto mediante process.env.PORT, si no, usamos el 10000
 const port = process.env.PORT || 10000;
 
-app.use(cors());
 app.use(express.json());
 
 app.get('/api/ip/:targetIp', async (req, res) => {
