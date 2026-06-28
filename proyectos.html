@@ -17,17 +17,9 @@
         color: #ffffff;
         font-family: 'Segoe UI', sans-serif;
         margin: 0;
-        padding: 0;
         display: flex;
         height: 100vh;
         overflow: hidden;
-    }
-
-    .fondo-ip-activo {
-        background-image: url('https://www.bbva.com/wp-content/uploads/2018/02/redes-mundo-digital-conexiones-internet-datos-BBVA.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
     }
 
     .sidebar {
@@ -37,70 +29,49 @@
         display: flex;
         flex-direction: column;
         padding: 20px 0;
-        box-sizing: border-box;
+    }
+
+    .main-content {
+        flex-grow: 1;
+        display: flex; /* Nuevo */
+        flex-direction: column;
+        justify-content: center; /* Centra verticalmente */
+        align-items: center;     /* Centra horizontalmente */
+        padding: 20px;
         overflow-y: auto;
     }
 
-    .sidebar::-webkit-scrollbar { width: 6px; }
-    .sidebar::-webkit-scrollbar-thumb { background-color: #3b3b54; border-radius: 3px; }
-
-    .main-content {
-        flex-grow: 1; 
-        padding: 20px;
-        overflow-y: auto; 
-    }
-
+    /* Cada panel ocupa el centro de .main-content */
     .panel-herramienta {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
-    height: 80vh; 
-}
-
-    .panel-blanco {
-        background-color: #f4f7f6;
-        color: #333;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin-top: 20px;
+        width: 100%;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
-    #input-ip {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid #4af626 !important;
-        color: white !important;
-        padding: 15px;
-        width: 50% !important;
-        border-radius: 5px;
+    h1 { color: #4af626; font-size: 2.5rem; margin-bottom: 20px; }
+    
+    .buscador-google {
+        width: 80%;
+        padding: 15px 25px;
+        border-radius: 30px;
+        border: 1px solid #4af626;
+        background: #11111a;
+        color: white;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
     }
 
-    .menu-osint { list-style: none; padding: 0; margin: 0; }
     .menu-osint li {
         padding: 12px 25px;
-        font-size: 14px;
-        font-weight: 600;
         color: #b3b3cc;
         cursor: pointer;
-        transition: all 0.3s;
-        border-left: 3px solid transparent;
+        transition: 0.3s;
     }
-    .menu-osint li:hover { background-color: #252538; color: #4af626; border-left: 3px solid #4af626; }
-
-    h1 { color: #4af626; margin-top: 10px; font-size: 32px; }
-    
-    .modal-proyecto {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(5px);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-    }
-    </style>
+    .menu-osint li:hover { background-color: #252538; color: #4af626; }
+</style>
 </head>
 <body>
       <div class="sidebar">
@@ -574,8 +545,9 @@ async function ejecutarBusquedaEmail() {
       
   function mostrarHerramienta(id) {
    
-    document.querySelectorAll('.panel-herramienta').forEach(div => {
-        div.style.display = 'none';
+    const paneles = document.querySelectorAll('.panel-herramienta');
+    paneles.forEach(panel => {
+        panel.style.display = 'none';
     });
     
   
@@ -585,7 +557,7 @@ async function ejecutarBusquedaEmail() {
    
     var seleccionado = document.getElementById(id);
     if (seleccionado) {
-        seleccionado.style.display = 'block';
+        seleccionado.style.display = 'flex';
     } else {
        console.error("El panel con ID " + id + " no existe.");
     }
