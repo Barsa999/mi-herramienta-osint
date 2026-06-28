@@ -51,8 +51,12 @@
     }
 
     .panel-herramienta {
-        display: none;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    height: 80vh; 
+}
 
     .panel-blanco {
         background-color: #f4f7f6;
@@ -137,24 +141,25 @@
     <a href="base web.html" class="btn-logout">🚪 LOG OUT</a>
 </div>
 
-  <div class="main-content">
-      <div id="pantalla-inicio" class="panel-herramienta" style="display: block;">
-        <h1 class="logo-titulo">Mi Buscador</h1>
+ <div class="main-content">
+    <div id="pantalla-inicio" class="panel-herramienta" style="display: block;">
+        <h1>Mi Buscador</h1>
         <input type="text" class="buscador-google" placeholder="Pregúntale a tu buscador...">
         <div id="fecha-hora" class="reloj-estilo"></div>
-    </div>
-    <div id="tp-ip" class="panel-herramienta fondo-profesional" style="display: none;">
+  
+    </div> <div id="tp-ip" class="panel-herramienta" style="display: none;">
         <h1>Rastreo y Seguimiento de Direcciones IP</h1>
         <button onclick="irAlPanelInformacion()">Crear enlace corto</button>
-    </div>
-
-    <div id="tp-general" class="panel-herramienta" style="display: none;">
+        
+   </div> <div id="tp-general" class="panel-herramienta" style="display: none;">
+        
         <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Third Party: General Search</h1>
         <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce palabras clave o términos globales para indexar registros públicos:</p>
         <input type="text" placeholder="Buscar término, ID, metadatos..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
         <br>
         <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-    </div>
+        </div> 
+    </div> 
 
     <div id="tp-email" class="panel-herramienta" style="display: none;">
     <h1 style="color: #4af626; margin-bottom: 15px;">📧 Forense de Correos Electrónicos</h1>
@@ -590,7 +595,7 @@ async function ejecutarBusquedaEmail() {
     if (seleccionado) {
         seleccionado.style.display = 'block';
     } else {
-        console.error("No existe el panel con ID: " + id);
+       console.error("El panel con ID " + id + " no existe.");
     }
 }
       async function buscarTelefono() {
