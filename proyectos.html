@@ -138,68 +138,137 @@
 </div>
 
   <div class="main-content">
-    
-    <div id="tp-ip" class="panel-herramienta fondo-ip-activo" style="display: block; text-align: center; padding: 50px;">
-        <h1 style="color: #fff; font-size: 32px; margin-bottom: 15px;">Rastreo y Seguimiento de Direcciones IP</h1>
-        <p style="color: #b3b3cc; margin-bottom: 25px;">Introduce una URL, un número de teléfono o un código de seguimiento válido</p>
-        
-        <input type="text" id="input-ip" placeholder="Introduce aquí..." style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid #4af626; padding: 15px; width: 50%; border-radius: 5px; margin-bottom: 20px;">
-        <br>
-        <button onclick="irAlPanelInformacion()" style="background: #4af626; color: #000; border: none; padding: 12px 30px; cursor: pointer; font-weight: bold; border-radius: 5px;">
-            Crear un enlace corto
-        </button>
-        <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
+
+    <div id="tp-ip" class="panel-herramienta fondo-profesional" style="display: block;">
+
+        <h1>Rastreo y Seguimiento de Direcciones IP</h1>
+
+        <button onclick="irAlPanelInformacion()">Crear enlace corto</button>
+
     </div>
 
-    <div id="panel-informacion" class="panel-blanco" style="display: none; background-color: #f4f7f6; color: #333; padding: 20px; border-radius: 8px; margin-top: 20px;">
-        <h1>INFORMACIÓN DEL ENLACE</h1>
-        <div class="fila" style="margin-bottom: 10px;">
-            <strong>URL de redirección:</strong> <span id="url-destino"></span>
-        </div>
-        <div class="fila" style="margin-bottom: 10px;">
-            <strong>Enlace de seguimiento:</strong> 
-            <input type="text" id="link-rastreo" readonly style="width: 300px;">
-            <button onclick="copiarLink()">Copiar</button>
-        </div>
-        <div class="opciones">
-            <label><input type="checkbox"> Recopilar datos SMART</label><br>
-            <label><input type="checkbox"> Recopilar datos GPS</label><br>
-            <label><input type="checkbox"> Notificaciones (Telegram/Email)</label>
-        </div>
-        <button onclick="volverAlInicio()" style="margin-top: 20px; padding: 10px 20px; cursor: pointer;">Volver</button>
-    </div>
+
 
     <div id="tp-general" class="panel-herramienta">
+
         <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Third Party: General Search</h1>
+
         <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce palabras clave o términos globales para indexar registros públicos:</p>
-        <input type="text" placeholder="Buscar término..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+
+        <input type="text" placeholder="Buscar término, ID, metadatos..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+
         <br>
+
         <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+
     </div>
+
+
 
     <div id="tp-email" class="panel-herramienta">
-        <h1 style="color: #4af626; margin-bottom: 15px;">📧 Forense de Correos Electrónicos</h1>
-        <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce el correo para auditar filtraciones:</p>
-        <input type="email" id="input-email" placeholder="ejemplo@target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-        <br>
-        <button onclick="ejecutarBusquedaEmail()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-        <div id="resultado-email" style="margin-top: 20px; color: #fff; border-top: 1px solid #3b3b54; padding-top: 15px;">
-            <div id="textos-resultados"></div>
-            <div style="width: 100%; max-width: 400px; margin-top: 20px;">
-                <canvas id="miGrafico"></canvas>
-            </div>
+
+    <h1 style="color: #4af626; margin-bottom: 15px;">📧 Forense de Correos Electrónicos</h1>
+
+    <p style="color: #b3b3cc; margin-bottom: 15px;">Introduce el correo para auditar filtraciones:</p>
+
+
+
+    <input type="email" id="input-email" placeholder="ejemplo@target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+
+    <br>
+
+    <button onclick="ejecutarBusquedaEmail()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+
+
+
+    <div id="resultado-email" style="margin-top: 20px; color: #fff; border-top: 1px solid #3b3b54; padding-top: 15px;">
+
+        <div id="textos-resultados"></div>
+
+        <div style="width: 100%; max-width: 400px; margin-top: 20px;">
+
+            <canvas id="miGrafico"></canvas>
+
         </div>
-        <button id="btn-pdf" style="display: none; background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px; margin-top: 15px;" onclick="generarPDF()">Descargar Reporte PDF</button>
+
     </div>
 
-    <div id="tp-domain" class="panel-herramienta">
-        <h1 style="color: #4af626; margin-bottom: 15px;">🌐 Rastreo de Dominios</h1>
-        <p style="color: #b3b3cc; margin-bottom: 15px;">Consulta de registros WHOIS, subdominios e infraestructura DNS:</p>
-        <input type="text" placeholder="target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-        <br>
-        <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-    </div>
+    <button id="btn-pdf" style="display: none; background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px; margin-top: 15px;" onclick="generarPDF()">Descargar Reporte PDF</button>
+
 </div>
+
+
+
+       <div id="tp-domain" class="panel-herramienta" style="display: none;">
+
+    <h1 style="color: #4af626; margin-bottom: 15px;">🌐 Rastreo de Dominios</h1>
+
+    <p style="color: #b3b3cc; margin-bottom: 15px;">Consulta de registros WHOIS, subdominios e infraestructura DNS:</p>
+
+    <input type="text" placeholder="target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
+
+    <br>
+
+    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+
+</div>
+
+
+
+<div id="panel-informacion" class="panel-blanco" style="display: none; background-color: #f4f7f6; color: #333; padding: 20px; border-radius: 8px; margin-top: 20px;">
+
+    <h1>INFORMACIÓN DEL ENLACE</h1>
+
+    <div class="fila" style="margin-bottom: 10px;">
+
+        <strong>URL de redirección:</strong> <span id="url-destino"></span>
+
+    </div>
+
+    <div class="fila" style="margin-bottom: 10px;">
+
+        <strong>Enlace de seguimiento:</strong> 
+
+        <input type="text" id="link-rastreo" readonly style="width: 300px;">
+
+        <button onclick="copiarLink()">Copiar</button>
+
+    </div>
+
+    <div class="opciones">
+
+        <label><input type="checkbox"> Recopilar datos SMART</label><br>
+        <label><input type="checkbox"> Recopilar datos GPS</label><br>
+        <label><input type="checkbox"> Notificaciones (Telegram/Email)</label>
+
+    </div>
+    <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; cursor: pointer;">Volver al Inicio</button>
+
+</div>
+
+
+
+<div id="tp-ip" class="fondo-profesional" style="display: block; text-align: center; padding: 50px;">
+    <h1 style="color: #fff; font-size: 32px; margin-bottom: 15px;">Rastreo y Seguimiento de Direcciones IP</h1>
+    <p style="color: #b3b3cc; margin-bottom: 25px;">Introduce una URL, un número de teléfono o un código de seguimiento válido</p>
+
+    
+
+    <input type="text" id="input-ip" placeholder="Introduce aquí..." style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid #4af626; padding: 15px; width: 50%; border-radius: 5px; margin-bottom: 20px;">
+
+    <br>
+
+    <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 12px 30px; cursor: pointer; font-weight: bold; border-radius: 5px;">
+
+        Crear un enlace corto
+
+    </button>
+
+    <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
+
+</div>
+
+
        <div id="tp-image" class="panel-herramienta" style="display: none;">
     <h1 style="color: #4af626; margin-bottom: 15px;">🖼️ Análisis Forense de Imágenes</h1>
     <p style="color: #b3b3cc; margin-bottom: 15px;">Carga un archivo de imagen para extraer metadatos EXIF ocultos o búsqueda inversa:</p>
