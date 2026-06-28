@@ -13,14 +13,10 @@
 
 <style>
 body {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url('https://png.pngtree.com/thumb_back/fh260/background/20240421/pngtree-light-blue-hexagon-digital-technology-background-design-image_15718650.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-color: #0b0e14;
+    font-family: 'Segoe UI', sans-serif;
     margin: 0;
     height: 100vh;
-    display: flex; /* Mantiene la estructura */
 }
     .sidebar {
         width: 280px;
@@ -41,25 +37,25 @@ body {
 }
     
     .panel-herramienta {
-    display: none; /* JS lo activará */
-    width: 80%;
-    max-width: 600px;
-    background: rgba(15, 20, 30, 0.85); /* Fondo oscuro con transparencia */
-    backdrop-filter: blur(10px);
+    display: none;
+    background: rgba(15, 20, 30, 0.95);
     border: 2px solid #4af626;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 20px; /* Reduje el padding para que no se vea tan gigante */
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px; /* Limitamos el ancho para que no se estire */
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color: white;
 }
-   input {
-    width: 80% !important;
-    padding: 15px !important;
+  input, textarea {
+    width: 90% !important;
+    padding: 10px !important;
+    font-size: 0.9rem !important;
     background: #11111a !important;
     border: 1px solid #4af626 !important;
     color: white !important;
-    border-radius: 10px;
-    margin-top: 20px;
+    border-radius: 5px;
+    margin: 10px 0;
 }
  h1 {
     color: #4af626 !important; /* Volvemos al verde neón, que destaca genial en fondo oscuro */
@@ -87,6 +83,10 @@ body {
     }
     .menu-osint li:hover { background-color: #252538; color: #4af626; }
     
+    button {
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+}
 </style>
 </head>
 <body>
