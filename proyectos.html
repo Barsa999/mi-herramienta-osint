@@ -37,6 +37,24 @@
 .sidebar::-webkit-scrollbar {
     width: 6px;
 }
+  .fondo-profesional {
+    background-image: url('https://www.bbva.com/wp-content/uploads/2018/02/redes-mundo-digital-conexiones-internet-datos-BBVA.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+    #input-ip {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid #4af626 !important;
+    color: white !important;
+    padding: 15px;
+    width: 50% !important;
+}    
  .panel-blanco {
     background-color: #f4f7f6;
     color: #333;
@@ -294,20 +312,16 @@ h1 {
     <button onclick="location.reload()" style="margin-top: 20px;">Volver</button>
 </div>
 
-<div id="tp-ip" class="panel-herramienta" style="display: block;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Rastreo y Seguimiento de IP</h1>
-    <p style="color: #b3b3cc;">Introduce una URL para generar un enlace de rastreo:</p>
+<div id="tp-ip" class="fondo-profesional" style="display: block;">
+    <h1 style="color: #fff; font-size: 32px;">Rastreo y Seguimiento de Direcciones IP</h1>
+    <p style="color: #b3b3cc;">Introduce una URL, un número de teléfono o un código de seguimiento válido</p>
     
-    <input type="text" id="input-ip" placeholder="Ej: https://google.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px;">
+   <input type="text" id="input-ip" placeholder="Introduce aquí...">
     <br>
-    <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 4px; font-weight: bold;">Crear enlace corto</button>
-    
-    <input type="hidden" id="id-generado" value="">
-
-    <button onclick="verificarResultados(document.getElementById('id-generado').value)" 
-            style="background: #333; color: #4af626; border: 1px solid #4af626; padding: 10px; margin-top: 10px; cursor: pointer;">
-        Ver Resultados
+    <button onclick="generarLinkRastreo()" style="background: #4af626; padding: 12px 30px; border: none; cursor: pointer; font-weight: bold;">
+        Crear un enlace corto
     </button>
+</div>
     
     <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
 </div>
