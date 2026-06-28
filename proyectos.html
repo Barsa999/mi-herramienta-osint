@@ -13,10 +13,14 @@
 
 <style>
 body {
-    background-color: #0b0e14;
-    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://png.pngtree.com/thumb_back/fh260/background/20240421/pngtree-light-blue-hexagon-digital-technology-background-design-image_15718650.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     margin: 0;
     height: 100vh;
+    display: flex;
 }
     .sidebar {
         width: 280px;
@@ -36,18 +40,20 @@ body {
     overflow: hidden;
 }
     
-    .panel-herramienta {
+   .panel-herramienta {
     display: none;
-    background: rgba(15, 20, 30, 0.95);
+    background: rgba(15, 20, 30, 0.95); /* Fondo oscuro semitransparente */
     border: 2px solid #4af626;
-    padding: 20px; /* Reduje el padding para que no se vea tan gigante */
+    padding: 20px;
     border-radius: 15px;
     width: 90%;
-    max-width: 500px; /* Limitamos el ancho para que no se estire */
+    max-width: 500px;
     text-align: center;
     color: white;
+    /* Esto centra el panel en la pantalla */
+    margin: auto; 
 }
-  input, textarea {
+  .panel-herramienta input, .panel-herramienta textarea {
     width: 90% !important;
     padding: 10px !important;
     font-size: 0.9rem !important;
@@ -58,10 +64,11 @@ body {
     margin: 10px 0;
 }
  h1 {
-    color: #4af626 !important; /* Volvemos al verde neón, que destaca genial en fondo oscuro */
-    font-size: 2rem;
-    text-shadow: 0 0 8px rgba(74, 246, 38, 0.4); /* Un pequeño resplandor para que se vea más profesional */
-    margin-bottom: 20px;
+    font-size: 1.5rem !important; /* Lo bajamos de 2rem a 1.5rem para que quepa mejor */
+    color: #4af626 !important;
+    text-shadow: 0 0 8px rgba(74, 246, 38, 0.4);
+    margin-bottom: 15px; /* Ajustado para que sea proporcional al nuevo tamaño */
+    line-height: 1.2;     /* Mejora la lectura si el título es largo */
 }
     
     .buscador-google {
