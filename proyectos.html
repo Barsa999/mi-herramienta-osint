@@ -269,10 +269,12 @@ h1 {
 </div>
 
 <div id="tp-ip" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🖥️ Auditoría de Direcciones IP</h1>
-    <input type="text" id="input-ip" placeholder="8.8.8.8" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px;">
+    <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Rastreo de IP</h1>
+    <p style="color: #b3b3cc;">Introduce una URL para generar un enlace de rastreo:</p>
+    
+    <input type="text" id="input-ip" placeholder="Ej: https://google.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px;">
     <br>
-    <button onclick="ejecutarBusquedaIP()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 4px; font-weight: bold;">Search</button>
+    <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 4px; font-weight: bold;">Generar Enlace</button>
     
     <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
     <div id="mapa-ip" style="height: 300px; width: 100%; margin-top: 20px; border: 2px solid #4af626; display: none;"></div>
