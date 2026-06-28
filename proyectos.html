@@ -436,6 +436,25 @@ h1 {
   <script>
     var mapa;
 var miChart;
+      
+      function generarLinkRastreo() {
+        const urlDestino = document.getElementById('input-ip').value;
+        const resDiv = document.getElementById('resultado-ip');
+
+        if (!urlDestino) {
+            alert("Por favor, introduce una URL.");
+            return;
+        }
+
+        const idUnico = Math.random().toString(36).substr(2, 9);
+        const linkGenerado = `https://shadow-osint.onrender.com/r/${idUnico}`;
+
+        resDiv.innerHTML = `
+            <p style="color: #4af626;">Enlace generado con éxito:</p>
+            <input type="text" value="${linkGenerado}" readonly style="width: 100%; background: #11111a; color: #fff; border: 1px solid #4af626; padding: 5px;">
+            <p style="font-size: 12px; margin-top: 10px;">Copia este enlace y compártelo. Cuando alguien haga clic, podrás ver su IP aquí.</p>
+        `;
+    }
 
 async function ejecutarBusquedaIP() {
     var ipTarget = document.getElementById('input-ip').value;
