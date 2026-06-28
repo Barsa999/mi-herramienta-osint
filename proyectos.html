@@ -275,7 +275,10 @@ h1 {
     <input type="text" id="input-ip" placeholder="Ej: https://google.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px;">
     <br>
     <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 4px; font-weight: bold;">Generar Enlace</button>
-    
+    <button onclick="verificarResultados(document.getElementById('id-generado').value)" 
+            style="background: #333; color: #4af626; border: 1px solid #4af626; padding: 10px; margin-top: 10px; cursor: pointer;">
+        Ver Resultados
+    </button>
     <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
     <div id="mapa-ip" style="height: 300px; width: 100%; margin-top: 20px; border: 2px solid #4af626; display: none;"></div>
 </div>
@@ -450,11 +453,34 @@ var miChart;
         const linkGenerado = `https://shadow-osint.onrender.com/r/${idUnico}`;
 
         resDiv.innerHTML = `
-            <p style="color: #4af626;">Enlace generado con éxito:</p>
-            <input type="text" value="${linkGenerado}" readonly style="width: 100%; background: #11111a; color: #fff; border: 1px solid #4af626; padding: 5px;">
-            <p style="font-size: 12px; margin-top: 10px;">Copia este enlace y compártelo. Cuando alguien haga clic, podrás ver su IP aquí.</p>
-        `;
+           <p style="color: #4af626;">Enlace generado con éxito:</p>
+           <input type="text" id="id-generado" value="${linkGenerado}" readonly style="...">
+           <p>Copia y comparte...</p>
+           `;
     }
+      async function verificarResultados(idUnico) {
+    const resDiv = document.getElementById('resultado-ip');
+    resDiv.innerHTML = "Buscando datos de rastreo...";
+
+    try {
+        const response = await fetch(`https://shadow-osint.onrender.com/api/get-logs/${idUnico}`);
+        const data = await response.json();
+
+        if (data.ip) {
+            resDiv.innerHTML = `
+                <div style="border: 1px solid #4af626; padding: 15px; margin-top: 10px;">
+                    <h3 style="color: #4af626;">✅ ¡Datos capturados!</h3>
+                    <p><strong>IP:</strong> ${data.ip}</p>
+                    <p><strong>Fecha/Hora:</strong> ${data.fecha}</p>
+                </div>
+            `;
+        } else {
+            resDiv.innerHTML = "<p style='color: orange;'>Aún no hay clics en este enlace. Sigue esperando...</p>";
+        }
+    } catch (error) {
+        resDiv.innerHTML = "<p style='color: red;'>Error al consultar los resultados.</p>";
+    }
+}
 
 async function ejecutarBusquedaIP() {
     var ipTarget = document.getElementById('input-ip').value;
