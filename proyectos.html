@@ -13,12 +13,14 @@
 
 <style>
 body {
-    background-image: url('https://www.xtrafondos.com/wallpapers/windows-11-abstracto-claro-12161.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://png.pngtree.com/thumb_back/fh260/background/20240421/pngtree-light-blue-hexagon-digital-technology-background-design-image_15718650.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    display: flex; /* Mantiene la estructura */
 }
     .sidebar {
         width: 280px;
@@ -30,35 +32,40 @@ body {
     }
 
   .main-content {
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
-    backdrop-filter: blur(15px); /* Efecto vidrio */
-    border-radius: 20px;
-    margin: 40px;
-    padding: 30px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    min-height: 80vh;
+    flex-grow: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #333; /* Texto oscuro para leer bien sobre el fondo claro */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center;     /* Centrado vertical */
+    height: 100vh;
+    overflow: hidden;
 }
     
     .panel-herramienta {
-    display: none; /* Oculto por defecto */
-    width: 100%;
+    display: none; /* JS lo activará */
+    width: 80%;
+    max-width: 600px;
+    background: rgba(15, 20, 30, 0.85); /* Fondo oscuro con transparencia */
+    backdrop-filter: blur(10px);
+    border: 2px solid #4af626;
+    padding: 40px;
+    border-radius: 20px;
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
    input {
-    background: rgba(0, 0, 0, 0.05) !important;
-    border: 2px solid #4af626 !important;
-    color: #333 !important;
-    padding: 15px;
-    width: 60%;
+    width: 80% !important;
+    padding: 15px !important;
+    background: #11111a !important;
+    border: 1px solid #4af626 !important;
+    color: white !important;
     border-radius: 10px;
+    margin-top: 20px;
 }
-  h1 {
-    color: #000 !important; /* Título negro para alto contraste */
+ h1 {
+    color: #4af626 !important; /* Volvemos al verde neón, que destaca genial en fondo oscuro */
     font-size: 2rem;
+    text-shadow: 0 0 8px rgba(74, 246, 38, 0.4); /* Un pequeño resplandor para que se vea más profesional */
+    margin-bottom: 20px;
 }
     
     .buscador-google {
