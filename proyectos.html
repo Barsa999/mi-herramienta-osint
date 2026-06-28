@@ -276,30 +276,31 @@ h1 {
     <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
 </div>
 
-<div id="panel-informacion" class="panel-blanco" style="display: none;">
+<div id="panel-informacion" class="panel-blanco" style="display: none; background-color: #f4f7f6; color: #333; padding: 20px; border-radius: 8px; margin-top: 20px;">
     <h1>INFORMACIÓN DEL ENLACE</h1>
-    <div class="fila">
+    <div class="fila" style="margin-bottom: 10px;">
         <strong>URL de redirección:</strong> <span id="url-destino"></span>
     </div>
-    <div class="fila">
+    <div class="fila" style="margin-bottom: 10px;">
         <strong>Enlace de seguimiento:</strong> 
-        <input type="text" id="link-rastreo" readonly>
+        <input type="text" id="link-rastreo" readonly style="width: 300px;">
         <button onclick="copiarLink()">Copiar</button>
     </div>
     <div class="opciones">
-        <label><input type="checkbox"> Recopilar datos SMART</label>
-        <label><input type="checkbox"> Recopilar datos GPS</label>
+        <label><input type="checkbox"> Recopilar datos SMART</label><br>
+        <label><input type="checkbox"> Recopilar datos GPS</label><br>
         <label><input type="checkbox"> Notificaciones (Telegram/Email)</label>
     </div>
+    <button onclick="location.reload()" style="margin-top: 20px;">Volver</button>
 </div>
 
-<div id="tp-ip" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Rastreo de IP</h1>
+<div id="tp-ip" class="panel-herramienta" style="display: block;">
+    <h1 style="color: #4af626; margin-bottom: 15px;">🔍 Rastreo y Seguimiento de IP</h1>
     <p style="color: #b3b3cc;">Introduce una URL para generar un enlace de rastreo:</p>
     
     <input type="text" id="input-ip" placeholder="Ej: https://google.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px;">
     <br>
-    <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 4px; font-weight: bold;">Generar Enlace</button>
+    <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; margin-top: 10px; border-radius: 4px; font-weight: bold;">Crear enlace corto</button>
     
     <input type="hidden" id="id-generado" value="">
 
@@ -309,9 +310,7 @@ h1 {
     </button>
     
     <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
-    <div id="mapa-ip" style="height: 300px; width: 100%; margin-top: 20px; border: 2px solid #4af626; display: none;"></div>
 </div>
-
        <div id="tp-image" class="panel-herramienta" style="display: none;">
     <h1 style="color: #4af626; margin-bottom: 15px;">🖼️ Análisis Forense de Imágenes</h1>
     <p style="color: #b3b3cc; margin-bottom: 15px;">Carga un archivo de imagen para extraer metadatos EXIF ocultos o búsqueda inversa:</p>
