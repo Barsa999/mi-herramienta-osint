@@ -20,79 +20,79 @@ body {
     background-attachment: fixed;
     margin: 0;
     height: 100vh;
-    display: flex;
+    display: flex; 
+    font-family: 'Segoe UI', sans-serif;
 }
-    .sidebar {
-        width: 280px;
-        background-color: #151522;
-        border-right: 2px solid #3b3b54;
-        display: flex;
-        flex-direction: column;
-        padding: 20px 0;
-    }
+.sidebar {
+    width: 280px;
+    background-color: #151522;
+    border-right: 2px solid #3b3b54;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
 
-  .main-content {
+.menu-osint li {
+    padding: 12px 25px;
+    color: #b3b3cc;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.menu-osint li:hover { background-color: #252538; color: #4af626; }
+
+.main-content {
     flex-grow: 1;
     display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center;     /* Centrado vertical */
+    justify-content: center;
+    align-items: center; 
     height: 100vh;
     overflow: hidden;
 }
-    
-   .panel-herramienta {
-    display: none;
-    background: rgba(15, 20, 30, 0.95); /* Fondo oscuro semitransparente */
+
+.panel-herramienta {
+    display: none; 
+    background: rgba(15, 20, 30, 0.95);
     border: 2px solid #4af626;
-    padding: 20px;
-    border-radius: 15px;
+    padding: 30px;
+    border-radius: 20px;
     width: 90%;
     max-width: 500px;
     text-align: center;
     color: white;
-    /* Esto centra el panel en la pantalla */
-    margin: auto; 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
 }
-  .panel-herramienta input, .panel-herramienta textarea {
+
+.panel-herramienta h1 {
+    font-size: 1.5rem !important;
+    color: #4af626 !important;
+    text-shadow: 0 0 8px rgba(74, 246, 38, 0.4);
+    margin: 0;
+}
+
+.panel-herramienta input, .panel-herramienta textarea {
     width: 90% !important;
-    padding: 10px !important;
+    padding: 12px !important;
     font-size: 0.9rem !important;
     background: #11111a !important;
     border: 1px solid #4af626 !important;
     color: white !important;
     border-radius: 5px;
-    margin: 10px 0;
+    margin: 5px 0;
 }
- h1 {
-    font-size: 1.5rem !important; /* Lo bajamos de 2rem a 1.5rem para que quepa mejor */
-    color: #4af626 !important;
-    text-shadow: 0 0 8px rgba(74, 246, 38, 0.4);
-    margin-bottom: 15px; /* Ajustado para que sea proporcional al nuevo tamaño */
-    line-height: 1.2;     /* Mejora la lectura si el título es largo */
-}
-    
-    .buscador-google {
-        width: 80%;
-        padding: 15px 25px;
-        border-radius: 30px;
-        border: 1px solid #4af626;
-        background: #11111a;
-        color: white;
-        font-size: 1.1rem;
-        margin-bottom: 20px;
-    }
 
-    .menu-osint li {
-        padding: 12px 25px;
-        color: #b3b3cc;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-    .menu-osint li:hover { background-color: #252538; color: #4af626; }
-    
-    button {
-    padding: 8px 20px !important;
+.panel-herramienta button {
+    padding: 10px 25px !important;
     font-size: 0.9rem !important;
+    background-color: #4af626;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
 }
 </style>
 </head>
