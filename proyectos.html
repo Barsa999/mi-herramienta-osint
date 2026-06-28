@@ -17,6 +17,8 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
 }
     .sidebar {
         width: 280px;
@@ -28,33 +30,36 @@ body {
     }
 
   .main-content {
-    flex-grow: 1;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+    backdrop-filter: blur(15px); /* Efecto vidrio */
+    border-radius: 20px;
+    margin: 40px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    min-height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Quitamos cualquier overflow o altura forzada que pueda estar ocultando el contenido */
-    overflow: hidden; 
+    color: #333; /* Texto oscuro para leer bien sobre el fondo claro */
 }
     
     .panel-herramienta {
-    display: none;
-    background-color: rgba(20, 20, 30, 0.85); /* Un azul muy oscuro */
-    color: #ffffff; /* Texto blanco */
-    border: 2px solid #4af626; /* Tu borde verde */
-    padding: 40px;
-    border-radius: 20px;
-    width: 80%;
-    max-width: 700px;
+    display: none; /* Oculto por defecto */
+    width: 100%;
     text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
-    input {
-    background: #11111a !important;
-    color: #fff !important;
-    border: 1px solid #4af626 !important;
+   input {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border: 2px solid #4af626 !important;
+    color: #333 !important;
+    padding: 15px;
+    width: 60%;
+    border-radius: 10px;
 }
-    h1 { color: #4af626; font-size: 2.5rem; margin-bottom: 20px; }
+  h1 {
+    color: #000 !important; /* Título negro para alto contraste */
+    font-size: 2rem;
+}
     
     .buscador-google {
         width: 80%;
