@@ -12,15 +12,14 @@
 </head>
 
 <style>
-  body {
-    background-image: url('https://st3.depositphotos.com/1000423/18761/i/450/depositphotos_187616892-stock-photo-high-computer-technology.jpg');
+ body {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('https://png.pngtree.com/thumb_back/fh260/background/20240421/pngtree-light-blue-hexagon-digital-technology-background-design-image_15718650.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    /* Un toque de oscuridad extra para que el texto blanco resalte más */
-    background-blend-mode: multiply;
-    background-color: #1a1a2e; 
+    background-color: #0b0e14; /* Color base oscuro por si la imagen tarda en cargar */
 }
     .sidebar {
         width: 280px;
@@ -42,17 +41,16 @@
     
     .panel-herramienta {
     display: none; 
-    /* Fondo oscuro sólido con un poco de transparencia, pero no total */
-    background-color: rgba(21, 21, 34, 0.95); 
-    border: 1px solid #4af626; /* Borde verde para que destaque */
+    background-color: rgba(15, 20, 30, 0.9); /* Azul muy oscuro y casi sólido */
+    border: 1px solid #4af626; /* Tu verde neón clásico */
     padding: 40px;
-    border-radius: 15px;
+    border-radius: 20px;
     width: 80%;
     max-width: 700px;
     text-align: center;
-    /* Esto es lo más importante: fuerza que el panel esté siempre encima */
-    z-index: 100; 
-    position: relative;
+    backdrop-filter: blur(8px); /* El efecto "vidrio" que se verá genial con los hexágonos */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    z-index: 10;
 }
 
     h1 { color: #4af626; font-size: 2.5rem; margin-bottom: 20px; }
