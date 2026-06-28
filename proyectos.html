@@ -309,19 +309,18 @@ h1 {
         <label><input type="checkbox"> Recopilar datos GPS</label><br>
         <label><input type="checkbox"> Notificaciones (Telegram/Email)</label>
     </div>
-    <button onclick="location.reload()" style="margin-top: 20px;">Volver</button>
+    <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; cursor: pointer;">Volver al Inicio</button>
 </div>
 
-<div id="tp-ip" class="fondo-profesional" style="display: block;">
-    <h1 style="color: #fff; font-size: 32px;">Rastreo y Seguimiento de Direcciones IP</h1>
-    <p style="color: #b3b3cc;">Introduce una URL, un número de teléfono o un código de seguimiento válido</p>
+<div id="tp-ip" class="fondo-profesional" style="display: block; text-align: center; padding: 50px;">
+    <h1 style="color: #fff; font-size: 32px; margin-bottom: 15px;">Rastreo y Seguimiento de Direcciones IP</h1>
+    <p style="color: #b3b3cc; margin-bottom: 25px;">Introduce una URL, un número de teléfono o un código de seguimiento válido</p>
     
-   <input type="text" id="input-ip" placeholder="Introduce aquí...">
+    <input type="text" id="input-ip" placeholder="Introduce aquí..." style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid #4af626; padding: 15px; width: 50%; border-radius: 5px; margin-bottom: 20px;">
     <br>
-    <button onclick="generarLinkRastreo()" style="background: #4af626; padding: 12px 30px; border: none; cursor: pointer; font-weight: bold;">
+    <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 12px 30px; cursor: pointer; font-weight: bold; border-radius: 5px;">
         Crear un enlace corto
     </button>
-</div>
     
     <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
 </div>
@@ -769,6 +768,18 @@ async function ejecutarBusquedaEmail() {
         a.click();
         window.URL.revokeObjectURL(url); 
     }
+      function irAlPanelInformacion() {
+    const url = document.getElementById('input-ip').value;
+    if (!url) { alert("Introduce una URL"); return; }
+
+    document.getElementById('pantalla-inicio').style.display = 'none';
+    document.getElementById('pantalla-informacion').style.display = 'block';
+}
+
+function volverAlInicio() {
+    document.getElementById('pantalla-inicio').style.display = 'block';
+    document.getElementById('pantalla-informacion').style.display = 'none';
+}
 </script>
 
 </body>
