@@ -12,14 +12,11 @@
 </head>
 
 <style>
- body {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                url('https://png.pngtree.com/thumb_back/fh260/background/20240421/pngtree-light-blue-hexagon-digital-technology-background-design-image_15718650.jpg');
+body {
+    background-image: url('https://www.xtrafondos.com/wallpapers/windows-11-abstracto-claro-12161.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-color: #0b0e14; /* Color base oscuro por si la imagen tarda en cargar */
 }
     .sidebar {
         width: 280px;
@@ -40,19 +37,23 @@
 }
     
     .panel-herramienta {
-    display: none; 
-    background-color: rgba(15, 20, 30, 0.9); /* Azul muy oscuro y casi sólido */
-    border: 1px solid #4af626; /* Tu verde neón clásico */
+    display: none;
+    background-color: rgba(20, 20, 30, 0.85); /* Un azul muy oscuro */
+    color: #ffffff; /* Texto blanco */
+    border: 2px solid #4af626; /* Tu borde verde */
     padding: 40px;
     border-radius: 20px;
     width: 80%;
     max-width: 700px;
     text-align: center;
-    backdrop-filter: blur(8px); /* El efecto "vidrio" que se verá genial con los hexágonos */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-    z-index: 10;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
-
+    input {
+    background: #11111a !important;
+    color: #fff !important;
+    border: 1px solid #4af626 !important;
+}
     h1 { color: #4af626; font-size: 2.5rem; margin-bottom: 20px; }
     
     .buscador-google {
@@ -73,6 +74,7 @@
         transition: 0.3s;
     }
     .menu-osint li:hover { background-color: #252538; color: #4af626; }
+    
 </style>
 </head>
 <body>
