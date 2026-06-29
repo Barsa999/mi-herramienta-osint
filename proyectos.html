@@ -209,12 +209,9 @@ body {
     <h1 class="titulo-grande">BUSCADOR GENERAL</h1>
     
     <div class="barra-busqueda-completa">
-        <i class="fas fa-search"></i>
-        <input type="text" class="input-google" placeholder="Pregúntale a Google">
-        <div class="iconos-derecha">
-            <i class="fas fa-microphone"></i>
-            <i class="fas fa-camera"></i>
-        </div>
+    <i class="fas fa-search" onclick="realizarBusqueda()"></i> 
+    <input type="text" id="input-busqueda" class="input-google" placeholder="Pregúntale a Google">
+    </div>
         <button class="boton-modo-ia">
             <i class="fas fa-magic"></i> Modo IA
         </button>
@@ -666,6 +663,18 @@ async function ejecutarBusquedaEmail() {
             console.error("El panel con ID " + id + " no existe.");
         }
     }
+      function realizarBusqueda() {
+    var query = document.getElementById('input-busqueda').value;
+    if (query) {
+        window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+    }
+}
+
+document.getElementById('input-busqueda').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        realizarBusqueda();
+    }
+});
       async function buscarTelefono() {
     const numero = document.getElementById('phoneInput').value;
     const resDiv = document.getElementById('resultadoTelefono');
