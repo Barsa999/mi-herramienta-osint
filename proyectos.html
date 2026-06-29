@@ -103,12 +103,12 @@ body {
     margin: 20px auto;          
 }
     .fondo-email-activo {
-    background-image: url('https://thumbs.dreamstime.com/b/informaci%C3%B3n-de-distribuci%C3%B3n-en-un-concepto-digital-del-mundo-burbuja-que-irradia-sobres-del-correo-29943954.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-blend-mode: overlay; 
-    background-color: rgba(0, 0, 0, 0.7); 
+    background-image: url('https://thumbs.dreamstime.com/b/informaci%C3%B3n-de-distribuci%C3%B3n-en-un-concepto-digital-del-mundo-burbuja-que-irradia-sobres-del-correo-29943954.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-blend-mode: overlay !important; 
+    background-color: rgba(0, 0, 0, 0.7) !important;
 }
     .iconos-derecha {
     display: flex;
@@ -697,7 +697,7 @@ document.getElementById('input-email').addEventListener('keypress', function (e)
     var el = document.getElementById(id);
     if (el) {
         el.style.display = 'flex';
-        el.style.flexDirection = 'column'; // Asegura la alineación vertical
+        el.style.flexDirection = 'column'; 
         el.style.alignItems = 'center';
         el.style.justifyContent = 'center';
     } else {
