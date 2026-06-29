@@ -102,13 +102,13 @@ body {
     max-width: 500px;
     margin: 20px auto;          
 }
-    .fondo-email-activo {
-    background-image: url('https://thumbs.dreamstime.com/b/informaci%C3%B3n-de-distribuci%C3%B3n-en-un-concepto-digital-del-mundo-burbuja-que-irradia-sobres-del-correo-29943954.jpg') !important;
+   .fondo-email-activo {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://thumbs.dreamstime.com/b/informaci%C3%B3n-de-distribuci%C3%B3n-en-un-concepto-digital-del-mundo-burbuja-que-irradia-sobres-del-correo-29943954.jpg') !important;
     background-size: cover !important;
     background-position: center !important;
+    background-attachment: fixed !important;
     background-repeat: no-repeat !important;
-    background-blend-mode: overlay !important; 
-    background-color: rgba(0, 0, 0, 0.7) !important;
 }
     .iconos-derecha {
     display: flex;
@@ -688,12 +688,12 @@ document.getElementById('input-email').addEventListener('keypress', function (e)
         if (el) el.style.display = 'none';
     });
 
-    const mainContent = document.querySelector('.main-content');
     if (id === 'tp-email') {
-        if (mainContent) mainContent.classList.add('fondo-email-activo');
+        document.body.classList.add('fondo-email-activo');
     } else {
-        if (mainContent) mainContent.classList.remove('fondo-email-activo');
+        document.body.classList.remove('fondo-email-activo');
     }
+
     var el = document.getElementById(id);
     if (el) {
         el.style.display = 'flex';
