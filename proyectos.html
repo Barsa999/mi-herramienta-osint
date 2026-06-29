@@ -52,21 +52,10 @@ body {
 
 .panel-herramienta {
     display: none; 
-    background: rgba(15, 20, 30, 0.95);
-    border: 2px solid #4af626;
-    padding: 30px;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-    color: white;
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px; 
+    padding: 20px;
+    background: transparent; 
+    border: none; 
 }
-
 .panel-herramienta h1 {
     font-size: 1.5rem !important;
     color: #4af626 !important;
@@ -121,14 +110,13 @@ body {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     gap: 15px;
 }
-    .input-google {
-    flex-grow: 1;
-    border: none !important;
-    background: none !important;
-    color: #3c4043 !important; /* Color oscuro */
-    font-size: 1.1rem;
-    padding: 0 !important;
-    margin: 0 !important;
+   .input-google {
+    background: white;
+    border: none;
+    padding: 15px;
+    border-radius: 25px;
+    width: 60%;
+    outline: none;
 }
     .input-google:focus {
     outline: none;
@@ -249,10 +237,10 @@ body {
       </div>
      </div>
 
-<div id="tp-email" class="panel-herramienta" style="display: none;">
-    <h1 class="titulo-grande">RASTREO DE CORREOS ELECTRÓNICOS</h1>
+<div id="tp-email" class="panel-herramienta">
+    <h1 class="titulo-grande" style="margin-bottom: 20px;">RASTREO DE CORREOS ELECTRÓNICOS</h1>
     
-    <div class="barra-busqueda-completa">
+    <div class="barra-busqueda-completa" style="background: transparent;">
         <input type="text" id="input-email" class="input-google" placeholder="ejemplo@target.com">
         <button class="boton-modo-ia" onclick="ejecutarBusquedaEmail()">Search</button>
     </div>
