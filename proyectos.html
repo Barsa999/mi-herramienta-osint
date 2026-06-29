@@ -10,10 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
 </head>
 <style>
 body {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
                 url('https://drscdn.500px.org/photo/220611539/q%3D75_m%3D600/v2?sig=d1ea46e20bbcb15f69c4c1982eabae2539a9d44b6d47ae8b5a2ac1cffa55b054');
     background-size: cover;
     background-position: center;
@@ -24,13 +25,54 @@ body {
     display: flex;
     font-family: 'Segoe UI', sans-serif;
 }
-.sidebar {
-    width: 280px;
-    background-color: #151522;
-    border-right: 2px solid #3b3b54;
+    .barra-busqueda-completa {
+    display: flex;
+    align-items: center;
+    background-color: white !important;
+    border-radius: 40px;
+    padding: 10px 20px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    gap: 15px;
+}
+    .barra-busqueda-completa i {
+    color: #70757a;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+    .boton-modo-ia {
+    background-color: #f8f9fa !important;
+    border: none !important;
+    color: #1a0dab !important;
+    border-radius: 20px;
+    padding: 8px 15px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+    .boton-modo-ia i {
+    color: #1a0dab !important;
+    font-size: 1rem;
+}
+    .buscador-central {
+    width: 90%;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
-    padding: 20px 0;
+    align-items: center;
+    gap: 20px;
+    margin: auto;
+}
+    .buscador-verde {
+    background: transparent;
+    border: 2px solid #00ff00;
+    border-radius: 30px;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
     .contenedor-buscador-limpio {
     background: transparent;
@@ -40,85 +82,11 @@ body {
     align-items: center;
     gap: 15px;
 }
-
-.menu-osint li {
-    padding: 12px 25px;
-    color: #b3b3cc;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.menu-osint li:hover { background-color: #252538; color: #4af626; }
-
-.main-content {
-    flex-grow: 1;
+    .iconos-derecha {
     display: flex;
-    justify-content: center;
-    align-items: center; 
-    height: 100vh;
-    overflow: hidden;
-}
-
-.panel-herramienta {
-    display: none;
-    padding: 20px;
-    background: transparent !important; /* Forzamos transparencia */
-    border: none !important;           /* Eliminamos bordes */
-}
-.panel-herramienta h1 {
-    font-size: 1.5rem !important;
-    color: #4af626 !important;
-    text-shadow: 0 0 8px rgba(74, 246, 38, 0.4);
-    margin: 0;
-}
-
-.panel-herramienta input, .panel-herramienta textarea {
-    width: 90% !important;
-    padding: 12px !important;
-    font-size: 0.9rem !important;
-    background: #11111a !important;
-    border: 1px solid #4af626 !important;
-    color: white !important;
-    border-radius: 5px;
-    margin: 5px 0;
-}
-
-.panel-herramienta button {
-    padding: 10px 25px !important;
-    font-size: 0.9rem !important;
-    background-color: #4af626;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-    .buscador-central {
-    width: 90%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin: auto; /* Centrado vertical */
-}
-    .titulo-grande {
-    font-size: 3rem !important; /* Letras grandes */
-    color: #4af626 !important; /* Verde neón */
-    margin: 0;
-    text-transform: uppercase;
-    text-shadow: none !important; /* Título limpio, sin sombra */
-}
-    .barra-busqueda-completa {
-    display: flex;
-    align-items: center;
-    background-color: white !important;
-    border-radius: 40px; /* Bordes muy redondeados */
-    padding: 10px 20px;
-    width: 100%;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     gap: 15px;
 }
-   .input-google {
+    .input-google {
     background: white;
     border: none;
     padding: 15px 25px;
@@ -131,53 +99,82 @@ body {
     .input-google:focus {
     outline: none;
 }
-   .input-transparente {
+    .input-transparente {
     background: transparent;
     border: none;
     color: white;
     width: 100%;
     outline: none;
-    text-align: center; 
+    text-align: center;
 }
-
-.barra-busqueda-completa i {
-    color: #70757a; /* Gris para los iconos */
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.iconos-derecha {
+    .main-content {
+    flex-grow: 1;
     display: flex;
-    gap: 15px;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh;
+    overflow: hidden;
 }
-
-.boton-modo-ia {
-    background-color: #f8f9fa !important;
-    border: none !important;
-    color: #1a0dab !important; /* Azul para el texto de IA */
-    border-radius: 20px;
-    padding: 8px 15px !important;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    .menu-osint li {
+    padding: 12px 25px;
+    color: #b3b3cc;
     cursor: pointer;
-    font-weight: 500;
+    transition: 0.3s;
 }
-
-.boton-modo-ia i {
-    color: #1a0dab !important; /* Azul para el icono de IA */
-    font-size: 1rem;
+    .menu-osint li:hover { 
+    background-color: #252538; 
+    color: #4af626; 
 }
     #tp-email {
-    border: 2px solid #00ff00; /* Borde verde */
+    border: none !important;
     padding: 20px;
-    border-radius: 10px;    
 }
-    .buscador-verde {
-    background: transparent;
-    border: 2px solid #00ff00; /* Borde verde */
-    border-radius: 30px;
-    padding: 10px 20px;
+    .panel-herramienta {
+    display: none;
+    padding: 20px;
+    background: transparent !important;
+    border: none !important;
+}
+    .panel-herramienta button {
+    padding: 10px 25px !important;
+    font-size: 0.9rem !important;
+    background-color: #4af626;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+    .panel-herramienta h1 {
+    font-size: 1.5rem !important;
+    color: #4af626 !important;
+    text-shadow: 0 0 8px rgba(74, 246, 38, 0.4);
+    margin: 0;
+}
+    .panel-herramienta input, .panel-herramienta textarea {
+    width: 90% !important;
+    padding: 12px !important;
+    font-size: 0.9rem !important;
+    background: #11111a !important;
+    border: 1px solid #4af626 !important;
+    color: white !important;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+    .sidebar {
+    width: 280px;
+    background-color: #151522;
+    border-right: 2px solid #3b3b54;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+    .titulo-grande {
+    font-size: 3rem !important;
+    color: #4af626 !important;
+    margin: 0;
+    text-transform: uppercase;
+    text-shadow: none !important;
 }
 </style>
 </head>
@@ -199,6 +196,7 @@ body {
         <li onclick="mostrarHerramienta('tp-hash')">🔑 Hash</li>
         <li onclick="mostrarHerramienta('tp-analytics')">📊 Google Analytics</li>
     </ul>
+          
 <div class="sidebar-titulo" style="margin-top: 20px;">Data Tools:</div>
 <ul class="menu-osint">
     <li onclick="mostrarHerramienta('dt-magic')">🪄 Magic File Tool</li>
@@ -253,212 +251,266 @@ body {
      </div>
 
 <div id="tp-email" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
-    <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE CORREOS ELECTRÓNICOS</h1>
-    <p style="color: #cccccc; font-size: 0.9rem; margin-bottom: 25px;">
-        Introduce el correo para auditar filtraciones:
-    </p>
-    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
-        <input type="text" id="input-email" class="input-transparente" placeholder="ejemplo@target.com">
+        <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE CORREOS ELECTRÓNICOS</h1>
+        <p style="color: #cccccc; font-size: 0.9rem; margin-bottom: 25px;">Introduce el correo para auditar filtraciones:</p>
+        <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+            <input type="text" id="input-email" class="input-transparente" placeholder="ejemplo@target.com">
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="boton-modo-ia" onclick="ejecutarBusquedaEmail()">Search</button>
+        </div>
+        <div id="resultado-email" style="margin-top: 30px; display: none;">
+            <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; width: 100%; max-width: 500px; margin: 0 auto;"></div>
+        </div>
     </div>
-    <div style="margin-top: 20px;">
-        <button class="boton-modo-ia" onclick="ejecutarBusquedaEmail()">Search</button>
-    </div>
-    <div id="resultado-email" style="margin-top: 30px; display: none;">
-        <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; width: 100%; max-width: 500px; margin: 0 auto;"></div>
-    </div>
-</div>
 
-     <div id="tp-ip" class="panel-herramienta" style="display: none; text-align: center; padding: 50px;">
-        <h1 style="color: #fff; font-size: 32px; margin-bottom: 15px;">Rastreo y Seguimiento de Direcciones IP</h1>
-        <p style="color: #b3b3cc; margin-bottom: 25px;">Introduce una URL, un número de teléfono o un código de seguimiento válido</p>
-        <input type="text" id="input-ip" placeholder="Introduce aquí..." style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid #4af626; padding: 15px; width: 50%; border-radius: 5px; margin-bottom: 20px;">
-        <br>
-        <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 12px 30px; cursor: pointer; font-weight: bold; border-radius: 5px;">Crear un enlace corto</button>
+    <div id="tp-ip" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+        <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE DIRECCIONES IP</h1>
+        <p style="color: #cccccc; font-size: 0.9rem; margin-bottom: 25px;">Introduce una URL, IP o código de seguimiento:</p>
+        <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+            <input type="text" id="input-ip" class="input-transparente" placeholder="Introduce aquí...">
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="boton-modo-ia" onclick="generarLinkRastreo()">Crear enlace</button>
+        </div>
         <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
-     </div>
-
-    <div id="tp-domain" class="panel-herramienta" style="display: none;">
-        <h1 style="color: #4af626; margin-bottom: 15px;">🌐 Rastreo de Dominios</h1>
-        <p style="color: #b3b3cc; margin-bottom: 15px;">Consulta de registros WHOIS, subdominios e infraestructura DNS:</p>
-        <input type="text" placeholder="target.com" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-        <br>
-        <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
     </div>
     
-<div id="panel-informacion" class="panel-blanco" style="display: none; background-color: #f4f7f6; color: #333; padding: 20px; border-radius: 8px; margin-top: 20px;">
-        <h1>INFORMACIÓN DEL ENLACE</h1>
-        <div class="fila" style="margin-bottom: 10px;">
+   <div id="tp-domain" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+        <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE DOMINIOS</h1>
+        <p style="color: #cccccc; font-size: 0.9rem; margin-bottom: 25px;">Consulta registros WHOIS y DNS:</p>
+        <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+            <input type="text" id="input-domain" class="input-transparente" placeholder="target.com">
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="boton-modo-ia" onclick="ejecutarBusquedaDomain()">Search</button>
+        </div>
+    </div>
+    
+<div id="panel-informacion" class="panel-herramienta" style="display: none; color: white; text-align: center; padding-top: 50px;">
+        <h1 class="titulo-grande">INFORMACIÓN DEL ENLACE</h1>
+        <div style="margin: 20px 0;">
             <strong>URL de redirección:</strong> <span id="url-destino"></span>
         </div>
-        <div class="fila" style="margin-bottom: 10px;">
+        <div style="margin: 20px 0;">
             <strong>Enlace de seguimiento:</strong> 
-            <input type="text" id="link-rastreo" readonly style="width: 300px;">
+            <input type="text" id="link-rastreo" readonly style="width: 200px; color: black;">
             <button onclick="copiarLink()">Copiar</button>
         </div>
-        <div class="opciones">
-            <label><input type="checkbox"> Recopilar datos SMART</label><br>
-            <label><input type="checkbox"> Recopilar datos GPS</label><br>
-            <label><input type="checkbox"> Notificaciones (Telegram/Email)</label>
-        </div>
-        <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; cursor: pointer;">Volver al Inicio</button>
+        <button onclick="location.reload()" class="boton-modo-ia" style="margin: 0 auto;">Volver al Inicio</button>
     </div>
-
 </div>
 
 
-       <div id="tp-image" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🖼️ Análisis Forense de Imágenes</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Carga un archivo de imagen para extraer metadatos EXIF ocultos o búsqueda inversa:</p>
-    <input type="file" style="color: #fff; margin-bottom: 15px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-</div>
-
-<div id="tp-username" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">👤 Búsqueda de Username</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Rastreo de alias y nombres de usuario en múltiples plataformas simultáneamente:</p>
-    <input type="text" placeholder="ejemplo_user123" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-</div>
-
-<div id="tp-person" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">👥 Búsqueda de Personas</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Búsqueda por nombres, apellidos o identificaciones oficiales:</p>
-    <input type="text" placeholder="Nombre completo del objetivo..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-</div>
-     <div id="tp-phone" class="panel-herramienta" style="display: none;">
-        <h1 style="color: #4af626; margin-bottom: 15px;">📞 Phone Number Lookup</h1>
-        <p style="color: #b3b3cc; margin-bottom: 15px;">Identificación de operador, país y reputación:</p>
-        <input type="text" id="phoneInput" placeholder="+51999999999" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-        <br>
-        <button onclick="buscarTelefono()" style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-        <div id="resultadoTelefono" style="margin-top: 20px; color: #fff; padding: 15px; background: #000; border: 1px solid #4af626;"></div>
+<div id="tp-image" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🖼️ ANÁLISIS FORENSE DE IMÁGENES</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Carga un archivo para extraer metadatos EXIF o búsqueda inversa:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px; padding: 15px;">
+        <input type="file" style="color: white;">
     </div>
-
-<div id="tp-location" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🗺️ Location 2 Map</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Correlación de coordenadas geográficas o direcciones físicas:</p>
-    <input type="text" placeholder="Latitud, Longitud o Dirección..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia" onclick="alert('Funcionalidad en desarrollo')">Search</button>
+    </div>
 </div>
 
-<div id="tp-file" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">📁 File Analytics</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Indexación de documentos expuestos públicamente (PDF, DOCX, XLSX):</p>
-    <input type="text" placeholder="Nombre del archivo o extensión..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="tp-username" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">👤 BÚSQUEDA DE USERNAME</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Rastreo de alias en múltiples plataformas:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" id="input-username" class="input-transparente" placeholder="ejemplo_user123">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia" onclick="alert('Buscando usuario...')">Search</button>
+    </div>
 </div>
 
-<div id="tp-vin" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🚗 VIN Decoder</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Búsqueda de registros vehiculares mediante Número de Identificación de Vehículo (VIN):</p>
-    <input type="text" placeholder="Introduce el código VIN..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="tp-person" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">👥 BÚSQUEDA DE PERSONAS</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Búsqueda por nombres, apellidos o IDs:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" id="input-person" class="input-transparente" placeholder="Nombre completo del objetivo...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia" onclick="alert('Buscando persona...')">Search</button>
+    </div>
 </div>
 
-<div id="tp-hash" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🔑 Hash Cracker / Search</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Verificación de firmas de bases de datos comprometidas (MD5, SHA-1, SHA-256):</p>
-    <input type="text" placeholder="Pega el Hash aquí..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="tp-phone" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">📞 PHONE NUMBER LOOKUP</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Identificación de operador, país y reputación:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" id="phoneInput" class="input-transparente" placeholder="+51999999999">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia" onclick="buscarTelefono()">Search</button>
+    </div>
+    <div id="resultadoTelefono" style="margin-top: 20px; color: #fff; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto;"></div>
 </div>
 
-<div id="tp-analytics" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">📊 Google Analytics OSINT</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Correlación de sitios web mediante códigos de seguimiento UA-/G-:</p>
-    <input type="text" placeholder="UA-XXXXX o G-XXXXXX" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="tp-location" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🗺️ LOCATION 2 MAP</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Correlación de coordenadas o direcciones:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" id="input-location" class="input-transparente" placeholder="Latitud, Longitud o Dirección...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia" onclick="alert('Correlacionando ubicación...')">Search</button>
+    </div>
 </div>
 
-<div id="dt-magic" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🪄 Magic File Tool</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Verificación de firmas de archivos (Magic Bytes) para auditoría de formato:</p>
-    <input type="file" style="color: #fff; margin-bottom: 15px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="tp-file" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">📁 FILE ANALYTICS</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Indexación de documentos públicos (PDF, DOCX, XLSX):</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="Nombre o extensión...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
-<div id="dt-validate" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">✅ Validate Emails</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Verificación sintáctica avanzada de buzones en lote:</p>
-    <textarea placeholder="Lista de correos (uno por línea)..." rows="4" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;"></textarea>
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="tp-vin" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🚗 VIN DECODER</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Búsqueda de registros mediante Número de Identificación (VIN):</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="Introduce el código VIN...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
-       <div id="dt-geoip" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🌍 GeoIP Lookup</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Extracción de ISP, ASN y geolocalización estimada de red:</p>
-    <input type="text" placeholder="Dirección IP o Dominio..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="tp-hash" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🔑 HASH CRACKER / SEARCH</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Verificación de firmas (MD5, SHA-1, SHA-256):</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="Pega el Hash aquí...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
-<div id="dt-encoding" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🔣 Encoding Decoder</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Conversión de cadenas en Base64, Hexadecimal, URL Encode y binarios:</p>
-    <input type="text" placeholder="Texto a codificar/decodificar..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="tp-analytics" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">📊 GOOGLE ANALYTICS OSINT</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Correlación mediante códigos (UA-/G-):</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="UA-XXXXX o G-XXXXXX">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
-<div id="dt-urls" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🔗 URLs Parser</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Análisis de cadenas de URL y extracción de variables y parámetros estructurados:</p>
-    <input type="text" placeholder="https://ejemplo.com/path?param=value" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; margin-bottom: 15px; border-radius: 4px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="dt-magic" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🪄 MAGIC FILE TOOL</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Verificación de firmas (Magic Bytes):</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px; padding: 15px;">
+        <input type="file" style="color: white;">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
-<div id="sm-facebook" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🔷 Módulo de Inteligencia: Facebook</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Correlación y extracción de perfiles mediante Facebook ID o URLs estáticas:</p>
-    <input type="text" placeholder="ID de Perfil o URL..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
-</div>
-        <div id="sm-twitter" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">🐦 Módulo de Inteligencia: Twitter / X</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Búsqueda avanzada de Tweets históricos, menciones y registros de cuentas:</p>
-    <input type="text" placeholder="@usuario o término..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="dt-validate" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">✅ VALIDATE EMAILS</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Verificación de buzones en lote:</p>
+    <div style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <textarea rows="4" style="background: rgba(0,0,0,0.5); border: 1px solid #00ff00; color: white; width: 100%; border-radius: 10px; padding: 10px;" placeholder="Lista de correos (uno por línea)..."></textarea>
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
-<div id="sm-linkedin" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">💼 Módulo de Inteligencia: LinkedIn</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Mapeo de estructuras organizacionales corporativas y perfiles profesionales:</p>
-    <input type="text" placeholder="Empresa o nombre de empleado..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="dt-geoip" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🌍 GEOIP LOOKUP</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Extracción de ISP, ASN y geolocalización:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="Dirección IP o Dominio...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
-<div id="sm-telegram" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">✈️ Módulo de Inteligencia: Telegram</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Rastreo de canales públicos, bots, IDs de chat e información de cuentas:</p>
-    <input type="text" placeholder="@alias_telegram o ID..." style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="dt-encoding" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🔣 ENCODING DECODER</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Conversión (Base64, Hex, URL Encode):</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="Texto a codificar/decodificar...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
-<div id="sm-instagram" class="panel-herramienta" style="display: none;">
-    <h1 style="color: #4af626; margin-bottom: 15px;">📸 Módulo de Inteligencia: Instagram</h1>
-    <p style="color: #b3b3cc; margin-bottom: 15px;">Extracción de metadatos públicos, identificadores internos de cuentas y hashtags:</p>
-    <input type="text" placeholder="@usuario_instagram" style="background: #11111a; color: #fff; border: 1px solid #4af626; padding: 10px; width: 70%; border-radius: 4px; margin-bottom: 15px;">
-    <br>
-    <button style="background: #4af626; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; border-radius: 4px;">Search</button>
+<div id="dt-urls" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🔗 URLs PARSER</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Análisis de cadenas de URL y extracción de parámetros:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="https://ejemplo.com/path?param=value">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
+<div id="sm-facebook" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🔷 INTELIGENCIA: FACEBOOK</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Correlación y extracción de perfiles:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="ID de Perfil o URL...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
 </div>
 
+<div id="sm-twitter" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">🐦 INTELIGENCIA: TWITTER / X</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Búsqueda avanzada de Tweets y menciones:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="@usuario o término...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
+</div>
+
+<div id="sm-linkedin" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">💼 INTELIGENCIA: LINKEDIN</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Mapeo de estructuras organizacionales:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="Empresa o nombre de empleado...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
+</div>
+
+<div id="sm-telegram" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">✈️ INTELIGENCIA: TELEGRAM</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Rastreo de canales, bots y cuentas:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="@alias_telegram o ID...">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
+</div>
+
+<div id="sm-instagram" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">📸 INTELIGENCIA: INSTAGRAM</h1>
+    <p style="color: #cccccc; margin-bottom: 25px;">Extracción de metadatos y hashtags:</p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
+        <input type="text" class="input-transparente" placeholder="@usuario_instagram">
+    </div>
+    <div style="margin-top: 20px;">
+        <button class="boton-modo-ia">Search</button>
+    </div>
+</div>
   <script>
     var mapa;
 var miChart;
