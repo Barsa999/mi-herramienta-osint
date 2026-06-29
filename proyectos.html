@@ -131,13 +131,13 @@ body {
     .input-google:focus {
     outline: none;
 }
-    .input-transparente {
-    background: transparent; /* Fondo transparente para que se vea el fondo de la página */
+   .input-transparente {
+    background: transparent;
     border: none;
-    color: white; /* Texto blanco para que resalte sobre el fondo oscuro */
-    padding: 10px;
+    color: white;
     width: 100%;
     outline: none;
+    text-align: center; 
 }
 
 .barra-busqueda-completa i {
@@ -174,16 +174,10 @@ body {
     border-radius: 10px;    
 }
     .buscador-verde {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent; /* Fondo totalmente transparente */
-    border: 2px solid #00ff00; /* Solo el borde es verde */
+    background: transparent;
+    border: 2px solid #00ff00; /* Borde verde */
     border-radius: 30px;
-    padding: 5px 15px;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 auto;
+    padding: 10px 20px;
 }
 </style>
 </head>
@@ -240,15 +234,6 @@ body {
         </button>
     </div>
 </div>
-    
-    <div id="tp-ip" class="panel-herramienta" style="display: none; text-align: center; padding: 50px;">
-        <h1 style="color: #fff; font-size: 32px; margin-bottom: 15px;">Rastreo y Seguimiento de Direcciones IP</h1>
-        <p style="color: #b3b3cc; margin-bottom: 25px;">Introduce una URL, un número de teléfono o un código de seguimiento válido</p>
-        <input type="text" id="input-ip" placeholder="Introduce aquí..." style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid #4af626; padding: 15px; width: 50%; border-radius: 5px; margin-bottom: 20px;">
-        <br>
-        <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 12px 30px; cursor: pointer; font-weight: bold; border-radius: 5px;">Crear un enlace corto</button>
-        <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
-     </div>
 
     <div class="buscador-central">
     <h1 class="titulo-grande">BUSCADOR</h1>
@@ -267,18 +252,30 @@ body {
       </div>
      </div>
 
-<div id="tp-email" class="panel-herramienta">
-    <h1 class="titulo-centrado">RASTREO DE CORREOS ELECTRÓNICOS</h1>
-    
-    <div class="buscador-verde">
+<div id="tp-email" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE CORREOS ELECTRÓNICOS</h1>
+    <p style="color: #cccccc; font-size: 0.9rem; margin-bottom: 25px;">
+        Introduce el correo para auditar filtraciones:
+    </p>
+    <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
         <input type="text" id="input-email" class="input-transparente" placeholder="ejemplo@target.com">
+    </div>
+    <div style="margin-top: 20px;">
         <button class="boton-modo-ia" onclick="ejecutarBusquedaEmail()">Search</button>
     </div>
-
     <div id="resultado-email" style="margin-top: 30px; display: none;">
-        <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px;"></div>
+        <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; width: 100%; max-width: 500px; margin: 0 auto;"></div>
     </div>
 </div>
+
+     <div id="tp-ip" class="panel-herramienta" style="display: none; text-align: center; padding: 50px;">
+        <h1 style="color: #fff; font-size: 32px; margin-bottom: 15px;">Rastreo y Seguimiento de Direcciones IP</h1>
+        <p style="color: #b3b3cc; margin-bottom: 25px;">Introduce una URL, un número de teléfono o un código de seguimiento válido</p>
+        <input type="text" id="input-ip" placeholder="Introduce aquí..." style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid #4af626; padding: 15px; width: 50%; border-radius: 5px; margin-bottom: 20px;">
+        <br>
+        <button onclick="generarLinkRastreo()" style="background: #4af626; color: #000; border: none; padding: 12px 30px; cursor: pointer; font-weight: bold; border-radius: 5px;">Crear un enlace corto</button>
+        <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
+     </div>
 
     <div id="tp-domain" class="panel-herramienta" style="display: none;">
         <h1 style="color: #4af626; margin-bottom: 15px;">🌐 Rastreo de Dominios</h1>
