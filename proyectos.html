@@ -672,9 +672,7 @@ async function ejecutarBusquedaEmail() {
 
 document.getElementById('input-busqueda').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-        realizarBusqueda();
-        let valor = this.value;
-        window.open('https://www.google.com/search?q=' + encodeURIComponent(valor), '_blank');
+        realizarBusqueda(); 
     }
 });
       async function buscarTelefono() {
