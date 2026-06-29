@@ -32,6 +32,14 @@ body {
     flex-direction: column;
     padding: 20px 0;
 }
+    .contenedor-buscador-limpio {
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
 
 .menu-osint li {
     padding: 12px 25px;
@@ -51,10 +59,10 @@ body {
 }
 
 .panel-herramienta {
-    display: none; 
+    display: none;
     padding: 20px;
-    background: transparent; 
-    border: none; 
+    background: transparent !important; /* Forzamos transparencia */
+    border: none !important;           /* Eliminamos bordes */
 }
 .panel-herramienta h1 {
     font-size: 1.5rem !important;
@@ -113,9 +121,11 @@ body {
    .input-google {
     background: white;
     border: none;
-    padding: 15px;
-    border-radius: 25px;
-    width: 60%;
+    padding: 15px 25px;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 600px;
+    font-size: 16px;
     outline: none;
 }
     .input-google:focus {
@@ -238,15 +248,17 @@ body {
      </div>
 
 <div id="tp-email" class="panel-herramienta">
-    <h1 class="titulo-grande" style="margin-bottom: 20px;">RASTREO DE CORREOS ELECTRÓNICOS</h1>
+    <h1 class="titulo-grande" style="margin-bottom: 30px; color: #00ff00;">RASTREO DE CORREOS ELECTRÓNICOS</h1>
     
-    <div class="barra-busqueda-completa" style="background: transparent;">
-        <input type="text" id="input-email" class="input-google" placeholder="ejemplo@target.com">
-        <button class="boton-modo-ia" onclick="ejecutarBusquedaEmail()">Search</button>
+    <div class="contenedor-buscador-limpio">
+        <div class="barra-busqueda-completa" style="background: transparent; border: none; width: 100%; display: flex; justify-content: center; gap: 10px;">
+            <input type="text" id="input-email" class="input-google" placeholder="ejemplo@target.com">
+            <button class="boton-modo-ia" onclick="ejecutarBusquedaEmail()">Search</button>
+        </div>
     </div>
 
-    <div id="resultado-email" style="margin-top: 20px; display: none;">
-        <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px;"></div>
+    <div id="resultado-email" style="margin-top: 30px; display: none; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.6); padding: 20px; border-radius: 15px; border: 1px solid #333;"></div>
     </div>
 </div>
 
