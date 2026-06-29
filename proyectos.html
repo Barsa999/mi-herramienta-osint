@@ -102,6 +102,14 @@ body {
     max-width: 500px;
     margin: 20px auto;          
 }
+    .fondo-email-activo {
+    background-image: url('https://thumbs.dreamstime.com/b/informaci%C3%B3n-de-distribuci%C3%B3n-en-un-concepto-digital-del-mundo-burbuja-que-irradia-sobres-del-correo-29943954.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay; 
+    background-color: rgba(0, 0, 0, 0.7); 
+}
     .iconos-derecha {
     display: flex;
     gap: 15px;
@@ -675,30 +683,43 @@ document.getElementById('input-email').addEventListener('keypress', function (e)
     }
 });
   function mostrarHerramienta(id) {
-        const elementos = document.querySelectorAll('.panel-herramienta, .buscador-central, #vista-inicio');
-        elementos.forEach(el => {
-            if (el) el.style.display = 'none';
-        });
+    const elementos = document.querySelectorAll('.panel-herramienta, .buscador-central, #vista-inicio');
+    elementos.forEach(el => {
+        if (el) el.style.display = 'none';
+    });
 
-        var el = document.getElementById(id);
-        if (el) {
-            el.style.display = 'flex';
-        } else {
-            console.error("El panel con ID " + id + " no existe.");
-        }
+    const mainContent = document.querySelector('.main-content');
+    if (id === 'tp-email') {
+        if (mainContent) mainContent.classList.add('fondo-email-activo');
+    } else {
+        if (mainContent) mainContent.classList.remove('fondo-email-activo');
     }
-      function realizarBusqueda() {
+    var el = document.getElementById(id);
+    if (el) {
+        el.style.display = 'flex';
+        el.style.flexDirection = 'column'; // Asegura la alineación vertical
+        el.style.alignItems = 'center';
+        el.style.justifyContent = 'center';
+    } else {
+        console.error("El panel con ID " + id + " no existe.");
+    }
+}
+
+function realizarBusqueda() {
     var query = document.getElementById('input-busqueda').value;
     if (query) {
         window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
     }
 }
 
-document.getElementById('input-busqueda').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        realizarBusqueda(); 
-    }
-});
+const inputBusqueda = document.getElementById('input-busqueda');
+if (inputBusqueda) {
+    inputBusqueda.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            realizarBusqueda(); 
+        }
+    });
+}
       async function buscarTelefono() {
     const numero = document.getElementById('phoneInput').value;
     const resDiv = document.getElementById('resultadoTelefono');
