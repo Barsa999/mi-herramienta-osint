@@ -318,25 +318,30 @@ body {
      </div>
 
 <div id="tp-email" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
-    <div id="email-paso-1">
+
+    <div id="pantalla-buscador">
         <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE CORREOS</h1>
         <div class="contenedor-buscador-unico">
             <input type="text" id="input-email" class="input-limpio" placeholder="ejemplo@target.com">
         </div>
-        <button class="boton-modo-ia" onclick="irAValidar('email')">Siguiente</button>
+        <button class="boton-modo-ia" style="margin-top:20px;" onclick="irAPaginaBlanca()">Siguiente</button>
     </div>
 
-    <div id="email-paso-2" style="display: none;">
-        <p>¿Validar el correo: <span id="email-a-validar" style="color: #4af626;"></span>?</p>
-        <button class="boton-modo-ia" onclick="iniciarCarga('email')">Validar ahora</button>
-    </div>
+    <div id="pantalla-blanca" style="display: none; background: white; padding-top: 50px; color: black;">
+        
+        <div id="email-paso-2">
+            <p>¿Validar el correo: <span id="email-a-validar" style="color: #4af626; font-weight: bold;"></span>?</p>
+            <button class="boton-modo-ia" onclick="iniciarCarga('email')">Validar ahora</button>
+        </div>
 
-    <div id="email-paso-3" style="display: none;">
-        <div class="barra-progreso"><div id="progreso-email"></div></div>
-    </div>
+        <div id="email-paso-3" style="display: none;">
+            <div class="barra-progreso" style="border-color: #333;"><div id="progreso-email" style="background: #333;"></div></div>
+            <p>Procesando...</p>
+        </div>
 
-    <div id="email-paso-4" style="display: none;">
-        <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px;"></div>
+        <div id="email-paso-4" style="display: none;">
+            <div id="textos-resultados" style="color: black; padding: 15px;"></div>
+        </div>
     </div>
 </div>
 
@@ -688,6 +693,15 @@ async function ejecutarBusquedaIP() {
     } catch (err) {
         resultadoDiv.innerHTML = "Error al conectar con el servicio de geolocalización.";
     }
+}
+      function irAPaginaBlanca() {
+    const correo = document.getElementById('input-email').value;
+    if (!correo) return alert("Introduce un correo");
+
+    document.getElementById('pantalla-buscador').style.display = 'none';
+    document.getElementById('pantalla-blanca').style.display = 'block';
+
+    document.getElementById('email-a-validar').innerText = correo;
 }
       function irAValidar(tipo) {
     const input = document.getElementById('input-' + tipo);
