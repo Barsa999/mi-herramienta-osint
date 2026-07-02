@@ -40,6 +40,17 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
 }
+    .barra-progreso {
+    width: 100%;
+    max-width: 500px;
+    height: 12px;
+    background: #1a1a1a;
+    border-radius: 6px;
+    margin: 25px auto;
+    overflow: hidden;
+    border: 1px solid #4af626; 
+    box-shadow: 0 0 10px rgba(74, 246, 38, 0.2);
+}
     .boton-modo-ia {
     background-color: #f8f9fa !important;
     border: none !important;
@@ -104,6 +115,10 @@ body {
     width: 100%;
     max-width: 500px;
     margin: 20px auto;          
+}
+    #email-paso-4 {
+    margin-top: 20px;
+    animation: fadeIn 0.5s;
 }
    .fondo-email-activo {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
@@ -203,6 +218,12 @@ body {
     border-radius: 5px;
     margin: 5px 0;
 }
+    #progreso-email {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4af626, #2d9e17);
+    transition: width 0.3s ease;
+}
     .sidebar {
     width: 280px;
     background-color: #151522;
@@ -217,6 +238,10 @@ body {
     margin: 0;
     text-transform: uppercase;
     text-shadow: none !important;
+}
+    @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 </style>
 </head>
@@ -293,29 +318,34 @@ body {
      </div>
 
 <div id="tp-email" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
-        <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE CORREOS ELECTRÓNICOS</h1>
-        <p style="color: #cccccc; font-size: 0.9rem; margin-bottom: 25px;">Introduce el correo para auditar filtraciones:</p>
+    <div id="email-paso-1">
+        <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE CORREOS</h1>
         <div class="contenedor-buscador-unico">
-        <input type="text" id="input-email" class="input-limpio" placeholder="ejemplo@target.com">
-     </div>
-        <div style="margin-top: 20px;">
-            <button class="boton-modo-ia" onclick="ejecutarBusquedaEmail()">Search</button>
+            <input type="text" id="input-email" class="input-limpio" placeholder="ejemplo@target.com">
         </div>
-        <div id="resultado-email" style="margin-top: 30px; display: none;">
-            <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; width: 100%; max-width: 500px; margin: 0 auto;"></div>
-        </div>
+        <button class="boton-modo-ia" onclick="irAValidar('email')">Siguiente</button>
     </div>
 
-    <div id="tp-ip" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
-        <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE DIRECCIONES IP</h1>
-        <p style="color: #cccccc; font-size: 0.9rem; margin-bottom: 25px;">Introduce una URL, IP o código de seguimiento:</p>
-        <div class="buscador-verde" style="margin: 0 auto; width: 100%; max-width: 500px;">
-            <input type="text" id="input-ip" class="input-transparente" placeholder="Introduce aquí...">
-        </div>
-        <div style="margin-top: 20px;">
-            <button class="boton-modo-ia" onclick="generarLinkRastreo()">Crear enlace</button>
-        </div>
-        <div id="resultado-ip" style="margin-top: 20px; color: #fff;"></div>
+    <div id="email-paso-2" style="display: none;">
+        <p>¿Validar el correo: <span id="email-a-validar" style="color: #4af626;"></span>?</p>
+        <button class="boton-modo-ia" onclick="iniciarCarga('email')">Validar ahora</button>
+    </div>
+
+    <div id="email-paso-3" style="display: none;">
+        <div class="barra-progreso"><div id="progreso-email"></div></div>
+    </div>
+
+    <div id="email-paso-4" style="display: none;">
+        <div id="textos-resultados" style="color: white; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px;"></div>
+    </div>
+</div>
+
+<div id="tp-ip" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
+    <h1 class="titulo-grande">RASTREO DE DIRECCIONES IP</h1>
+    <div class="contenedor-buscador-unico">
+        <input type="text" id="input-ip" class="input-limpio" placeholder="Introduce IP...">
+    </div>
+    <button class="boton-modo-ia" onclick="irAValidar('ip')">Siguiente</button>
     </div>
     
    <div id="tp-domain" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
@@ -659,6 +689,37 @@ async function ejecutarBusquedaIP() {
         resultadoDiv.innerHTML = "Error al conectar con el servicio de geolocalización.";
     }
 }
+      function irAValidar(tipo) {
+    const input = document.getElementById('input-' + tipo);
+    const valor = input.value;
+    if (!valor) return alert("Por favor, introduce un dato.");
+
+    document.getElementById(tipo + '-paso-1').style.display = 'none';
+    document.getElementById(tipo + '-a-validar').innerText = valor;
+    document.getElementById(tipo + '-paso-2').style.display = 'block';
+}
+
+function iniciarCarga(tipo) {
+    document.getElementById(tipo + '-paso-2').style.display = 'none';
+    document.getElementById(tipo + '-paso-3').style.display = 'block';
+
+    let progreso = 0;
+    const barra = document.getElementById('progreso-' + tipo);
+    
+    let intervalo = setInterval(() => {
+        progreso += 5;
+        barra.style.width = progreso + '%';
+        
+        if (progreso >= 100) {
+            clearInterval(intervalo);
+            document.getElementById(tipo + '-paso-3').style.display = 'none';
+            document.getElementById(tipo + '-paso-4').style.display = 'block';
+      
+            if(tipo === 'email') ejecutarBusquedaEmailReal();
+        }
+    }, 150);
+}
+      
 async function ejecutarBusquedaEmail() {
     const emailTarget = document.getElementById('input-email').value;
     const resultadoDiv = document.getElementById('resultado-email');
