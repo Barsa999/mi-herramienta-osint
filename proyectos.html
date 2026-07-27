@@ -1109,65 +1109,62 @@ function regresarBuscadorEmail() {
       
  async function ejecutarBusquedaEmail() {
     const emailTarget = document.getElementById('input-email').value.trim();
-    const apiKey = "a0633aeb05fe4a3082cab81fc92490bd";
+    const barraProgreso = document.getElementById('barra-progreso'); 
+    const textosDiv = document.getElementById('textos-resultados');
 
     if (!emailTarget) {
         alert("Por favor, escribe un correo electrónico");
         return;
     }
 
-    console.log("Buscando en tiempo real para:", emailTarget);
+    let progreso = 0;
+    const intervaloCarga = setInterval(() => {
+        progreso += 10;
+        if (progreso > 90) progreso = 90;
+        console.log(`Cargando análisis: ${progreso}%`);
+    }, 150);
 
     try {
-        const response = await fetch(`https://emailreputation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodeURIComponent(emailTarget)}`);
-        if (!response.ok) throw new Error('Error en la consulta de la API');
+        const response = await fetch(`https://mi-herramienta-osint.onrender.com/api/email/${encodeURIComponent(emailTarget)}`);
+        
+        clearInterval(intervaloCarga);
+
+        if (!response.ok) throw new Error('Error en el servidor');
         
         const datos = await response.json();
-        console.log("Respuesta real de Abstract API:", datos);
+        console.log("Datos reales desde el servidor:", datos);
 
-        // 1. Mostrar el correo buscado arriba
         const elEmail = document.getElementById("email-mostrado");
         if (elEmail) elEmail.innerText = datos.email_address || emailTarget;
 
-        // 2. Fecha de registro real del dominio (FIRST SEEN)
         const elFirstSeen = document.getElementById("first-seen");
-        if (elFirstSeen) {
-            let fechaRegistro = "No disponible";
-            if (datos.email_domain && datos.email_domain.date_registered) {
-                // Formatea la fecha de la API de forma limpia
-                let fechaObj = new Date(datos.email_domain.date_registered);
-                if (!isNaN(fechaObj)) {
-                    fechaRegistro = fechaObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                } else {
-                    fechaRegistro = datos.email_domain.date_registered;
-                }
-            }
-            elFirstSeen.innerText = fechaRegistro;
+        if (elFirstSeen && datos.email_domain) {
+            elFirstSeen.innerText = datos.email_domain.date_registered || "No disponible";
         }
 
-        // 3. Estado de entrega (CAN RECEIVE EMAIL)
         const elReceive = document.getElementById("can-receive-email");
-        if (elReceive) {
-            let deliverable = datos.email_deliverability && datos.email_deliverability.status === "deliverable";
-            elReceive.innerText = deliverable ? "Yes" : "No";
-            elReceive.style.color = deliverable ? "#2ecc71" : "#e74c3c"; // Verde si recibe, rojo si no
+        if (elReceive && datos.email_deliverability) {
+            let esValido = datos.email_deliverability.status === "deliverable";
+            elReceive.innerText = esValido ? "Yes" : "No";
+            elReceive.style.color = esValido ? "#2ecc71" : "#e74c3c";
         }
 
-        // 4. Proveedor (EMAIL PROVIDER)
         const elProvider = document.getElementById("email-provider");
-        if (elProvider) {
-            let proveedor = "Desconocido";
-            if (datos.email_sender && datos.email_sender.organization_name) {
-                proveedor = datos.email_sender.organization_name;
-            } else if (datos.email_domain && datos.email_domain.domain) {
-                proveedor = datos.email_domain.domain;
-            }
-            elProvider.innerText = proveedor;
+        if (elProvider && datos.email_sender) {
+            elProvider.innerText = datos.email_sender.organization_name || (datos.email_domain ? datos.email_domain.domain : "Gmail");
         }
+
+        const namesFoundCard = document.querySelector(".names-found-card");
+        if(namesFoundCard) {
+            namesFoundCard.innerHTML = `<span style="color: #2ecc71;">✔ Verificado en tiempo real</span><p style="color: #aaa; margin-top: 5px;">Dominio analizado correctamente mediante pasarela segura.</p>`;
+        }
+
+        console.log("Análisis completado al 100%");
 
     } catch (error) {
-        console.error("Error al consultar:", error);
-        alert("Hubo un error al realizar la búsqueda en tiempo real.");
+        clearInterval(intervaloCarga);
+        console.error("Error en la búsqueda:", error);
+        alert("No se pudo completar la búsqueda en tiempo real.");
     }
 }
 
