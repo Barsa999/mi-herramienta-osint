@@ -1168,10 +1168,11 @@ function regresarBuscadorEmail() {
     }
 }
     
- function mostrarHerramienta(id) {
-    const elementosOcultar = document.querySelectorAll('.panel-herramienta, .buscador-central, #vista-inicio, .vista-modulo, .contenedor-herramienta');
-    elementosOcultar.forEach(el => {
-        if (el) el.style.display = 'none';
+function mostrarHerramienta(id) {
+    document.querySelectorAll('*').forEach(el => {
+        if (el.classList && (el.classList.contains('panel-herramienta') || el.classList.contains('buscador-central') || el.classList.contains('vista-modulo') || el.classList.contains('contenedor-herramienta') || el.id === 'vista-inicio' || el.id === 'buscador-dinamico-global')) {
+            el.style.display = 'none';
+        }
     });
 
     if (id === 'email' || id === 'tp-email') {
@@ -1194,7 +1195,7 @@ function regresarBuscadorEmail() {
             buscadorUniversal = document.createElement('div');
             buscadorUniversal.id = 'buscador-dinamico-global';
             buscadorUniversal.className = 'buscador-central';
-            buscadorUniversal.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: 40px;';
+            buscadorUniversal.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; padding: 40px; background: rgba(0,0,0,0.85); border-radius: 12px;';
             
             buscadorUniversal.innerHTML = `
                 <h2 id="titulo-herramienta-activa" style="color: #2ecc71; margin-bottom: 20px; text-transform: uppercase;">Módulo OSINT</h2>
@@ -1202,7 +1203,7 @@ function regresarBuscadorEmail() {
                     <input type="text" id="input-dinamico" placeholder="Escribe el objetivo a buscar..." style="flex: 1; padding: 15px; border-radius: 8px; border: 1px solid #333; background: #111; color: #fff; font-size: 16px;">
                     <button onclick="ejecutarBusquedaDinamica('${id}')" style="padding: 15px 25px; background: #2ecc71; border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer;">Buscar</button>
                 </div>
-                <div id="resultado-dinamico" style="margin-top: 20px; color: #aaa; width: 100%; max-width: 600px;"></div>
+                <div id="resultado-dinamico" style="margin-top: 20px; color: #aaa; width: 100%; max-width: 600px; text-align: center;"></div>
             `;
             document.body.appendChild(buscadorUniversal);
         } else {
@@ -1225,7 +1226,7 @@ function ejecutarBusquedaDinamica(tipoTool) {
 
     setTimeout(() => {
         contenedorResultado.innerHTML = `
-            <div style="background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333;">
+            <div style="background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333; text-align: left;">
                 <p style="color: #2ecc71; font-weight: bold;">✔ Análisis completado con éxito</p>
                 <p style="color: #fff; margin-top: 5px;">Objetivo analizado: <b>${valorInput}</b></p>
                 <p style="color: #aaa; font-size: 13px; margin-top: 5px;">Estado: Registros indexados y validados correctamente.</p>
