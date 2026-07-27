@@ -1169,19 +1169,26 @@ function regresarBuscadorEmail() {
 }
     
 function mostrarHerramienta(id) {
-    document.querySelectorAll('*').forEach(el => {
-        if (el.classList && (el.classList.contains('panel-herramienta') || el.classList.contains('buscador-central') || el.classList.contains('vista-modulo') || el.classList.contains('contenedor-herramienta') || el.id === 'vista-inicio' || el.id === 'buscador-dinamico-global')) {
-            el.style.display = 'none';
-        }
+    document.querySelectorAll('.panel-herramienta, .buscador-central, #vista-inicio, .vista-modulo, .contenedor-herramienta, div[id^="vista-"], div[id^="tp-"], #buscador-dinamico-global').forEach(el => {
+        el.style.display = 'none';
     });
 
     if (id === 'email' || id === 'tp-email') {
         document.body.classList.add('fondo-email-activo');
+        let seccionEmail = document.getElementById('tp-email');
+        if (seccionEmail) {
+            seccionEmail.style.display = 'block';
+            let pantallaBuscador = document.getElementById('pantalla-buscador');
+            let pantallaBlanca = document.getElementById('pantalla-blanca');
+            if (pantallaBuscador) pantallaBuscador.style.display = 'flex';
+            if (pantallaBlanca) pantallaBlanca.style.display = 'none';
+        }
+        return;
     } else {
         document.body.classList.remove('fondo-email-activo');
     }
 
-    let seccionActual = document.getElementById(id) || document.getElementById('vista-' + id) || document.querySelector('.tool-' + id);
+    let seccionActual = document.getElementById(id) || document.getElementById('vista-' + id) || document.querySelector('.' + id);
 
     if (seccionActual) {
         seccionActual.style.display = 'flex';
@@ -1195,15 +1202,15 @@ function mostrarHerramienta(id) {
             buscadorUniversal = document.createElement('div');
             buscadorUniversal.id = 'buscador-dinamico-global';
             buscadorUniversal.className = 'buscador-central';
-            buscadorUniversal.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; padding: 40px; background: rgba(0,0,0,0.85); border-radius: 12px;';
+            buscadorUniversal.style.cssText = 'display: flex; flex-direction: column; align-items: center; justify-content: center; width: calc(100vw - 220px); height: 100vh; position: fixed; top: 0; left: 220px; background: #0f1115; z-index: 999999; padding: 40px; box-sizing: border-box;';
             
             buscadorUniversal.innerHTML = `
-                <h2 id="titulo-herramienta-activa" style="color: #2ecc71; margin-bottom: 20px; text-transform: uppercase;">Módulo OSINT</h2>
+                <h2 id="titulo-herramienta-activa" style="color: #2ecc71; margin-bottom: 20px; text-transform: uppercase; font-family: sans-serif;">Módulo OSINT</h2>
                 <div style="display: flex; gap: 10px; width: 100%; max-width: 600px;">
                     <input type="text" id="input-dinamico" placeholder="Escribe el objetivo a buscar..." style="flex: 1; padding: 15px; border-radius: 8px; border: 1px solid #333; background: #111; color: #fff; font-size: 16px;">
                     <button onclick="ejecutarBusquedaDinamica('${id}')" style="padding: 15px 25px; background: #2ecc71; border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer;">Buscar</button>
                 </div>
-                <div id="resultado-dinamico" style="margin-top: 20px; color: #aaa; width: 100%; max-width: 600px; text-align: center;"></div>
+                <div id="resultado-dinamico" style="margin-top: 20px; color: #aaa; width: 100%; max-width: 600px; text-align: center; font-family: sans-serif;"></div>
             `;
             document.body.appendChild(buscadorUniversal);
         } else {
@@ -1226,10 +1233,10 @@ function ejecutarBusquedaDinamica(tipoTool) {
 
     setTimeout(() => {
         contenedorResultado.innerHTML = `
-            <div style="background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333; text-align: left;">
+            <div style="background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531; text-align: left;">
                 <p style="color: #2ecc71; font-weight: bold;">✔ Análisis completado con éxito</p>
                 <p style="color: #fff; margin-top: 5px;">Objetivo analizado: <b>${valorInput}</b></p>
-                <p style="color: #aaa; font-size: 13px; margin-top: 5px;">Estado: Registros indexados y validados correctamente.</p>
+                <p style="color: #8c92a4; font-size: 13px; margin-top: 5px;">Estado: Registros indexados y validados correctamente en red.</p>
             </div>
         `;
     }, 1000);
