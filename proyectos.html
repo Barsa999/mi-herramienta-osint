@@ -758,6 +758,113 @@ body {
             }
         }, 150);
     }
+    // --- LÓGICA DE LA IA WHOAMI ACTUALIZADA PARA TODAS LAS HERRAMIENTAS ---
+    function procesarComandoWhoami(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            const texto = document.getElementById('input-busqueda').value.toLowerCase().trim();
+
+            // Third Party Search
+            if (texto.includes("correo") || texto.includes("email") || texto.includes("mail")) {
+                alert("WHOAMI IA: Redirigiendo al módulo de Verificación de Correo.");
+                mostrarHerramienta('tp-email');
+            } 
+            else if (texto.includes("dominio") || texto.includes("domain") || texto.includes("whois")) {
+                alert("WHOAMI IA: Abriendo Rastreo de Dominios.");
+                mostrarHerramienta('tp-domain');
+            }
+            else if (texto.includes("ip") || texto.includes("rastrear") || texto.includes("direccion")) {
+                alert("WHOAMI IA: Cargando módulo de Rastreo de IP.");
+                mostrarHerramienta('tp-ip');
+            } 
+            else if (texto.includes("imagen") || texto.includes("foto") || texto.includes("image") || texto.includes("exif")) {
+                alert("WHOAMI IA: Abriendo Análisis Forense de Imágenes.");
+                mostrarHerramienta('tp-image');
+            }
+            else if (texto.includes("usuario") || texto.includes("user") || texto.includes("username")) {
+                alert("WHOAMI IA: Abriendo Búsqueda de Username.");
+                mostrarHerramienta('tp-username');
+            }
+            else if (texto.includes("persona") || texto.includes("person") || texto.includes("nombre")) {
+                alert("WHOAMI IA: Abriendo Módulo de Búsqueda de Personas.");
+                mostrarHerramienta('tp-person');
+            }
+            else if (texto.includes("telefono") || texto.includes("celular") || texto.includes("numero") || texto.includes("phone")) {
+                alert("WHOAMI IA: Conectando con Phone Number Lookup.");
+                mostrarHerramienta('tp-phone');
+            }
+            else if (texto.includes("ubicacion") || texto.includes("mapa") || texto.includes("location") || texto.includes("map")) {
+                alert("WHOAMI IA: Abriendo Location 2 Map.");
+                mostrarHerramienta('tp-location');
+            }
+            else if (texto.includes("archivo") || texto.includes("documento") || texto.includes("file")) {
+                alert("WHOAMI IA: Abriendo File Analytics.");
+                mostrarHerramienta('tp-file');
+            }
+            else if (texto.includes("vin") || texto.includes("vehiculouto") || texto.includes("auto")) {
+                alert("WHOAMI IA: Abriendo VIN Decoder.");
+                mostrarHerramienta('tp-vin');
+            }
+            else if (texto.includes("hash") || texto.includes("md5") || texto.includes("sha")) {
+                alert("WHOAMI IA: Abriendo sistema de verificación de Hash.");
+                mostrarHerramienta('tp-hash');
+            }
+            else if (texto.includes("analytics") || texto.includes("google analytics") || texto.includes("ua-")) {
+                alert("WHOAMI IA: Abriendo Google Analytics OSINT.");
+                mostrarHerramienta('tp-analytics');
+            }
+            
+            // Data Tools
+            else if (texto.includes("magic") || texto.includes("bytes")) {
+                alert("WHOAMI IA: Abriendo Magic File Tool.");
+                mostrarHerramienta('dt-magic');
+            }
+            else if (texto.includes("validar") && texto.includes("lote")) {
+                alert("WHOAMI IA: Abriendo Validador de Emails en lote.");
+                mostrarHerramienta('dt-validate');
+            }
+            else if (texto.includes("geoip") || texto.includes("asn") || texto.includes("isp")) {
+                alert("WHOAMI IA: Abriendo GeoIP Lookup.");
+                mostrarHerramienta('dt-geoip');
+            }
+            else if (texto.includes("encoding") || texto.includes("base64") || texto.includes("hex") || texto.includes("decodificar")) {
+                alert("WHOAMI IA: Abriendo Encoding Decoder.");
+                mostrarHerramienta('dt-encoding');
+            }
+            else if (texto.includes("url") || texto.includes("parser") || texto.includes("link")) {
+                alert("WHOAMI IA: Abriendo URLs Parser.");
+                mostrarHerramienta('dt-urls');
+            }
+
+            // Social Media Tools
+            else if (texto.includes("facebook") || texto.includes("fb")) {
+                alert("WHOAMI IA: Abriendo Módulo de Facebook.");
+                mostrarHerramienta('sm-facebook');
+            }
+            else if (texto.includes("twitter") || texto.includes("x") || texto.includes("tweet")) {
+                alert("WHOAMI IA: Abriendo Módulo de Twitter / X.");
+                mostrarHerramienta('sm-twitter');
+            }
+            else if (texto.includes("linkedin") || texto.includes("empleado") || texto.includes("empresa")) {
+                alert("WHOAMI IA: Abriendo Módulo de LinkedIn.");
+                mostrarHerramienta('sm-linkedin');
+            }
+            else if (texto.includes("telegram") || texto.includes("canal") || texto.includes("bot")) {
+                alert("WHOAMI IA: Abriendo Módulo de Telegram.");
+                mostrarHerramienta('sm-telegram');
+            }
+            else if (texto.includes("instagram") || texto.includes("insta") || texto.includes("ig")) {
+                alert("WHOAMI IA: Abriendo Módulo de Instagram.");
+                mostrarHerramienta('sm-instagram');
+            }
+            
+            else {
+                if (texto) {
+                    alert("WHOAMI IA: Comando no reconocido. Prueba escribiendo 'correo', 'ip', 'imagen', 'telefono', 'facebook', etc.");
+                }
+            }
+        }
+    }
       
     async function ejecutarBusquedaEmail() {
         const emailTarget = document.getElementById('input-email').value;
