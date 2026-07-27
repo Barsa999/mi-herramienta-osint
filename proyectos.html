@@ -1168,36 +1168,29 @@ function regresarBuscadorEmail() {
     }
 }
     
-    function mostrarHerramienta(id) {
-    // 1. Ocultar todas las pantallas principales y contenedores de herramientas previos
+ function mostrarHerramienta(id) {
     const elementosOcultar = document.querySelectorAll('.panel-herramienta, .buscador-central, #vista-inicio, .vista-modulo, .contenedor-herramienta');
     elementosOcultar.forEach(el => {
         if (el) el.style.display = 'none';
     });
 
-    // 2. Control de fondo para email
     if (id === 'email' || id === 'tp-email') {
         document.body.classList.add('fondo-email-activo');
     } else {
         document.body.classList.remove('fondo-email-activo');
     }
 
-    // 3. Buscar si existe un contenedor específico para la herramienta seleccionada
     let seccionActual = document.getElementById(id) || document.getElementById('vista-' + id) || document.querySelector('.tool-' + id);
 
     if (seccionActual) {
-        // Si el contenedor existe en tu HTML, lo mostramos
         seccionActual.style.display = 'flex';
         seccionActual.style.flexDirection = 'column';
         seccionActual.style.alignItems = 'center';
         seccionActual.style.justifyContent = 'center';
     } else {
-        // 4. SISTEMA DE RESPALDO DINÁMICO: 
-        // Si la herramienta no tiene HTML propio, generamos y mostramos un buscador universal en pantalla para que NUNCA quede vacío
         let buscadorUniversal = document.getElementById('buscador-dinamico-global');
         
         if (!buscadorUniversal) {
-            // Creamos dinámicamente la caja si no existe
             buscadorUniversal = document.createElement('div');
             buscadorUniversal.id = 'buscador-dinamico-global';
             buscadorUniversal.className = 'buscador-central';
@@ -1213,14 +1206,12 @@ function regresarBuscadorEmail() {
             `;
             document.body.appendChild(buscadorUniversal);
         } else {
-            // Si ya existía, solo actualizamos el título y lo mostramos
             document.getElementById('titulo-herramienta-activa').innerText = `Módulo: ${id.replace(/-/g, ' ')}`;
             buscadorUniversal.style.display = 'flex';
         }
     }
 }
 
-// Función auxiliar para procesar consultas de las herramientas dinámicas
 function ejecutarBusquedaDinamica(tipoTool) {
     const valorInput = document.getElementById('input-dinamico').value.trim();
     const contenedorResultado = document.getElementById('resultado-dinamico');
@@ -1232,7 +1223,6 @@ function ejecutarBusquedaDinamica(tipoTool) {
 
     contenedorResultado.innerHTML = `<p style="color: #f39c12;">Consultando registros globales para [${tipoTool}]: ${valorInput}...</p>`;
 
-    // Simulación de respuesta en tiempo real según el módulo seleccionado
     setTimeout(() => {
         contenedorResultado.innerHTML = `
             <div style="background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333;">
