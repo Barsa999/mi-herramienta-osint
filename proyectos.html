@@ -330,20 +330,20 @@ input[type="email"],
 
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
                     <div style="background: #14171f; padding: 15px; border-radius: 8px; border: 1px solid #202531;">
-                        <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">First Seen</span>
-                        <div style="font-size: 14px; font-weight: bold; margin-top: 5px; color: #e2e8f0;">Oct 30, 2022</div>
+                        <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">Deliverability</span>
+                        <div id="res-deliverability" style="font-size: 14px; font-weight: bold; margin-top: 5px; color: #27ae60;">-</div>
                     </div>
                     <div style="background: #14171f; padding: 15px; border-radius: 8px; border: 1px solid #202531;">
-                        <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">Last Seen</span>
-                        <div style="font-size: 14px; font-weight: bold; margin-top: 5px; color: #e2e8f0;">Jul 27, 2026</div>
+                        <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">Quality Score</span>
+                        <div id="res-quality" style="font-size: 14px; font-weight: bold; margin-top: 5px; color: #e2e8f0;">-</div>
                     </div>
                     <div style="background: #14171f; padding: 15px; border-radius: 8px; border: 1px solid #202531;">
-                        <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">Can Receive Email</span>
-                        <div style="font-size: 14px; font-weight: bold; margin-top: 5px; color: #27ae60;">Yes</div>
+                        <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">Free Email</span>
+                        <div id="res-free" style="font-size: 14px; font-weight: bold; margin-top: 5px; color: #e2e8f0;">-</div>
                     </div>
                     <div style="background: #14171f; padding: 15px; border-radius: 8px; border: 1px solid #202531;">
-                        <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">Email Provider</span>
-                        <div style="font-size: 14px; font-weight: bold; margin-top: 5px; color: #e2e8f0;">Gmail</div>
+                        <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">SMTP Check</span>
+                        <div id="res-smtp" style="font-size: 14px; font-weight: bold; margin-top: 5px; color: #e2e8f0;">-</div>
                     </div>
                 </div>
 
@@ -351,49 +351,16 @@ input[type="email"],
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
                     <div style="background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531;">
-                        <span style="font-size: 12px; color: #8c92a4; font-weight: 500;">👤 Names Found</span>
-                        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
-                            <span style="background: #1f2430; padding: 4px 10px; border-radius: 4px; font-size: 13px; color: #fff;">josh flores <span style="font-size: 10px; color: #8c92a4;">Google</span></span>
-                            <span style="background: #1f2430; padding: 4px 10px; border-radius: 4px; font-size: 13px; color: #fff;">Guzz2000 <span style="font-size: 10px; color: #8c92a4;">TikTok</span></span>
+                        <span style="font-size: 12px; color: #8c92a4; font-weight: 500;">👤 User & Domain Info</span>
+                        <div id="res-domain-info" style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; color: #fff; font-size: 13px;">
+                            Cargando datos de Abstract API...
                         </div>
                     </div>
 
                     <div style="background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531;">
-                        <span style="font-size: 12px; color: #8c92a4; font-weight: 500;">🌐 Usernames</span>
-                        <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
-                            <span style="background: #1f2430; padding: 4px 10px; border-radius: 4px; font-size: 13px; color: #fff;">Barsa999 <span style="font-size: 10px; color: #8c92a4;">GitHub</span></span>
-                            <span style="background: #1f2430; padding: 4px 10px; border-radius: 4px; font-size: 13px; color: #fff;">guzz2008272 <span style="font-size: 10px; color: #8c92a4;">TikTok</span></span>
-                        </div>
-                    </div>
-
-                    <div style="background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531;">
-                        <span style="font-size: 12px; color: #8c92a4; font-weight: 500;">🖼️ Profile Pictures</span>
-                        <div style="margin-top: 12px; display: flex; gap: 10px;">
-                            <div style="width: 36px; height: 36px; background: #3b82f6; border-radius: 6px;"></div>
-                            <div style="width: 36px; height: 36px; background: #10b981; border-radius: 6px;"></div>
-                            <div style="width: 36px; height: 36px; background: #8b5cf6; border-radius: 6px;"></div>
-                        </div>
-                    </div>
-
-                    <div style="background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531;">
-                        <span style="font-size: 12px; color: #8c92a4; font-weight: 500;">🔗 Profile Links</span>
-                        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
-                            <a href="#" style="color: #3b82f6; text-decoration: none;">Google <span style="color: #8c92a4; font-size: 11px;">(Google)</span></a>
-                            <a href="#" style="color: #3b82f6; text-decoration: none;">Barsa999 <span style="color: #8c92a4; font-size: 11px;">(GitHub)</span></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531; margin-bottom: 30px;">
-                    <span style="font-size: 12px; color: #8c92a4; font-weight: 500; display: block; margin-bottom: 15px;">Data Breaches</span>
-                    <div style="display: flex; gap: 40px;">
-                        <div>
-                            <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">Amount</span>
-                            <div style="font-size: 20px; font-weight: bold; color: #fff; margin-top: 2px;">0</div>
-                        </div>
-                        <div>
-                            <span style="font-size: 10px; color: #8c92a4; text-transform: uppercase;">Sources</span>
-                            <div style="font-size: 20px; font-weight: bold; color: #fff; margin-top: 2px;">0</div>
+                        <span style="font-size: 12px; color: #8c92a4; font-weight: 500;">🌐 Disposables & Flags</span>
+                        <div id="res-flags" style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; color: #fff; font-size: 13px;">
+                            -
                         </div>
                     </div>
                 </div>
@@ -842,35 +809,63 @@ input[type="email"],
         let barra = document.getElementById('progreso-email');
         let textoPorcentaje = document.getElementById('texto-porcentaje');
         let textoEstado = document.getElementById('texto-estado-proceso');
-        let contenedorResultados = document.getElementById('textos-resultados');
         let paso4 = document.getElementById('email-paso-4');
         
         paso4.style.display = 'none';
         barra.style.width = '0%';
         textoPorcentaje.innerText = '0%';
-        textoEstado.innerText = "Conectando con servidores OSINT...";
+        textoEstado.innerText = "Conectando con servidores Abstract API...";
 
         let ancho = 0;
-        let intervalo = setInterval(() => {
-            if (ancho >= 100) {
+        let intervalo = setInterval(async () => {
+            if (ancho >= 90) {
                 clearInterval(intervalo);
-                textoEstado.innerText = "¡Análisis completado con éxito!";
-                paso4.style.display = 'block';
-                contenedorResultados.innerHTML = `
-                    <p><strong>[+] Objetivo analizado:</strong> ${email}</p>
-                    <p><strong>[+] Estado:</strong> Correo activo y verificado en bases de datos públicas.</p>
-                    <p><strong>[+] Brechas de seguridad detectadas:</strong> Ninguna asociada en registros recientes.</p>
-                    <p><strong>[+] Proveedor SMTP:</strong> Servidor seguro detectado.</p>
-                `;
+                textoEstado.innerText = "Consultando motor de validación...";
+                
+                try {
+                    const apiKey = "a0633aeb05fe4a3082cab81fc92490bd";
+                    const response = await fetch(`https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodeURIComponent(email)}`);
+                    const data = await response.json();
+
+                    barra.style.width = '100%';
+                    textoPorcentaje.innerText = '100%';
+                    textoEstado.innerText = "¡Análisis completado con éxito!";
+                    paso4.style.display = 'block';
+
+                    document.getElementById('res-deliverability').innerText = data.deliverability || 'N/A';
+                    document.getElementById('res-quality').innerText = data.quality_score || 'N/A';
+                    document.getElementById('res-free').innerText = data.is_freemail?.value ? "Yes" : "No";
+                    document.getElementById('res-smtp').innerText = data.is_smtp_valid?.value ? "Valid" : "Invalid";
+
+                    document.getElementById('res-domain-info').innerHTML = `
+                        <span><strong>User:</strong> ${data.user || email.split('@')[0]}</span><br>
+                        <span><strong>Domain:</strong> ${data.domain || 'N/A'}</span>
+                    `;
+
+                    document.getElementById('res-flags').innerHTML = `
+                        <span><strong>Disposable:</strong> ${data.is_disposable_email?.value ? "Yes" : "No"}</span><br>
+                        <span><strong>Catchall:</strong> ${data.is_catchall_email?.value ? "Yes" : "No"}</span>
+                    `;
+
+                    let contenedorResultados = document.getElementById('textos-resultados');
+                    contenedorResultados.innerHTML = `
+                        <p><strong>[+] Objetivo analizado:</strong> ${email}</p>
+                        <p><strong>[+] Estado Deliverability:</strong> ${data.deliverability}</p>
+                        <p><strong>[+] Quality Score:</strong> ${data.quality_score}</p>
+                        <p><strong>[+] Servidor SMTP Valido:</strong> ${data.is_smtp_valid?.value ? "Sí" : "No"}</p>
+                    `;
+                } catch (err) {
+                    textoEstado.innerText = "Error en la consulta con Abstract API.";
+                }
             } else {
-                ancho += 10;
+                ancho += 15;
                 barra.style.width = ancho + '%';
                 textoPorcentaje.innerText = ancho + '%';
                 
-                if (ancho === 40) textoEstado.innerText = "Buscando registros de filtraciones...";
-                if (ancho === 80) textoEstado.innerText = "Verificando metadatos y dominios...";
+                if (ancho === 45) textoEstado.innerText = "Verificando registros de servidor de correo...";
+                if (ancho === 75) textoEstado.innerText = "Analizando puntuación de calidad...";
             }
-        }, 300);
+        }, 200);
     }
 
     function regresarBuscadorEmail() {
@@ -889,7 +884,7 @@ input[type="email"],
             const data = await response.json();
 
             if (data.valido) {
-                resDir.innerHTML = `
+                resDiv.innerHTML = `
                     <p><strong>Número:</strong> ${data.numero}</p>
                     <p><strong>País:</strong> ${data.pais}</p>
                     <p><strong>Operador:</strong> ${data.operador || 'No especificado'}</p>
