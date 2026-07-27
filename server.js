@@ -42,17 +42,30 @@ app.get('/api/ip/:targetIp', async (req, res) => {
     }
 });
 
+// --- RUTA DE CORREO ACTUALIZADA CON ABSTRACT API ---
 app.get('/api/email/:email', async (req, res) => {
     const email = req.params.email;
-    const user = email.split('@')[0];
-    async function verificarLink(url) {
-        try { const response = await fetch(url, { method: 'HEAD' }); return response.ok; } catch { return false; }
-    }
+    const apiKey = "a0633aeb05fe4a3082cab81fc92490bd";
+
     try {
-        const gravatarExiste = await verificarLink(`https://es.gravatar.com/${user}`);
-        res.json({ existe: true, domain: email.split('@')[1], servicios_vinculados: [{ nombre: "Gravatar", link: `https://es.gravatar.com/${user}`, verificado: gravatarExiste }] });
+        const response = await fetch(`https://emailreputation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodeURIComponent(email)}`);
+        if (!response.ok) {
+            throw new Error("Error al conectar con Abstract API");
+        }
+        
+        const data = await response.json();
+        
+        // Enviamos la respuesta estructurada con datos reales en tiempo real
+        res.json({
+            email_address: data.email_address,
+            email_deliverability: data.email_deliverability,
+            email_sender: data.email_sender,
+            email_domain: data.email_domain,
+            email_quality: data.email_quality
+        });
     } catch (error) {
-        res.status(500).json({ error: "Error al validar" });
+        console.error("Error en /api/email:", error);
+        res.status(500).json({ error: "Error al validar el correo en tiempo real" });
     }
 });
 
