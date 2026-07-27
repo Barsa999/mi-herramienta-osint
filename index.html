@@ -6,48 +6,59 @@
     <title>BARSA.NET - Seguridad de Datos</title>
     <style>
         body {
-            background-color: #1e1e2f;
+            background-color: #000000; /* Fondo negro profesional pedido */
             color: #ffffff;
             font-family: 'Segoe UI', sans-serif;
             text-align: center;
-            padding-top: 30px;
             margin: 0;
+            padding-top: 30px;
             position: relative;
             min-height: 100vh;
         }
-        h1 { color: #4af626; margin-top: 25px; font-size: 28px; letter-spacing: 1px; }
-        .subtitulo { color: #b3b3cc; font-size: 16px; margin-top: -10px; margin-bottom: 30px; }
+        h1 { color: #4af626; margin-top: 15px; font-size: 26px; letter-spacing: 1px; }
+        .subtitulo { color: #888888; font-size: 14px; margin-top: -5px; margin-bottom: 25px; }
         
-        nav { margin-bottom: 40px; }
-        nav a { color: #4af626; text-decoration: none; margin: 0 15px; font-size: 18px; font-weight: bold; }
+        nav { margin-bottom: 20px; }
+        nav a { color: #4af626; text-decoration: none; margin: 0 15px; font-size: 16px; font-weight: bold; }
         nav a:hover { text-decoration: underline; }
         
         #menu-proyectos { display: none; color: #4af626; }
         
-        .mi-foto { width: 500px; max-width: 85%; height: auto; border-radius: 12px; border: 3px solid #4af626; box-shadow: 0 0 15px rgba(74, 246, 38, 0.3); }
+        .mi-foto { width: 400px; max-width: 80%; height: auto; border-radius: 12px; border: 2px solid #4af626; box-shadow: 0 0 15px rgba(74, 246, 38, 0.3); }
         
-        .tarjeta-soporte-flotante { position: absolute; top: 30px; right: 40px; background-color: #252538; border: 2px solid #4af626; border-radius: 10px; padding: 15px 20px; width: 250px; text-align: left; cursor: pointer; }
+        /* Tarjeta de soporte flotante original intacta */
+        .tarjeta-soporte-flotante { position: absolute; top: 30px; right: 40px; background-color: #121212; border: 1px solid #4af626; border-radius: 10px; padding: 15px 20px; width: 230px; text-align: left; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .indicador-clic { font-size: 11px; color: #4af626; text-align: right; margin-top: 8px; display: block; font-style: italic; }
 
-        .login-contenedor { background-color: #252538; border: 2px solid #3b3b54; border-radius: 12px; padding: 35px; width: 340px; margin: 40px auto; text-align: left; }
-        .login-contenedor h2 { color: #4af626; font-size: 22px; text-align: center; margin-bottom: 25px; }
-        .grupo-campo { margin-bottom: 20px; }
-        .grupo-campo label { display: block; color: #4af626; font-size: 14px; margin-bottom: 8px; }
-        .grupo-campo input { width: 100%; padding: 12px; background-color: #1a1a26; border: 1px solid #3b3b54; border-radius: 6px; color: #fff; box-sizing: border-box; }
+        /* Contenedor de Login Estilo Moderno / Profesional */
+        .login-contenedor { background-color: #121212; border: 1px solid #222222; border-radius: 12px; padding: 30px; width: 100%; max-width: 380px; margin: 25px auto; text-align: left; box-shadow: 0 8px 24px rgba(0,0,0,0.8); }
+        .login-contenedor h2 { color: #ffffff; font-size: 20px; text-align: center; margin-bottom: 20px; font-weight: 600; }
+        .grupo-campo { margin-bottom: 18px; }
+        .grupo-campo label { display: block; color: #cccccc; font-size: 13px; margin-bottom: 6px; font-weight: 500; }
+        .grupo-campo input { width: 100%; padding: 12px; background-color: #1a1a1a; border: 1px solid #333333; border-radius: 6px; color: #fff; box-sizing: border-box; outline: none; font-size: 14px; }
+        .grupo-campo input:focus { border-color: #4af626; }
         
-        .btn-ingresar { width: 100%; background-color: #4af626; color: #1e1e2f; border: none; padding: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; }
+        /* Botón de acceso con tu verde neón característico */
+        .btn-ingresar { width: 100%; background-color: #4af626; color: #000000; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 15px; box-shadow: 0 0 10px rgba(74, 246, 38, 0.3); transition: background 0.2s; }
+        .btn-ingresar:hover { background-color: #3de01e; }
 
-        .pantalla-oscura { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.75); justify-content: center; align-items: center; }
-        .ventana-modal { background-color: #252538; border: 2px solid #4af626; border-radius: 12px; width: 400px; padding: 30px; position: relative; }
+        /* Modal de soporte original intacto */
+        .pantalla-oscura { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 9999; }
+        .ventana-modal { background-color: #121212; border: 2px solid #4af626; border-radius: 12px; width: 380px; padding: 30px; position: relative; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.9); }
         .btn-cerrar { position: absolute; top: 15px; right: 15px; background: none; color: #fff; border: none; font-size: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
 
+    <!-- Icono / Escudo superior estilo plataforma OSINT profesional -->
+    <div style="display: inline-flex; background: rgba(74, 246, 38, 0.1); border: 1px solid #4af626; padding: 12px; border-radius: 10px; margin-bottom: 5px; box-shadow: 0 0 12px rgba(74, 246, 38, 0.2);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4af626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+    </div>
+
     <div class="tarjeta-soporte-flotante" onclick="abrirModal()">
-        <h3>Soporte Técnico</h3>
-        <p>📞 Tlf: 080000200</p>
-        <p>✉️ E-mail: soporte@barsa.net</p>
+        <h3 style="color:#4af626; margin-top:0; font-size:15px;">Soporte Técnico</h3>
+        <p style="margin:5px 0; font-size:13px;">📞 Tlf: 080000200</p>
+        <p style="margin:5px 0; font-size:13px;">✉️ E-mail: soporte@barsa.net</p>
         <span class="indicador-clic">Click para reportar ↑</span>
     </div>
 
@@ -61,11 +72,12 @@
     <h1>BASE DE DATOS BARSA.NET</h1>
     <p class="subtitulo">Encriptación de Datos y Ciberseguridad Ética</p>
 
+    <!-- Caja de Login Moderna y Profesional -->
     <div class="login-contenedor">
         <h2>Acceso al Portal ID</h2>
         <form onsubmit="validarAcceso(event)">
             <div class="grupo-campo">
-                <label>Login:</label>
+                <label>Login / Usuario:</label>
                 <input type="text" id="usuario" placeholder="Ingresa tu usuario" required>
             </div>
             <div class="grupo-campo">
@@ -76,14 +88,15 @@
         </form>
     </div>
 
+    <!-- Modal de Soporte Original -->
     <div id="miModal" class="pantalla-oscura">
         <div class="ventana-modal">
             <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
-            <h2 style="color: #4af626;">Ticket de Soporte</h2>
+            <h2 style="color: #4af626; margin-top:0; font-size:20px;">Ticket de Soporte</h2>
             <form onsubmit="enviarTicket(event)">
-                <div class="grupo-campo"><label>Tu Correo:</label><input type="email" required></div>
-                <div class="grupo-campo"><label>Asunto:</label><input type="text" required></div>
-                <button type="submit" class="btn-ingresar">Enviar Reporte</button>
+                <div class="grupo-campo"><label>Tu Correo:</label><input type="email" required style="width: 100%; padding: 10px; background-color: #1a1a1a; border: 1px solid #333; color:#fff; border-radius:6px;"></div>
+                <div class="grupo-campo"><label>Asunto:</label><input type="text" required style="width: 100%; padding: 10px; background-color: #1a1a1a; border: 1px solid #333; color:#fff; border-radius:6px;"></div>
+                <button type="submit" class="btn-ingresar" style="margin-top: 10px;">Enviar Reporte</button>
             </form>
         </div>
     </div>
