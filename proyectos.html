@@ -1107,8 +1107,8 @@ function regresarBuscadorEmail() {
     document.getElementById('input-email').value = '';
 }
       
-  async function ejecutarBusquedaEmail() {
-    const emailTarget = document.getElementById('input-email').value;
+ async function ejecutarBusquedaEmail() {
+    const emailTarget = document.getElementById('input-email').value.trim();
     const apiKey = "a0633aeb05fe4a3082cab81fc92490bd";
 
     if (!emailTarget) {
@@ -1116,49 +1116,58 @@ function regresarBuscadorEmail() {
         return;
     }
 
-    console.log("Realizando consulta real para:", emailTarget);
+    console.log("Buscando en tiempo real para:", emailTarget);
 
     try {
         const response = await fetch(`https://emailreputation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodeURIComponent(emailTarget)}`);
         if (!response.ok) throw new Error('Error en la consulta de la API');
         
         const datos = await response.json();
-        console.log("Datos reales de la API:", datos);
+        console.log("Respuesta real de Abstract API:", datos);
 
-        // 1. Correo analizado arriba
+        // 1. Mostrar el correo buscado arriba
         const elEmail = document.getElementById("email-mostrado");
         if (elEmail) elEmail.innerText = datos.email_address || emailTarget;
 
-        // 2. Tarjetas superiores (Metadata técnica real)
+        // 2. Fecha de registro real del dominio (FIRST SEEN)
         const elFirstSeen = document.getElementById("first-seen");
         if (elFirstSeen) {
-            elFirstSeen.innerText = datos.email_domain && datos.email_domain.date_registered 
-                ? datos.email_domain.date_registered 
-                : "No disponible";
+            let fechaRegistro = "No disponible";
+            if (datos.email_domain && datos.email_domain.date_registered) {
+                // Formatea la fecha de la API de forma limpia
+                let fechaObj = new Date(datos.email_domain.date_registered);
+                if (!isNaN(fechaObj)) {
+                    fechaRegistro = fechaObj.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                } else {
+                    fechaRegistro = datos.email_domain.date_registered;
+                }
+            }
+            elFirstSeen.innerText = fechaRegistro;
         }
 
+        // 3. Estado de entrega (CAN RECEIVE EMAIL)
         const elReceive = document.getElementById("can-receive-email");
         if (elReceive) {
-            elReceive.innerText = (datos.email_deliverability && datos.email_deliverability.status === "deliverable") ? "Yes" : "No";
+            let deliverable = datos.email_deliverability && datos.email_deliverability.status === "deliverable";
+            elReceive.innerText = deliverable ? "Yes" : "No";
+            elReceive.style.color = deliverable ? "#2ecc71" : "#e74c3c"; // Verde si recibe, rojo si no
         }
 
+        // 4. Proveedor (EMAIL PROVIDER)
         const elProvider = document.getElementById("email-provider");
         if (elProvider) {
-            elProvider.innerText = datos.email_sender && datos.email_sender.organization_name 
-                ? datos.email_sender.organization_name 
-                : (datos.email_domain ? datos.email_domain.domain : "Gmail / Externo");
-        }
-
-        // 3. Limpiar secciones de nombres/usuarios genéricos si la API no los provee directamente
-        // (Para que no aparezcan tus datos personales al buscar otro correo)
-        const namesFound = document.querySelector(".names-found-card") || document.getElementById("names-found");
-        if(namesFound) {
-            namesFound.innerHTML = `<span class="badge">Consulta en vivo realizada</span><p style="margin-top:10px; color:#aaa;">Dominio verificado correctamente en los registros oficiales.</p>`;
+            let proveedor = "Desconocido";
+            if (datos.email_sender && datos.email_sender.organization_name) {
+                proveedor = datos.email_sender.organization_name;
+            } else if (datos.email_domain && datos.email_domain.domain) {
+                proveedor = datos.email_domain.domain;
+            }
+            elProvider.innerText = proveedor;
         }
 
     } catch (error) {
-        console.error("Error en tiempo real:", error);
-        alert("No se pudo conectar con el servidor de la API.");
+        console.error("Error al consultar:", error);
+        alert("Hubo un error al realizar la búsqueda en tiempo real.");
     }
 }
 
