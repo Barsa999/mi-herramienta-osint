@@ -378,28 +378,42 @@ body {
     </div>
 </div>
 
-    <div id="tp-email" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
-    <div id="pantalla-buscador">
-        <h1 class="titulo-grande" style="margin-bottom: 10px;">RASTREO DE CORREOS</h1>
-        <div class="contenedor-buscador-unico">
-            <input type="text" id="input-email" class="input-limpio" placeholder="ejemplo@target.com">
-        </div>
-        <button class="boton-modo-ia" style="margin-top:20px;" onclick="irAPaginaBlanca()">Siguiente</button>
+   <div id="tp-email" class="panel-herramienta" style="display: none;">
+    <div class="osint-header">
+        <h2>📧 MÓDULO AVANZADO DE RASTREO DE CORREOS</h2>
+        <p class="osint-subtitle">Analiza metadatos, brechas de seguridad y registros asociados a una dirección de email en tiempo real.</p>
     </div>
 
-    <div id="pantalla-blanca" style="display: none; background: white; padding-top: 50px; color: black;">
-        <div id="email-paso-2">
-            <p>¿Validar el correo: <span id="email-a-validar" style="color: #4af626; font-weight: bold;"></span>?</p>
-            <button class="boton-modo-ia" onclick="iniciarCarga('email')">Validar ahora</button>
+    <div class="osint-dashboard-grid">
+      
+        <div class="osint-card buscador-card">
+            <h3>Panel de Consulta</h3>
+            <p class="card-desc">Ingresa el objetivo para iniciar el escaneo en bases de datos OSINT.</p>
+            
+            <div class="buscador-wrapper">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="input-email" placeholder="ejemplo@target.com">
+            </div>
+            
+            <button class="btn-osint-action" onclick="ejecutarBusquedaEmail()">
+                <i class="fas fa-search"></i> Iniciar Escaneo
+            </button>
         </div>
 
-        <div id="email-paso-3" style="display: none;">
-            <div class="barra-progreso" style="border-color: #333;"><div id="progreso-email" style="background: #333;"></div></div>
-            <p>Procesando...</p>
+        <div class="osint-card info-card">
+            <h3><i class="fas fa-shield-alt"></i> Estado del Módulo</h3>
+            <ul class="stats-list">
+                <li><span>Estado API:</span> <strong class="text-success">Conectado (Online)</strong></li>
+                <li><span>Bases de datos:</span> <strong>+45 Globales</strong></li>
+                <li><span>Nivel de precisión:</span> <strong class="text-neon">99.8%</strong></li>
+            </ul>
         </div>
+    </div>
 
-        <div id="email-paso-4" style="display: none;">
-            <div id="textos-resultados" style="color: black; padding: 15px;"></div>
+    <div class="osint-card resultados-card">
+        <h3><i class="fas fa-terminal"></i> Resultados del Análisis</h3>
+        <div id="textos-resultados" class="terminal-box">
+            <span class="placeholder-text">// Esperando objetivo para procesar datos... Realiza una búsqueda arriba.</span>
         </div>
     </div>
 </div>
