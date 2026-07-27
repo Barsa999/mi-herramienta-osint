@@ -953,6 +953,28 @@ body {
     }
 }
 
+function manejarIntroEmail(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const inputVal = document.getElementById('input-email').value.trim();
+        
+        if (!inputVal) {
+            alert("Por favor, ingresa un correo válido.");
+            return;
+        }
+
+        // Asigna el valor
+        document.getElementById('email-a-validar').innerText = inputVal;
+
+        // Oculta el buscador y muestra la pantalla blanca interna
+        document.getElementById('pantalla-buscador').style.display = 'none';
+        document.getElementById('pantalla-blanca').style.display = 'block';
+
+        // Ejecuta la carga
+        iniciarCargaEmailCompleta(inputVal);
+    }
+}
+
 function iniciarCargaEmailCompleta(email) {
     let barra = document.getElementById('progreso-email');
     let textoEstado = document.getElementById('texto-estado-proceso');
@@ -985,7 +1007,13 @@ function iniciarCargaEmailCompleta(email) {
 }
 
 function regresarBuscadorEmail() {
+    // Oculta la pantalla blanca de resultados
     document.getElementById('pantalla-blanca').style.display = 'none';
+    
+    // Vuelve a mostrar el buscador original centrado
+    document.getElementById('pantalla-buscador').style.display = 'flex';
+    
+    // Limpia el input
     document.getElementById('input-email').value = '';
 }
       
