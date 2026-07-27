@@ -1167,27 +1167,39 @@ function regresarBuscadorEmail() {
         alert("No se pudo completar la búsqueda en tiempo real.");
     }
 }
-
+    
     function mostrarHerramienta(id) {
-        const elementos = document.querySelectorAll('.panel-herramienta, .buscador-central, #vista-inicio');
-        elementos.forEach(el => {
-            if (el) el.style.display = 'none';
-        });
+    const elementos = document.querySelectorAll('.panel-herramienta, .buscador-central, #vista-inicio, .vista-modulo');
+    elementos.forEach(el => {
+        if (el) el.style.display = 'none';
+    });
 
-        if (id === 'tp-email') {
-            document.body.classList.add('fondo-email-activo');
-        } else {
-            document.body.classList.remove('fondo-email-activo');
-        }
+    if (id === 'tp-email' || id === 'email') {
+        document.body.classList.add('fondo-email-activo');
+    } else {
+        document.body.classList.remove('fondo-email-activo');
+    }
 
-        var el = document.getElementById(id);
-        if (el) {
-            el.style.display = 'flex';
-            el.style.flexDirection = 'column'; 
-            el.style.alignItems = 'center';
-            el.style.justifyContent = 'center';
+    let contenedorDestino = document.getElementById(id);
+
+    if (!contenedorDestino) {
+        contenedorDestino = document.getElementById('vista-' + id) || document.querySelector('.' + id);
+    }
+
+    if (contenedorDestino) {
+        contenedorDestino.style.display = 'flex';
+        contenedorDestino.style.flexDirection = 'column';
+        contenedorDestino.style.alignItems = 'center';
+        contenedorDestino.style.justifyContent = 'center';
+    } else {
+        // Fallback: si la vista específica aún no tiene su HTML creado, mostramos un aviso amigable en el buscador central
+        const buscadorCentral = document.querySelector('.buscador-central');
+        if (buscadorCentral) {
+            buscadorCentral.style.display = 'flex';
+            console.warn(`La sección "${id}" seleccionada aún no tiene un contenedor HTML asignado en la página.`);
         }
     }
+}
 
     async function buscarTelefono() {
         const numero = document.getElementById('phoneInput').value;
