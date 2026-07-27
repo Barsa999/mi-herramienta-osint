@@ -378,33 +378,33 @@ body {
     </div>
 </div>
 
-<div id="tp-email" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
-        <!-- Pantalla de búsqueda inicial -->
-        <div id="pantalla-buscador">
-            <h1 class="titulo-grande" style="margin-bottom: 20px;">RASTREO DE CORREOS</h1>
-            <div class="contenedor-buscador-unico">
-                <input type="text" id="input-email" class="input-limpio" placeholder="ejemplo@target.com" onkeydown="manejarIntroEmail(event)">
-            </div>
-        </div>
-
-        <div id="pantalla-blanca" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; padding: 40px; color: black; z-index: 10; box-sizing: border-box; text-align: left; overflow-y: auto;">
-            <button onclick="regresarBuscadorEmail()" style="float: right; padding: 8px 15px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">Volver</button>
-            
-            <h2 style="color: #111; margin-bottom: 20px;">Resultados del Análisis para: <span id="email-a-validar" style="color: #27ae60;"></span></h2>
-            
-            <div id="email-paso-3" style="margin: 20px 0;">
-                <div class="barra-progreso" style="border-color: #ccc; width: 100%; height: 15px; background: #eee; border-radius: 10px; overflow: hidden;">
-                    <div id="progreso-email" style="background: #27ae60; height: 100%; width: 0%;"></div>
-                </div>
-                <p id="texto-estado-proceso" style="margin-top: 10px; font-weight: bold; color: #555;">Procesando escaneo en bases de datos...</p>
-            </div>
-
-            <div id="email-paso-4" style="display: none; margin-top: 20px;">
-                <div id="textos-resultados" style="color: #222; background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace;"></div>
-            </div>
+<div id="tp-email" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px; position: relative; width: 100%; height: 100%; box-sizing: border-box;">
+    
+    <div id="pantalla-buscador" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <h1 class="titulo-grande" style="margin-bottom: 20px;">RASTREO DE CORREOS</h1>
+        <div class="contenedor-buscador-unico">
+            <input type="text" id="input-email" class="input-limpio" placeholder="ejemplo@target.com" onkeydown="manejarIntroEmail(event)">
         </div>
     </div>
 
+    <div id="pantalla-blanca" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: white; padding: 40px; color: black; z-index: 20; box-sizing: border-box; text-align: left; overflow-y: auto; border-radius: inherit;">
+        <button onclick="regresarBuscadorEmail()" style="float: right; padding: 8px 15px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">Volver</button>
+        
+        <h2 style="color: #111; margin-bottom: 20px; font-size: 20px;">Resultados del Análisis para: <span id="email-a-validar" style="color: #27ae60;"></span></h2>
+        
+        <div id="email-paso-3" style="margin: 20px 0;">
+            <div class="barra-progreso" style="border-color: #ccc; width: 100%; height: 12px; background: #eee; border-radius: 10px; overflow: hidden;">
+                <div id="progreso-email" style="background: #27ae60; height: 100%; width: 0%;"></div>
+            </div>
+            <p id="texto-estado-proceso" style="margin-top: 10px; font-weight: bold; color: #555; font-size: 14px;">Procesando escaneo en bases de datos...</p>
+        </div>
+
+        <div id="email-paso-4" style="display: none; margin-top: 20px;">
+            <div id="textos-resultados" style="color: #222; background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; font-family: monospace; font-size: 13px;"></div>
+        </div>
+    </div>
+</div>
+    
 <div id="tp-ip" class="panel-herramienta" style="display: none; text-align: center; padding-top: 50px;">
     <h1 class="titulo-grande">RASTREO DE DIRECCIONES IP</h1>
     <div class="contenedor-buscador-unico">
