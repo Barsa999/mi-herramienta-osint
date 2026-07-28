@@ -408,8 +408,12 @@ input[type="email"],
                     <p id="texto-estado-proceso" style="margin-top: 10px; font-weight: 500; color: #8c92a4; font-size: 13px; text-align: center;">Procesando escaneo en bases de datos...</p>
                 </div>
 
+                <!-- NUEVOS DATOS INTEGRADOS DENTRO DE UNA TARJETA IDÉNTICA A LAS DE ARRIBA -->
                 <div id="email-paso-4" style="display: none; margin-top: 20px;">
-                    <div id="textos-resultados" style="color: #cbd5e1; background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531; font-family: monospace; font-size: 13px; line-height: 1.5;"></div>
+                    <div style="background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531;">
+                        <span style="font-size: 12px; color: #8c92a4; font-weight: 500; display: block; margin-bottom: 12px;">📊 Abstract API Verification Details</span>
+                        <div id="textos-resultados" style="color: #cbd5e1; font-family: monospace; font-size: 13px; line-height: 1.6;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -867,22 +871,22 @@ input[type="email"],
 
                     let contenedorResultados = document.getElementById('textos-resultados');
                     contenedorResultados.innerHTML = `
-                        <p><strong>[+] Objetivo analizado:</strong> ${email}</p>
-                        <p><strong>[+] Estado Deliverability:</strong> ${data.deliverability || 'N/A'}</p>
-                        <p><strong>[+] Quality Score:</strong> ${data.quality_score || 'N/A'}</p>
-                        <p><strong>[+] Servidor SMTP Válido:</strong> ${data.is_smtp_valid?.value ? "Sí" : "No"}</p>
-                        <p><strong>[+] Email Temporal / Desechable:</strong> ${data.is_disposable_email?.value ? "Sí" : "No"}</p>
-                        <p><strong>[+] Servidor Catch-all:</strong> ${data.is_catchall_email?.value ? "Sí" : "No"}</p>
+                        <p style="margin: 6px 0;"><strong>[+] Objetivo analizado:</strong> ${email}</p>
+                        <p style="margin: 6px 0;"><strong>[+] Estado Deliverability:</strong> ${data.deliverability || 'N/A'}</p>
+                        <p style="margin: 6px 0;"><strong>[+] Quality Score:</strong> ${data.quality_score || 'N/A'}</p>
+                        <p style="margin: 6px 0;"><strong>[+] Servidor SMTP Válido:</strong> ${data.is_smtp_valid?.value ? "Sí" : "No"}</p>
+                        <p style="margin: 6px 0;"><strong>[+] Email Temporal / Desechable:</strong> ${data.is_disposable_email?.value ? "Sí" : "No"}</p>
+                        <p style="margin: 6px 0;"><strong>[+] Servidor Catch-all:</strong> ${data.is_catchall_email?.value ? "Sí" : "No"}</p>
                     `;
                 } catch (err) {
                     barra.style.width = '100%';
                     textoPorcentaje.innerText = '100%';
-                    textoEstado.innerText = "¡Análisis completado (Datos locales/simulados) así como brechas!";
+                    textoEstado.innerText = "¡Análisis completado (Datos locales/simulados)!";
                     paso4.style.display = 'block';
                     document.getElementById('textos-resultados').innerHTML = `
-                        <p><strong>[+] Objetivo analizado:</strong> ${email}</p>
-                        <p><strong>[+] Estado:</strong> Correo activo y verificado en bases de datos públicas.</p>
-                        <p><strong>[+] Brechas de seguridad detectadas:</strong> Ninguna asociada en registros recientes.</p>
+                        <p style="margin: 6px 0;"><strong>[+] Objetivo analizado:</strong> ${email}</p>
+                        <p style="margin: 6px 0;"><strong>[+] Estado:</strong> Correo activo y verificado en bases de datos públicas.</p>
+                        <p style="margin: 6px 0;"><strong>[+] Brechas de seguridad detectadas:</strong> Ninguna asociada en registros recientes.</p>
                     `;
                 }
             } else {
