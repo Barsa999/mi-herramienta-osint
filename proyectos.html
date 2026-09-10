@@ -929,6 +929,20 @@ input[type="email"],
             resDiv.innerHTML = "<p style='color: red;'>Error de conexión con el servidor.</p>";
         }
     }
+    
+async function enviarMensajeAWhoami(textoUsuario) {
+    try {
+        let respuesta = await fetch('http://127.0.0.1:5000/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mensaje: textoUsuario })
+        });
+        let datos = await respuesta.json();
+        alert(datos.respuesta);
+    } catch (error) {
+        console.error("Error conectando con Whoami:", error);
+    }
+}
 </script>
 
 </body>
