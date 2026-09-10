@@ -82,8 +82,7 @@ body {
     margin: auto;
 }
 
-.buscador-central .whoami-ia, 
-#tp-general > div:first-child:not(.buscador-central):not(h1):not(div) {
+.buscador-central .whoami-ia {
     display: none !important;
 }
 
@@ -99,16 +98,11 @@ body {
     margin: 0 auto;
 }
 
-.contenedor-buscador-unico {
-    border: 2px solid #4af626 !important; 
-    border-radius: 30px;        
-    padding: 8px 20px;         
-    display: flex;
-    align-items: center;
-    background: rgba(19, 19, 19, 0.85) !important;
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;            
+.contenedor-buscador-unico,
+.buscador-central input[type="text"],
+.buscador-central input {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
 }
 
 #email-paso-4 {
@@ -125,23 +119,26 @@ body {
     background-repeat: no-repeat !important;
 }
 
-.input-google {
+.input-google, 
+.buscador-central input {
     background: transparent !important;
     border: none !important;
     padding: 5px 10px;
     width: 100%;
     font-size: 16px;
     outline: none;
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
 }
 
-.input-google:focus {
+.input-google:focus,
+.buscador-central input:focus {
     outline: none;
 }
 
-.input-google::placeholder {
-    color: #9aa0a6 !important;
+.input-google::placeholder,
+.buscador-central input::placeholder {
+    color: #70757a !important;
     opacity: 1 !important;
 }
 
@@ -180,6 +177,7 @@ input[type="email"],
     height: 100vh;
     overflow-y: auto;
     position: relative;
+    background: transparent !important;
 }
 
 .menu-osint li {
