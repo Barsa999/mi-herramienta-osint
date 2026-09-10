@@ -1030,16 +1030,16 @@ document.getElementById('input-busqueda').addEventListener('keydown', async func
             })
         });
 
-        const datos = await respuesta.json();
-        const textoRespuesta = datos.candidates?.[0]?.content?.parts?.[0]?.text || "No se pudo obtener una respuesta.";
+       const datos = await respuesta.json();
+    const textoRespuesta = datos.candidates?.[0]?.content?.parts?.[0]?.text || "No se pudo obtener una respuesta.";
 
-        aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+    aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 
-  } catch (error) {
-        aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini.</span>";
-    }
-    
+} catch (error) {
+    aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini.</span>";
+}
+});
 </script>
 
 <script>
