@@ -303,7 +303,7 @@ input[type="email"],
         
         <div class="barra-busqueda-completa">
             <i class="fas fa-terminal" style="color: #4af626;"></i> 
-            <input type="text" id="input-busqueda" class="input-google" placeholder="Pregúntale a WHOAMI (ej. verificar correo, rastrear ip, hash...)" style="color: #000; font-weight: 500;" onkeydown="procesarComandoWhoami(event)">
+           <input type="text" id="input-busqueda" class="input-google" placeholder="Pregúntale a WHOAMI (ej. verificar correo, rastrear ip, hash...)" style="color: #000; font-weight: 500;">
         </div>
         <button class="boton-modo-ia" style="background: rgba(74, 246, 38, 0.1) !important; color: #4af626 !important; border: 1px solid #4af626 !important;">
             <i class="fas fa-sparkles" style="color: #4af626 !important;"></i> Modo IA Activo
@@ -930,14 +930,11 @@ input[type="email"],
         }
     }
     
-async function procesarComandowhoami(event) {
-    // Si presiona la tecla Enter (código 13)
-    if (event.key === 'Enter' || event.keyCode === 13) {
-        event.preventDefault(); 
+document.getElementById('input-busqueda').addEventListener('keydown', async function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
         
-        const inputField = document.getElementById('input-busqueda');
-        const textoUsuario = inputField.value;
-        
+        const textoUsuario = this.value;
         if (!textoUsuario.trim()) return;
 
         try {
@@ -947,17 +944,14 @@ async function procesarComandowhoami(event) {
                 body: JSON.stringify({ mensaje: textoUsuario })
             });
             let datos = await respuesta.json();
-            
             alert(datos.respuesta);
-            
-            inputField.value = '';
-            
+            this.value = '';
         } catch (error) {
             console.error("Error conectando con Whoami:", error);
-            alert("Error: No se pudo conectar con el servidor local de Whoami.");
+            alert("Error: No se pudo conectar con el servidor local.");
         }
     }
-}
+});
 </script>
 </body>
 </html>
