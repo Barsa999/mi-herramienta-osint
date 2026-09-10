@@ -1036,11 +1036,12 @@ document.getElementById('input-busqueda').addEventListener('keydown', async func
         aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    } catch (error) {
+  } catch (error) {
         aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini.</span>";
     }
-</script>
     
+</script>
+
 <script>
 document.querySelectorAll('.buscador-central input, .input-google').forEach(input => {
     input.style.color = '#000000';
