@@ -296,23 +296,26 @@ input[type="email"],
     <a href="base web.html" class="btn-logout" style="color: #4af626; padding: 20px; text-decoration: none; font-weight: bold;">🚪 LOG OUT</a>
 </div>
 
-<div class="main-content">
-<div id="tp-general" class="buscador-central" style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100% !important; max-width: 100% !important; flex: 1; min-height: 100vh; background: #070913 !important; padding: 40px 20px; box-sizing: border-box; margin: 0 !important;">
-        <h1 class="titulo-grande" style="color: #4af626; margin-bottom: 5px;">WHOAMI - IA</h1>
-        <p style="color: #888; font-size: 14px; margin-bottom: 15px;">Sistema de Inteligencia Artificial para Redirección OSINT</p>
-        
-        <div class="barra-busqueda-completa">
-            <i class="fas fa-terminal" style="color: #4af626;"></i> 
-           <input type="text" id="input-busqueda" class="input-google" placeholder="Pregúntale a WHOAMI (ej. verificar correo, rastrear ip, hash...)" style="color: #000; font-weight: 500;">
-        </div>
-       <div id="whoami-chat-container" style="display: none; width: 700px; max-width: 95%; margin: 20px auto; max-height: 400px; overflow-y: auto; flex-direction: column; gap: 15px; padding: 10px; font-family: sans-serif; text-align: left;">
-</div>
+<div class="main-content" style="background-color: #131313 !important; min-height: 100vh; position: relative; box-sizing: border-box;">
     
-        <button class="boton-modo-ia" style="background: rgba(74, 246, 38, 0.1) !important; color: #4af626 !important; border: 1px solid #4af626 !important;">
-            <i class="fas fa-sparkles" style="color: #4af626 !important;"></i> Modo IA Activo
-        </button>
+    <div style="position: absolute; top: 20px; left: 20px; color: #4af626; font-family: monospace; font-size: 16px; font-weight: bold; z-index: 10;">
+        WHOAMI - IA
     </div>
 
+    <div id="tp-general" class="buscador-central" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; width: 100% !important; max-width: 100% !important; background: transparent !important; padding: 40px 20px; box-sizing: border-box; margin: 0 !important; text-align: center;">
+
+        <h1 class="titulo-grande" style="color: #e3e3e3; font-size: 42px; font-weight: 400; margin-bottom: 30px; font-family: sans-serif;">¿En qué puedo ayudarte?</h1>
+        
+        <div class="barra-busqueda-completa" style="width: 700px; max-width: 95%; background-color: #1e1f20; border-radius: 28px; display: flex; align-items: center; padding: 15px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); box-sizing: border-box; border: 1px solid #444746;">
+            <i class="fas fa-terminal" style="color: #4af626; margin-right: 15px; font-size: 18px;"></i> 
+            <input type="text" id="input-busqueda" class="input-google" placeholder="Hola Barsa, ¿en qué puedo ayudarte?" style="background: transparent; border: none; color: #e3e3e3; font-size: 16px; width: 100%; outline: none; font-family: sans-serif;">
+        </div>
+
+        <div id="whoami-chat-container" style="display: none; width: 700px; max-width: 95%; margin: 20px auto; max-height: 400px; overflow-y: auto; flex-direction: column; gap: 15px; padding: 10px; font-family: sans-serif; text-align: left;">
+        </div>
+
+    </div>
+</div>
     <div id="tp-email" class="panel-herramienta" style="display: none;">
         <div id="pantalla-buscador" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
             <h1 class="titulo-grande" style="margin-bottom: 20px;">RASTREO DE CORREOS</h1>
