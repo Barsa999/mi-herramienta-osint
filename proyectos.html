@@ -358,20 +358,22 @@ div#pantalla-blanca {
         WHOAMI - IA
     </div>
 
-    <div id="tp-general" class="buscador-central" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; width: 100% !important; max-width: 100% !important; background: #131313 !important; padding: 60px 20px; box-sizing: border-box; margin: 0 !important; text-align: center;">
-        
-        <h1 class="titulo-grande" style="color: #e3e3e3; font-size: 42px; font-weight: 400; margin-bottom: 30px; font-family: sans-serif;">¿En qué puedo ayudarte?</h1>
-        
-        <div class="barra-busqueda-completa" style="width: 700px; max-width: 95%; background-color: #1e1f20; border-radius: 28px; display: flex; align-items: center; padding: 15px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); box-sizing: border-box; border: 1px solid #444746;">
-            <i class="fas fa-terminal" style="color: #4af626; margin-right: 15px; font-size: 18px;"></i> 
-            <input type="text" id="input-busqueda" placeholder="Hola Barsa, ¿en qué puedo ayudarte?" style="background: transparent !important; border: none !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; font-size: 16px; width: 100%; outline: none; font-family: sans-serif;">
-            <i class="fas fa-microphone" style="color: #9aa0a6; margin-left: 15px; font-size: 18px; cursor: pointer;" title="Entrada por voz"></i>
-        </div>
-
-        <div id="whoami-chat-container" style="display: none; width: 700px; max-width: 95%; margin: 30px auto 0 auto; overflow-y: visible; flex-direction: column; gap: 15px; padding: 10px; font-family: sans-serif; text-align: left;">
-        </div>
-
+   <div id="tp-general" class="buscador-central" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; width: 100% !important; max-width: 100% !important; background: transparent !important;">
+    
+    <h1 class="titulo-grande" style="color: #e3e3e3; font-size: 42px; font-weight: 400; margin-bottom: 30px; font-family: sans-serif;">¿En qué puedo ayudarte?</h1>
+    
+    <!-- Historial de mensajes de la IA -->
+    <div id="whoami-chat-container" style="display: flex; width: 700px; max-width: 95%; max-height: 40vh; overflow-y: auto; margin-bottom: 20px; flex-direction: column; gap: 15px; padding: 10px; font-family: sans-serif; text-align: left;">
     </div>
+
+    <!-- Barra donde escribes tu pregunta -->
+    <div class="barra-busqueda-completa" style="width: 700px; max-width: 95%; background-color: #1e1f20; border-radius: 28px; display: flex; align-items: center; padding: 15px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+        <i class="fas fa-terminal" style="color: #4af626; margin-right: 15px; font-size: 18px;"></i>
+        <input type="text" id="input-busqueda" placeholder="Hola Barsa, ¿en qué puedo ayudarte?" onkeydown="if(event.key === 'Enter') enviarMensajeIA()" style="background: transparent !important; border: none !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; width: 100%; outline: none; font-size: 16px;">
+        <i class="fas fa-paper-plane" onclick="enviarMensajeIA()" style="color: #4af626; margin-left: 15px; font-size: 18px; cursor: pointer;" title="Enviar"></i>
+    </div>
+
+</div>
 </div>
     <div id="tp-email" class="panel-herramienta" style="display: none;">
         <div id="pantalla-buscador" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
@@ -1010,29 +1012,33 @@ document.getElementById('input-busqueda').addEventListener('keydown', async func
 
         this.value = '';
 
-        const aiBubble = document.createElement('div');
-        aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
-        aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
-        chatContainer.appendChild(aiBubble);
+     const aiBubble = document.createElement('div');
+    aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
+    aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
+    chatContainer.appendChild(aiBubble);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    try {
+        const apiKey = "AQ.Ab8RN6KyCeR6VqZvA_ViOYDTBGryV-9JL82VrGCOvGIkC8wzyA";
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+        const respuesta = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: textoUsuario }] }]
+            })
+        });
+
+        const datos = await respuesta.json();
+        const textoRespuesta = datos.candidates?.[0]?.content?.parts?.[0]?.text || "No se pudo obtener una respuesta.";
+
+        aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
-        try {
-            let respuesta = await fetch('http://127.0.0.1:5000/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ mensaje: textoUsuario })
-            });
-            let datos = await respuesta.json();
-            
-            aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${datos.respuesta}`;
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            
-        } catch (error) {
-            console.error("Error conectando con Whoami:", error);
-            aiBubble.innerHTML = "<span style='color: #f2b8b5;'>Error: No se pudo conectar con el servidor local de Whoami.</span>";
-        }
+    } catch (error) {
+        aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini.</span>";
     }
-});
 </script>
     
 <script>
