@@ -305,6 +305,11 @@ input[type="email"],
             <i class="fas fa-terminal" style="color: #4af626;"></i> 
            <input type="text" id="input-busqueda" class="input-google" placeholder="Pregúntale a WHOAMI (ej. verificar correo, rastrear ip, hash...)" style="color: #000; font-weight: 500;">
         </div>
+        <div id="whoami-chat-box" style="display: none; width: 600px; max-width: 90%; margin: 20px auto; background: rgba(10, 15, 10, 0.9); border: 1px solid #4af626; border-radius: 8px; padding: 15px; color: #4af626; font-family: monospace; text-align: left; max-height: 300px; overflow-y: auto; box-shadow: 0 0 15px rgba(74, 246, 38, 0.2);">
+        <div style="font-weight: bold; border-bottom: 1px solid #4af626; padding-bottom: 5px; margin-bottom: 8px;">WHOAMI - RESPUESTA:</div>
+        <div id="whoami-respuesta-texto">Esperando comando...</div>
+    </div>
+    
         <button class="boton-modo-ia" style="background: rgba(74, 246, 38, 0.1) !important; color: #4af626 !important; border: 1px solid #4af626 !important;">
             <i class="fas fa-sparkles" style="color: #4af626 !important;"></i> Modo IA Activo
         </button>
@@ -937,6 +942,13 @@ document.getElementById('input-busqueda').addEventListener('keydown', async func
         const textoUsuario = this.value;
         if (!textoUsuario.trim()) return;
 
+        const chatBox = document.getElementById('whoami-chat-box');
+        const respuestaTexto = document.getElementById('whoami-respuesta-texto');
+
+        // Muestra el panel y pon un texto de "Pensando..."
+        chatBox.style.display = 'block';
+        respuestaTexto.innerHTML = "Analizando consulta...";
+
         try {
             let respuesta = await fetch('http://127.0.0.1:5000/api/chat', {
                 method: 'POST',
@@ -944,11 +956,14 @@ document.getElementById('input-busqueda').addEventListener('keydown', async func
                 body: JSON.stringify({ mensaje: textoUsuario })
             });
             let datos = await respuesta.json();
-            alert(datos.respuesta);
-            this.value = '';
+            
+            // Muestra la respuesta real que viene de Python
+            respuestaTexto.innerHTML = datos.respuesta;
+            this.value = ''; // Limpia la barra de búsqueda
+            
         } catch (error) {
             console.error("Error conectando con Whoami:", error);
-            alert("Error: No se pudo conectar con el servidor local.");
+            respuestaTexto.innerHTML = "<span style='color: #ff4444;'>Error: No se pudo conectar con el servidor local de Whoami.</span>";
         }
     }
 });
