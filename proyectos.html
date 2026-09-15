@@ -29,7 +29,7 @@ body {
 .barra-busqueda-completa {
     display: flex;
     align-items: center;
-    background-color: white !important;
+    background-color: #ffffff !important; 
     border-radius: 40px;
     padding: 10px 20px;
     width: 100%;
@@ -324,16 +324,18 @@ textarea::placeholder {
     color: #a0a5aa !important;
     opacity: 1 !important;
 }
-    .barra-busqueda-completa input,
+
+/* CORRECCIÓN APLICADA AQUÍ: Texto negro para la barra blanca principal */
+.barra-busqueda-completa input,
 #input-busqueda {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
     background: transparent !important;
 }
 
 .barra-busqueda-completa input::placeholder,
 #input-busqueda::placeholder {
-    color: #a0a5aa !important;
+    color: #70757a !important;
     opacity: 1 !important;
 }
 </style>
