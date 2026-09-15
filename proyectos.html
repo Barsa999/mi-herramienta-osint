@@ -339,6 +339,13 @@ div.barra-busqueda-completa input[type="text"] {
     opacity: 1 !important;
     font-size: 16px !important;
 }
+    .barra-busqueda-completa input,
+#input-busqueda {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    background: transparent !important;
+    opacity: 1 !important;
+}
 </style>
 </head>
 <body onload="mostrarHerramienta('tp-general')">
@@ -976,6 +983,15 @@ div.barra-busqueda-completa input[type="text"] {
     document.getElementById('btn-enviar-ia').addEventListener('click', function() {
         enviarMensajeIA();
     });
+    const inputBusqueda = document.querySelector('.barra-busqueda-completa input') || document.getElementById('input-busqueda');
+    if (inputBusqueda) {
+        inputBusqueda.style.color = '#000000';
+        inputBusqueda.style.webkitTextFillColor = '#000000';
+        inputBusqueda.addEventListener('input', () => {
+            inputBusqueda.style.setProperty('color', '#000000', 'important');
+            inputBusqueda.style.setProperty('-webkit-text-fill-color', '#000000', 'important');
+        });
+    }
 </script>
 </body>
 </html>
