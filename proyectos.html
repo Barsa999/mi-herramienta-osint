@@ -101,8 +101,8 @@ body {
 .contenedor-buscador-unico,
 .buscador-central input[type="text"],
 .buscador-central input {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
 }
 #email-paso-4 {
     margin-top: 20px;
@@ -126,8 +126,8 @@ body {
     width: 100%;
     font-size: 16px;
     outline: none;
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
 }
 
 .input-google:focus,
@@ -137,7 +137,7 @@ body {
 
 .input-google::placeholder,
 .buscador-central input::placeholder {
-    color: #70757a !important;
+    color: #a0a5aa !important;
     opacity: 1 !important;
 }
 
@@ -306,7 +306,7 @@ div#pantalla-blanca {
     background: transparent !important;
     background-color: transparent !important;
 }
-    #pantalla-blanca div[style*="background"] {
+#pantalla-blanca div[style*="background"] {
     background: rgba(0, 0, 0, 0.4) !important;
     backdrop-filter: blur(5px);
 }
@@ -358,23 +358,22 @@ div#pantalla-blanca {
         WHOAMI - IA
     </div>
 
-   <div id="tp-general" class="buscador-central" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; width: 100% !important; max-width: 100% !important; background: transparent !important;">
-    
-    <h1 class="titulo-grande" style="color: #e3e3e3; font-size: 42px; font-weight: 400; margin-bottom: 30px; font-family: sans-serif;">¿En qué puedo ayudarte?</h1>
-    
-    <!-- Historial de mensajes de la IA -->
-    <div id="whoami-chat-container" style="display: flex; width: 700px; max-width: 95%; max-height: 40vh; overflow-y: auto; margin-bottom: 20px; flex-direction: column; gap: 15px; padding: 10px; font-family: sans-serif; text-align: left;">
+    <div id="tp-general" class="buscador-central" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; width: 100% !important; max-width: 100% !important; background: transparent !important;">
+        
+        <h1 class="titulo-grande" style="color: #e3e3e3; font-size: 42px; font-weight: 400; margin-bottom: 30px; font-family: sans-serif;">¿En qué puedo ayudarte?</h1>
+        
+        <!-- Historial de mensajes de la IA -->
+        <div id="whoami-chat-container" style="display: none; width: 700px; max-width: 95%; max-height: 40vh; overflow-y: auto; margin-bottom: 20px; flex-direction: column; gap: 15px; padding: 10px; font-family: sans-serif; text-align: left;">
+        </div>
+
+        <!-- Barra donde escribes tu pregunta -->
+        <div class="barra-busqueda-completa" style="width: 700px; max-width: 95%; background-color: #1e1f20; border-radius: 28px; display: flex; align-items: center; padding: 15px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+            <i class="fas fa-terminal" style="color: #4af626; margin-right: 15px; font-size: 18px;"></i>
+            <input type="text" id="input-busqueda" placeholder="Hola Barsa, ¿en qué puedo ayudarte?" style="background: transparent !important; border: none !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; width: 100%; outline: none; font-size: 16px;">
+            <i class="fas fa-paper-plane" id="btn-enviar-ia" style="color: #4af626; margin-left: 15px; font-size: 18px; cursor: pointer;" title="Enviar"></i>
+        </div>
     </div>
 
-    <!-- Barra donde escribes tu pregunta -->
-    <div class="barra-busqueda-completa" style="width: 700px; max-width: 95%; background-color: #1e1f20; border-radius: 28px; display: flex; align-items: center; padding: 15px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
-        <i class="fas fa-terminal" style="color: #4af626; margin-right: 15px; font-size: 18px;"></i>
-        <input type="text" id="input-busqueda" placeholder="Hola Barsa, ¿en qué puedo ayudarte?" onkeydown="if(event.key === 'Enter') enviarMensajeIA()" style="background: transparent !important; border: none !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; width: 100%; outline: none; font-size: 16px;">
-        <i class="fas fa-paper-plane" onclick="enviarMensajeIA()" style="color: #4af626; margin-left: 15px; font-size: 18px; cursor: pointer;" title="Enviar"></i>
-    </div>
-
-</div>
-</div>
     <div id="tp-email" class="panel-herramienta" style="display: none;">
         <div id="pantalla-buscador" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
             <h1 class="titulo-grande" style="margin-bottom: 20px;">RASTREO DE CORREOS</h1>
@@ -383,7 +382,7 @@ div#pantalla-blanca {
             </div>
         </div>
 
-        <div id="pantalla-blanca" style="display: none; position: fixed !important; top: 0 !important; left: 220px !important; right: 0 !important; bottom: 0 !important; width: calc(100vw - 220px) !important; max-width: none !important; height: 100vh !important; background: #0f1115 !important; padding: 30px 40px !important; color: #ffffff !important; z-index: 999999 !important; box-sizing: border-box !important; text-align: left !important; overflow-y: auto !important; border-radius: 0 !important; margin: 0 !important; font-family: sans-serif !important;">
+        <div id="pantalla-blanca" style="display: none; position: fixed !important; top: 0 !important; left: 280px !important; right: 0 !important; bottom: 0 !important; width: calc(100vw - 280px) !important; max-width: none !important; height: 100vh !important; background: #0f1115 !important; padding: 30px 40px !important; color: #ffffff !important; z-index: 999999 !important; box-sizing: border-box !important; text-align: left !important; overflow-y: auto !important; border-radius: 0 !important; margin: 0 !important; font-family: sans-serif !important;">
             <div style="max-width: 1200px; margin: 0 auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #22262e; padding-bottom: 20px;">
                     <div>
@@ -473,7 +472,6 @@ div#pantalla-blanca {
                     <p id="texto-estado-proceso" style="margin-top: 10px; font-weight: 500; color: #8c92a4; font-size: 13px; text-align: center;">Procesando escaneo en bases de datos...</p>
                 </div>
 
-                <!-- NUEVOS DATOS INTEGRADOS DENTRO DE UNA TARJETA IDÉNTICA A LAS DE ARRIBA -->
                 <div id="email-paso-4" style="display: none; margin-top: 20px;">
                     <div style="background: #14171f; padding: 20px; border-radius: 8px; border: 1px solid #202531;">
                         <span style="font-size: 12px; color: #8c92a4; font-weight: 500; display: block; margin-bottom: 12px;">📊 Abstract API Verification Details</span>
@@ -745,107 +743,6 @@ div#pantalla-blanca {
         }
     }
 
-    function procesarComandoWhoami(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            const texto = document.getElementById('input-busqueda').value.toLowerCase().trim();
-
-            if (texto.includes("correo") || texto.includes("email") || texto.includes("mail")) {
-                alert("WHOAMI IA: Redirigiendo al módulo de Verificación de Correo.");
-                mostrarHerramienta('tp-email');
-            } 
-            else if (texto.includes("dominio") || texto.includes("domain") || texto.includes("whois")) {
-                alert("WHOAMI IA: Abriendo Rastreo de Dominios.");
-                mostrarHerramienta('tp-domain');
-            }
-            else if (texto.includes("ip") || texto.includes("rastrear") || texto.includes("direccion")) {
-                alert("WHOAMI IA: Cargando módulo de Rastreo de IP.");
-                mostrarHerramienta('tp-ip');
-            } 
-            else if (texto.includes("imagen") || texto.includes("foto") || texto.includes("image") || texto.includes("exif")) {
-                alert("WHOAMI IA: Abriendo Análisis Forense de Imágenes.");
-                mostrarHerramienta('tp-image');
-            }
-            else if (texto.includes("usuario") || texto.includes("user") || texto.includes("username")) {
-                alert("WHOAMI IA: Abriendo Búsqueda de Username.");
-                mostrarHerramienta('tp-username');
-            }
-            else if (texto.includes("persona") || texto.includes("person") || texto.includes("nombre")) {
-                alert("WHOAMI IA: Abriendo Módulo de Búsqueda de Personas.");
-                mostrarHerramienta('tp-person');
-            }
-            else if (texto.includes("telefono") || texto.includes("celular") || texto.includes("numero") || texto.includes("phone")) {
-                alert("WHOAMI IA: Conectando con Phone Number Lookup.");
-                mostrarHerramienta('tp-phone');
-            }
-            else if (texto.includes("ubicacion") || texto.includes("mapa") || texto.includes("location") || texto.includes("map")) {
-                alert("WHOAMI IA: Abriendo Location 2 Map.");
-                mostrarHerramienta('tp-location');
-            }
-            else if (texto.includes("archivo") || texto.includes("documento") || texto.includes("file")) {
-                alert("WHOAMI IA: Abriendo File Analytics.");
-                mostrarHerramienta('tp-file');
-            }
-            else if (texto.includes("vin") || texto.includes("vehiculouto") || texto.includes("auto")) {
-                alert("WHOAMI IA: Abriendo VIN Decoder.");
-                mostrarHerramienta('tp-vin');
-            }
-            else if (texto.includes("hash") || texto.includes("md5") || texto.includes("sha")) {
-                alert("WHOAMI IA: Abriendo sistema de verificación de Hash.");
-                mostrarHerramienta('tp-hash');
-            }
-            else if (texto.includes("analytics") || texto.includes("google analytics") || texto.includes("ua-")) {
-                alert("WHOAMI IA: Abriendo Google Analytics OSINT.");
-                mostrarHerramienta('tp-analytics');
-            }
-            else if (texto.includes("magic") || texto.includes("bytes")) {
-                alert("WHOAMI IA: Abriendo Magic File Tool.");
-                mostrarHerramienta('dt-magic');
-            }
-            else if (texto.includes("validar") && texto.includes("lote")) {
-                alert("WHOAMI IA: Abriendo Validador de Emails en lote.");
-                mostrarHerramienta('dt-validate');
-            }
-            else if (texto.includes("geoip") || texto.includes("asn") || texto.includes("isp")) {
-                alert("WHOAMI IA: Abriendo GeoIP Lookup.");
-                mostrarHerramienta('dt-geoip');
-            }
-            else if (texto.includes("encoding") || texto.includes("base64") || texto.includes("hex") || texto.includes("decodificar")) {
-                alert("WHOAMI IA: Abriendo Encoding Decoder.");
-                mostrarHerramienta('dt-encoding');
-            }
-            else if (texto.includes("url") || texto.includes("parser") || texto.includes("link")) {
-                alert("WHOAMI IA: Abriendo URLs Parser.");
-                mostrarHerramienta('dt-urls');
-            }
-            else if (texto.includes("facebook") || texto.includes("fb")) {
-                alert("WHOAMI IA: Abriendo Módulo de Facebook.");
-                mostrarHerramienta('sm-facebook');
-            }
-            else if (texto.includes("twitter") || texto.includes("x") || texto.includes("tweet")) {
-                alert("WHOAMI IA: Abriendo Módulo de Twitter / X.");
-                mostrarHerramienta('sm-twitter');
-            }
-            else if (texto.includes("linkedin") || texto.includes("empleado") || texto.includes("empresa")) {
-                alert("WHOAMI IA: Abriendo Módulo de LinkedIn.");
-                mostrarHerramienta('sm-linkedin');
-            }
-            else if (texto.includes("telegram") || texto.includes("canal") || texto.includes("bot")) {
-                alert("WHOAMI IA: Abriendo Módulo de Telegram.");
-                mostrarHerramienta('sm-telegram');
-            }
-            else if (texto.includes("instagram") || texto.includes("insta") || texto.includes("ig")) {
-                alert("WHOAMI IA: Abriendo Módulo de Instagram.");
-                mostrarHerramienta('sm-instagram');
-            }
-            else {
-                if (texto) {
-                    window.open('https://www.google.com/search?q=' + encodeURIComponent(texto), '_blank');
-                }
-            }
-        }
-    }
-
     async function ejecutarBusquedaIP() {
         var ipTarget = document.getElementById('input-ip').value;
         var resultadoDiv = document.getElementById('resultado-ip');
@@ -994,12 +891,11 @@ div#pantalla-blanca {
             resDiv.innerHTML = "<p style='color: red;'>Error de conexión con el servidor.</p>";
         }
     }
-    
-document.getElementById('input-busqueda').addEventListener('keydown', async function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
 
-        const textoUsuario = this.value;
+    // Lógica optimizada y limpia para el chat con IA (Gemini)
+    async function enviarMensajeIA() {
+        const inputField = document.getElementById('input-busqueda');
+        const textoUsuario = inputField.value;
         if (!textoUsuario.trim()) return;
 
         let chatContainer = document.getElementById('whoami-chat-container');
@@ -1010,7 +906,7 @@ document.getElementById('input-busqueda').addEventListener('keydown', async func
         userBubble.innerText = textoUsuario;
         chatContainer.appendChild(userBubble);
 
-        this.value = '';
+        inputField.value = '';
 
         const aiBubble = document.createElement('div');
         aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
@@ -1040,18 +936,17 @@ document.getElementById('input-busqueda').addEventListener('keydown', async func
             aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini.</span>";
         }
     }
-});
-</script>
 
-<script>
-document.querySelectorAll('.buscador-central input, .input-google').forEach(input => {
-    input.style.color = '#000000';
-    input.style.webkitTextFillColor = '#000000';
-    input.addEventListener('input', function() {
-        this.style.color = '#000000';
-        this.style.webkitTextFillColor = '#000000';
+    document.getElementById('input-busqueda').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            enviarMensajeIA();
+        }
     });
-});
+
+    document.getElementById('btn-enviar-ia').addEventListener('click', function() {
+        enviarMensajeIA();
+    });
 </script>
 </body>
 </html>
