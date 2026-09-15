@@ -931,8 +931,8 @@ div.barra-busqueda-completa input[type="text"] {
     // Lógica optimizada y limpia para el chat con IA (Gemini)
     async function enviarMensajeIA() {
         const inputField = document.getElementById('input-busqueda');
-        const textoUsuario = inputField.value;
-        if (!textoUsuario.trim()) return;
+       if (inputField.value.includes("Hola Barsa")) { inputField.value = ""; }
+       const textoUsuario = inputField.value;
 
         let chatContainer = document.getElementById('whoami-chat-container');
         chatContainer.style.display = 'flex';
