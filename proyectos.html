@@ -325,18 +325,19 @@ textarea::placeholder {
     opacity: 1 !important;
 }
 
-/* Corrección definitiva: Forzar texto negro visible en la barra de búsqueda */
-.barra-busqueda-completa input,
-#input-busqueda {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
-    background: transparent !important;
-}
-
 .barra-busqueda-completa input::placeholder,
 #input-busqueda::placeholder {
     color: #70757a !important;
     opacity: 1 !important;
+}
+    /* FUERZA BRUTA ABSOLUTA PARA EL INPUT DE IA */
+input#input-busqueda,
+.barra-busqueda-completa input,
+div.barra-busqueda-completa input[type="text"] {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    opacity: 1 !important;
+    font-size: 16px !important;
 }
 </style>
 </head>
