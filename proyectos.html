@@ -998,7 +998,7 @@ div#pantalla-blanca {
 document.getElementById('input-busqueda').addEventListener('keydown', async function(event) {
     if (event.key === 'Enter') {
         event.preventDefault();
-        
+
         const textoUsuario = this.value;
         if (!textoUsuario.trim()) return;
 
@@ -1012,34 +1012,35 @@ document.getElementById('input-busqueda').addEventListener('keydown', async func
 
         this.value = '';
 
-     const aiBubble = document.createElement('div');
-    aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
-    aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
-    chatContainer.appendChild(aiBubble);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+        const aiBubble = document.createElement('div');
+        aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
+        aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
+        chatContainer.appendChild(aiBubble);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    try {
-        const apiKey = "AQ.Ab8RN6KyCeR6VqZvA_ViOYDTBGryV-9JL82VrGCOvGIkC8wzyA";
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        try {
+            const apiKey = "AQ.Ab8RN6KyCeR6VqZvA_ViOYDTbGrv-9JL82VrGCOvGIkC8wzyA";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-        const respuesta = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: textoUsuario }] }]
-            })
-        });
+            const respuesta = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: textoUsuario }] }]
+                })
+            });
 
-       const datos = await respuesta.json();
-    const textoRespuesta = datos.candidates?.[0]?.content?.parts?.[0]?.text || "No se pudo obtener una respuesta.";
+            const datos = await respuesta.json();
+            const textoRespuesta = datos.candidates?.[0]?.content?.parts?.[0]?.text || "No se pudo obtener una respuesta.";
 
-    aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+            aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
 
-} catch (error) {
-        aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini.</span>";
+        } catch (error) {
+            aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini.</span>";
+        }
     }
-        
+});
 </script>
 
 <script>
