@@ -928,22 +928,24 @@ div.barra-busqueda-completa input[type="text"] {
         }
     }
 
-    // Lógica optimizada y limpia para el chat con IA (Gemini)
     async function enviarMensajeIA() {
-        const inputField = document.getElementById('input-busqueda');
-       if (inputField.value.includes("Hola Barsa")) { inputField.value = ""; }
-       const textoUsuario = inputField.value;
+    const inputField = document.getElementById('input-busqueda');
+    const textoUsuario = inputField.value;
+    
+    if (!textoUsuario.trim()) return;
 
-        let chatContainer = document.getElementById('whoami-chat-container');
-        chatContainer.style.display = 'flex';
+    inputField.value = '';
+    inputField.defaultValue = '';
 
-        const userBubble = document.createElement('div');
-        userBubble.style.cssText = "background: #1e1f20; color: #e3e3e3; padding: 12px 20px; border-radius: 20px; max-width: 75%; align-self: flex-end; font-size: 15px; font-family: sans-serif; box-shadow: 0 2px 6px rgba(0,0,0,0.3);";
-        userBubble.innerText = textoUsuario;
-        chatContainer.appendChild(userBubble);
+    let chatContainer = document.getElementById('whoami-chat-container');
+    chatContainer.style.display = 'flex';
+
+    const userBubble = document.createElement('div');
+    userBubble.style.cssText = "background: #1e1f20; color: #e3e3e3; padding: 12px 20px; border-radius: 20px; max-width: 75%; align-self: flex-end; font-size: 15px; font-family: sans-serif; box-shadow: 0 2px 6px rgba(0,0,0,0.3);";
+    userBubble.innerText = textoUsuario;
+    chatContainer.appendChild(userBubble);
 
         inputField.value = '';
-
         const aiBubble = document.createElement('div');
         aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
         aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
