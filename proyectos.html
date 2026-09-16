@@ -987,12 +987,14 @@ div.barra-busqueda-completa input[type="text"] {
     });
     const inputBusqueda = document.querySelector('.barra-busqueda-completa input') || document.getElementById('input-busqueda');
     if (inputBusqueda) {
-        inputBusqueda.style.color = '#000000';
-        inputBusqueda.style.webkitTextFillColor = '#000000';
         inputBusqueda.addEventListener('input', () => {
             inputBusqueda.style.setProperty('color', '#000000', 'important');
             inputBusqueda.style.setProperty('-webkit-text-fill-color', '#000000', 'important');
         });
+    }
+    const inputBarra = document.getElementById('input-busqueda');
+    if (inputBarra && inputBarra.value.includes("Hola Barsa")) {
+        inputBarra.value = "";
     }
 </script>
 </body>
