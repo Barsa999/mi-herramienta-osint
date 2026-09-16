@@ -928,7 +928,7 @@ div.barra-busqueda-completa input[type="text"] {
         }
     }
 
-  async function enviarMensajeIA() {
+async function enviarMensajeIA() {
     const inputField = document.getElementById('input-busqueda');
     const textoUsuario = inputField.value;
     
@@ -1008,6 +1008,22 @@ if (inputBusqueda) {
 const inputBarra = document.getElementById('input-busqueda');
 if (inputBarra && inputBarra.value.includes("Hola Barsa")) {
     inputBarra.value = "";
+}
+
+// --- BLINDAJE VIGÍA CONTRA EL TEXTO FANTASMA ---
+const observerInput = new MutationObserver(() => {
+    const barra = document.getElementById('input-busqueda');
+    if (barra && barra.value.includes("Hola Barsa")) {
+        barra.value = "";
+    }
+});
+
+const barraTarget = document.getElementById('input-busqueda');
+if (barraTarget) {
+    observerInput.observe(barraTarget, { attributes: true, childList: true, subtree: true });
+    if (barraTarget.value.includes("Hola Barsa")) {
+        barraTarget.value = "";
+    }
 }
 </script>
 </body>
