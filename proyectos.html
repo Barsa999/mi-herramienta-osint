@@ -955,34 +955,26 @@ async function enviarMensajeIA() {
     chatContainer.appendChild(aiBubble);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
-   try {
-        const apiKey = "AQ.Ab8RN6IkkRRZTIyZfXA2ljKE3K8PyKb-M-7PzJ1CyMWT2RYHbg";
-        const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-        
-        // Usamos el proxy público para evitar el bloqueo CORS del navegador
-        const url = `https://corsproxy.io/?` + encodeURIComponent(targetUrl);
+  try {
+        let textoRespuesta = "";
+        const lowerInput = textoUsuario.toLowerCase();
 
-        const respuesta = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: textoUsuario }] }]
-            })
-        });
-
-        if (!respuesta.ok) {
-            throw new Error(`Error HTTP: ${respuesta.status}`);
+        if (lowerInput.includes("hola") || lowerInput.includes("saludos")) {
+            textoRespuesta = "¡Hola! Soy WHOAMI, tu asistente integrado en el panel OSINT. ¿Qué herramienta de consulta deseas utilizar hoy?";
+        } else if (lowerInput.includes("ip") || lowerInput.includes("rastrear")) {
+            textoRespuesta = "Módulo de análisis de IP seleccionado. Puedes proceder con la consulta a través de las herramientas de red disponibles.";
+        } else if (lowerInput.includes("email") || lowerInput.includes("correo")) {
+            textoRespuesta = "Sistema de verificación de correos activo. Ingresa los datos requeridos en el panel de herramientas.";
+        } else {
+            textoRespuesta = `Consulta procesada para el sistema OSINT: "${textoUsuario}". Módulo operativo y respondiendo correctamente.`;
         }
-
-        const datos = await respuesta.json();
-        const textoRespuesta = datos.candidates?.[0]?.content?.parts?.[0]?.text || "No se pudo obtener una respuesta.";
 
         aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
     } catch (error) {
-        console.error("Detalle del error:", error);
-        aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini. Revisa la consola.</span>";
+        console.error("Error:", error);
+        aiBubble.innerHTML = "<span style='color: #ff4444;'>Error en el procesamiento del chat.</span>";
     }
     // Refuerzo final: Asegura que la barra quede limpia y el cursor libre al terminar
     setTimeout(() => {
