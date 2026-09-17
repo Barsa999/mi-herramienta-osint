@@ -28,7 +28,32 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// --- RUTAS EXISTENTES ---
+// --- NUEVA RUTA PARA LA IA DE GEMINI (Bypassea el CORS y protege tu API Key) ---
+app.post('/api/chat', async (req, res) => {
+    try {
+        const { mensaje } = req.body;
+        // Puedes poner tu clave aquí directamente o configurarla en las variables de entorno de Render
+        const apiKey = process.env.GEMINI_API_KEY || "AQ.Ab8RN6IkkRRZTIyZfXA2ljKE3K8PyKb-M-7PzJ1CyMWT2RYHbg";
+
+        const googleUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+        const respuestaGoogle = await fetch(googleUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: mensaje }] }]
+            })
+        });
+
+        const datos = await respuestaGoogle.json();
+        res.json(datos);
+    } catch (error) {
+        console.error("Error en /api/chat:", error);
+        res.status(500).json({ error: "Error al conectar con la IA" });
+    }
+});
+
+// --- RUTAS EXISTENTES DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
     const ip = req.params.targetIp;
@@ -55,7 +80,6 @@ app.get('/api/email/:email', async (req, res) => {
         
         const data = await response.json();
         
-        // Enviamos la respuesta estructurada con datos reales en tiempo real
         res.json({
             email_address: data.email_address,
             email_deliverability: data.email_deliverability,
