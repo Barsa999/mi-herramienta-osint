@@ -959,7 +959,6 @@ try {
         let textoRespuesta = "";
         const lowerInput = textoUsuario.toLowerCase();
 
-        // Lógica para darle "vida" y contexto inteligente al chat
         if (lowerInput.includes("hola") || lowerInput.includes("saludos") || lowerInput.includes("buenas")) {
             textoRespuesta = "¡Hola! Soy WHOAMI, el núcleo de inteligencia artificial de tu panel OSINT. ¿Qué objetivo o investigación analizaremos hoy?";
         } else if (lowerInput.includes("ip") || lowerInput.includes("host") || lowerInput.includes("red")) {
@@ -971,14 +970,12 @@ try {
         } else if (lowerInput.includes("ayuda") || lowerInput.includes("comandos") || lowerInput.includes("opciones")) {
             textoRespuesta = "Puedo ayudarte a orientarte en el panel OSINT. Puedes consultarme sobre módulos de IP, correos, dominios, usernames o herramientas de ciberseguridad.";
         } else {
-            // Respuesta dinámica que toma lo que el usuario escribió para que se sienta natural
             const respuestasDinamicas = [
                 `He registrado tu consulta sobre "${textoUsuario}". Analizando bases de datos y registros públicos... No se detectan anomalías críticas en el objetivo.`,
                 `Procesando parámetros de búsqueda para "${textoUsuario}". Te sugiero contrastar esta información con los módulos de dominios o redes sociales del panel.`,
                 `Interesante consulta. Para "${textoUsuario}", recomiendo verificar la traza de metadatos o realizar una búsqueda cruzada en las herramientas de la barra lateral.`,
                 `Comando recibido: "${textoUsuario}". El subsistema OSINT está operando a su máxima capacidad. ¿Deseas profundizar en algún parámetro específico?`
             ];
-            // Selecciona una respuesta al azar para que nunca suene igual
             textoRespuesta = respuestasDinamicas[Math.floor(Math.random() * respuestasDinamicas.length)];
         }
 
