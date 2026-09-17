@@ -955,9 +955,12 @@ async function enviarMensajeIA() {
     chatContainer.appendChild(aiBubble);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    try {
+   try {
         const apiKey = "AQ.Ab8RN6IkkRRZTIyZfXA2ljKE3K8PyKb-M-7PzJ1CyMWT2RYHbg";
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        
+        // Usamos el proxy público para evitar el bloqueo CORS del navegador
+        const url = `https://corsproxy.io/?` + encodeURIComponent(targetUrl);
 
         const respuesta = await fetch(url, {
             method: 'POST',
@@ -981,7 +984,6 @@ async function enviarMensajeIA() {
         console.error("Detalle del error:", error);
         aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA de Gemini. Revisa la consola.</span>";
     }
-
     // Refuerzo final: Asegura que la barra quede limpia y el cursor libre al terminar
     setTimeout(() => {
         const finalInput = document.getElementById('input-busqueda');
