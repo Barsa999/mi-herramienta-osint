@@ -956,35 +956,28 @@ async function enviarMensajeIA() {
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
 try {
-        let textoRespuesta = "";
-        const lowerInput = textoUsuario.toLowerCase();
+        // Reemplaza con tu URL real de Render
+        const urlServidor = "https://tu-proyecto.onrender.com/api/chat";
 
-        if (lowerInput.includes("hola") || lowerInput.includes("saludos") || lowerInput.includes("buenas")) {
-            textoRespuesta = "¡Hola! Soy WHOAMI, el núcleo de inteligencia artificial de tu panel OSINT. ¿Qué objetivo o investigación analizaremos hoy?";
-        } else if (lowerInput.includes("ip") || lowerInput.includes("host") || lowerInput.includes("red")) {
-            textoRespuesta = "Analizando módulo de red. Para rastrear una dirección IP, puedes utilizar las herramientas dedicadas en el menú lateral de la izquierda o ingresar el objetivo.";
-        } else if (lowerInput.includes("email") || lowerInput.includes("correo") || lowerInput.includes("gmail")) {
-            textoRespuesta = "El subsistema de rastreo de correos electrónicos está listo. Asegúrate de verificar las cabeceras o usar el validador del panel lateral.";
-        } else if (lowerInput.includes("quien eres") || lowerInput.includes("que eres") || lowerInput.includes("tu nombre")) {
-            textoRespuesta = "Soy WHOAMI, un asistente de ciberinteligencia y OSINT diseñado para asistir en la recolección de datos y análisis de fuentes abiertas.";
-        } else if (lowerInput.includes("ayuda") || lowerInput.includes("comandos") || lowerInput.includes("opciones")) {
-            textoRespuesta = "Puedo ayudarte a orientarte en el panel OSINT. Puedes consultarme sobre módulos de IP, correos, dominios, usernames o herramientas de ciberseguridad.";
-        } else {
-            const respuestasDinamicas = [
-                `He registrado tu consulta sobre "${textoUsuario}". Analizando bases de datos y registros públicos... No se detectan anomalías críticas en el objetivo.`,
-                `Procesando parámetros de búsqueda para "${textoUsuario}". Te sugiero contrastar esta información con los módulos de dominios o redes sociales del panel.`,
-                `Interesante consulta. Para "${textoUsuario}", recomiendo verificar la traza de metadatos o realizar una búsqueda cruzada en las herramientas de la barra lateral.`,
-                `Comando recibido: "${textoUsuario}". El subsistema OSINT está operando a su máxima capacidad. ¿Deseas profundizar en algún parámetro específico?`
-            ];
-            textoRespuesta = respuestasDinamicas[Math.floor(Math.random() * respuestasDinamicas.length)];
+        const respuesta = await fetch(urlServidor, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mensaje: textoUsuario })
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error HTTP: ${respuesta.status}`);
         }
+
+        const datos = await respuesta.json();
+        const textoRespuesta = datos.candidates?.[0]?.content?.parts?.[0]?.text || "No se pudo obtener una respuesta.";
 
         aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
     } catch (error) {
-        console.error("Error:", error);
-        aiBubble.innerHTML = "<span style='color: #ff4444;'>Error en el procesamiento del chat.</span>";
+        console.error("Detalle del error:", error);
+        aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA.</span>";
     }
     // Refuerzo final: Asegura que la barra quede limpia y el cursor libre al terminar
     setTimeout(() => {
