@@ -34,17 +34,17 @@ app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
         
-       const response = await ai.models.generateContent({
-    model: 'gemini-1.5-flash',
-    contents: mensaje,
-});
+        const response = await ai.models.generateContent({
+            model: 'gemini-pro',
+            contents: mensaje,
+        });
+
         res.json({ response: response.text });
     } catch (error) {
-        console.error("DETALLE DEL ERROR DE IA:", error); 
+        console.error("DETALLE DEL ERROR DE IA:", error);
         res.status(500).json({ error: "Error al conectar con la IA: " + error.message });
     }
 });
-
 // --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
