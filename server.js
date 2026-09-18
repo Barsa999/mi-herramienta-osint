@@ -1,21 +1,23 @@
 const express = require('express');
 const cors = require('cors');
-const app = express();
+const { GoogleGenAI } = require('@google/genai');
 
+const app = express();
 const port = process.env.PORT || 10000;
+
 app.use(cors());
 app.use(express.json());
+
+// Inicializa el cliente oficial de Google usando la variable de entorno GEMINI_API_KEY
+const ai = new GoogleGenAI();
 
 let logs = {}; 
 
 app.get('/r/:id', (req, res) => {
     const id = req.params.id;
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    
     logs[id] = { ip: ip, fecha: new Date().toLocaleString() };
-    
     console.log(`Clic detectado en ID ${id} desde IP: ${ip}`);
-    
     res.redirect('https://google.com'); 
 });
 
@@ -28,28 +30,24 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
+// Ruta de chat usando el paquete oficial de Google
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
-        const apiKey = process.env.GEMINI_API_KEY;
-       const googleUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`;
-        const respuestaGoogle = await fetch(googleUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: mensaje }] }]
-            })
+        
+        const response = await ai.models.generateContent({
+            model: 'gemini-1.5-flash',
+            contents: mensaje,
         });
 
-        const datos = await respuestaGoogle.json();
-        res.json(datos);
+        res.json({ response: response.text });
     } catch (error) {
         console.error("Error en /api/chat:", error);
         res.status(500).json({ error: "Error al conectar con la IA" });
     }
 });
 
-// --- RUTAS EXISTENTES DE OSINT ---
+// --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
     const ip = req.params.targetIp;
@@ -63,19 +61,13 @@ app.get('/api/ip/:targetIp', async (req, res) => {
     }
 });
 
-// --- RUTA DE CORREO ACTUALIZADA CON ABSTRACT API ---
 app.get('/api/email/:email', async (req, res) => {
     const email = req.params.email;
     const apiKey = "a0633aeb05fe4a3082cab81fc92490bd";
-
     try {
         const response = await fetch(`https://emailreputation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodeURIComponent(email)}`);
-        if (!response.ok) {
-            throw new Error("Error al conectar con Abstract API");
-        }
-        
+        if (!response.ok) throw new Error("Error al conectar con Abstract API");
         const data = await response.json();
-        
         res.json({
             email_address: data.email_address,
             email_deliverability: data.email_deliverability,
