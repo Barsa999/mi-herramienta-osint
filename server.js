@@ -1,14 +1,11 @@
 const express = require('express');
 const cors = require('cors');
-const { GoogleGenAI } = require('@google/genai');
 
 const app = express();
 const port = process.env.PORT || 10000;
 
 app.use(cors());
 app.use(express.json());
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 let logs = {}; 
 
@@ -29,22 +26,38 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// Ruta de chat usando el paquete oficial de Google
+// Ruta de chat mediante fetch HTTP directo (Sin librerías de Google que fallen)
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
-        
-        const response = await ai.models.generateContent({
-            model: 'gemini-pro',
-            contents: mensaje,
+        const apiKey = process.env.GEMINI_API_KEY;
+
+        const googleUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+        const googleResponse = await fetch(googleUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: mensaje }] }]
+            })
         });
 
-        res.json({ response: response.text });
+        const data = await googleResponse.json();
+
+        if (!googleResponse.ok) {
+            console.error("Error de la API de Google:", data);
+            return res.status(500).json({ error: data.error?.message || "Error al conectar con la IA" });
+        }
+
+        const respuestaTexto = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sin respuesta";
+        res.json({ response: respuestaTexto });
+
     } catch (error) {
-        console.error("DETALLE DEL ERROR DE IA:", error);
-        res.status(500).json({ error: "Error al conectar con la IA: " + error.message });
+        console.error("Error en /api/chat:", error);
+        res.status(500).json({ error: "Error al conectar con la IA" });
     }
 });
+
 // --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
