@@ -8,8 +8,7 @@ const port = process.env.PORT || 10000;
 app.use(cors());
 app.use(express.json());
 
-// Inicializa el cliente oficial de Google usando la variable de entorno GEMINI_API_KEY
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 let logs = {}; 
 
