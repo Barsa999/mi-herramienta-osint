@@ -28,14 +28,11 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// --- NUEVA RUTA PARA LA IA DE GEMINI (Bypassea el CORS y protege tu API Key) ---
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
-        // Puedes poner tu clave aquí directamente o configurarla en las variables de entorno de Render
-        const apiKey = process.env.GEMINI_API_KEY || "AQ.Ab8RN6IkkRRZTIyZfXA2ljKE3K8PyKb-M-7PzJ1CyMWT2RYHbg";
-
-        const googleUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const apiKey = process.env.GEMINI_API_KEY;
+        const googleUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
         const respuestaGoogle = await fetch(googleUrl, {
             method: 'POST',
