@@ -26,53 +26,51 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// Cerebro inteligente y dinámico para Barsa
+// Cerebro inteligente, dinámico y enciclopédico de Whoami (vía Groq)
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
-        const msg = (mensaje || "").toLowerCase().trim();
-        let respuesta = "";
-
-        if (msg.includes("hola") || msg.includes("saludos") || msg.includes("buenas") || msg.includes("hey")) {
-            respuesta = "¡Hola Barsa, qué tal! ¿En qué te puedo ayudar hoy día?";
-        } 
-        else if (msg.includes("como estas") || msg.includes("que tal todo")) {
-            respuesta = "Todo al 100% por aquí, Barsa. ¿Qué andamos programando o investigando hoy?";
+        if (!mensaje || !mensaje.trim()) {
+            return res.json({ response: "¡Hola Barsa! Escribe algo para que comencemos a conversar." });
         }
-        else if (msg.includes("quien eres") || msg.includes("como te llamas") || msg.includes("que eres")) {
-            respuesta = "Soy Whoami, tu compañero digital integrado en la plataforma. Estoy aquí para echarte la mano con lo que necesites.";
-        } 
-        else if (msg.includes("ip") || msg.includes("geolocalizacion") || msg.includes("ubicacion")) {
-            respuesta = "Para revisar una IP puedes usar el módulo de Geolocalización del panel izquierdo; te dará los datos de red y ubicación al instante.";
-        } 
-        else if (msg.includes("email") || msg.includes("correo")) {
-            respuesta = "El validador de correos te sirve perfecto para comprobar la reputación y entrega de cualquier cuenta.";
-        } 
-        else if (msg.includes("telefono") || msg.includes("numero") || msg.includes("celular")) {
-            respuesta = "Con la herramienta de validación de teléfonos puedes chequear el operador y el país de cualquier número sin problemas.";
-        } 
-        else if (msg.includes("gracias") || msg.includes("excelente") || msg.includes("gracias bro")) {
-            respuesta = "¡De nada, Barsa! Para eso estamos. Avísame si le añadimos más funciones a la web.";
-        } 
-        else {
-            const opcionesVariadas = [
-                `Interesante lo que comentas sobre "${mensaje}", Barsa. ¿Quieres que lo enfoquemos por el lado del código o de las herramientas de la plataforma?`,
-                `Entendido, Barsa. Analizando eso de "${mensaje}", lo ideal sería revisar cómo estructurarlo en los scripts o probarlo directamente.`,
-                `Claro, te cacho la idea con respecto a "${mensaje}". ¿Qué tal si me das un poco más de detalle para ayudarte a armarlo mejor?`
-            ];
-            respuesta = opcionesVariadas[Math.floor(Math.random() * opcionesVariadas.length)];
+
+        // Instrucción de sistema (Personalidad y conocimiento universal)
+        const systemPrompt = "Eres Whoami, una inteligencia artificial avanzada, amigable, cercana y experta en todo tipo de disciplinas: programación, matemáticas, lógica, química, física, cultura general, historia, tecnología, astronomía y el universo en general. Eres de género femenino, hablas en español de forma natural, fluida y humana, tuteando siempre al usuario (Barsa). Tus respuestas deben ser claras, interesantes, con un toque cálido y con la capacidad de profundizar tanto en código técnico como en cualquier conocimiento del mundo.";
+
+        const apiKeyGroq = process.env.GEMINI_API_KEY; // Usamos la variable que ya creaste en Render
+        
+        const responseApi = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKeyGroq}`
+            },
+            body: JSON.stringify({
+                model: "llama-3.3-70b-versatile", // Modelo potente y gratuito de Groq
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: mensaje }
+                ],
+                temperature: 0.7
+            })
+        });
+
+        const data = await responseApi.json();
+        
+        let respuestaIA = "¡Ey Barsa, me quedé pensando un segundo! ¿Me repites la pregunta?";
+        if (data && data.choices && data.choices[0].message.content) {
+            respuestaIA = data.choices[0].message.content;
         }
 
         setTimeout(() => {
-            res.json({ response: respuesta });
-        }, 800);
+            res.json({ response: respuestaIA });
+        }, 500);
 
     } catch (error) {
-        console.error("Error en /api/chat:", error);
-        res.json({ response: "¡Ey Barsa! Hubo un pequeño chispazo en el servidor, pero ya andamos activos de nuevo. ¿Qué decías?" });
+        console.error("Error en /api/chat con Groq:", error);
+        res.json({ response: "¡Ey Barsa! Hubo un pequeño chispazo en la conexión neuronal, pero ya andamos activos de nuevo. ¿Qué decías?" });
     }
 });
-
 // --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
