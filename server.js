@@ -26,14 +26,13 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// Cerebro inteligente y dinámico para Barsa (Evita repeticiones robóticas)
+// Cerebro inteligente y dinámico para Barsa
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
         const msg = (mensaje || "").toLowerCase().trim();
         let respuesta = "";
 
-        // Saludos naturales y personalizados
         if (msg.includes("hola") || msg.includes("saludos") || msg.includes("buenas") || msg.includes("hey")) {
             respuesta = "¡Hola Barsa, qué tal! ¿En qué te puedo ayudar hoy día?";
         } 
@@ -43,7 +42,6 @@ app.post('/api/chat', async (req, res) => {
         else if (msg.includes("quien eres") || msg.includes("como te llamas") || msg.includes("que eres")) {
             respuesta = "Soy Whoami, tu compañero digital integrado en la plataforma. Estoy aquí para echarte la mano con lo que necesites.";
         } 
-        // Respuestas específicas según lo que pregunte para que tenga sentido real
         else if (msg.includes("ip") || msg.includes("geolocalizacion") || msg.includes("ubicacion")) {
             respuesta = "Para revisar una IP puedes usar el módulo de Geolocalización del panel izquierdo; te dará los datos de red y ubicación al instante.";
         } 
@@ -56,18 +54,15 @@ app.post('/api/chat', async (req, res) => {
         else if (msg.includes("gracias") || msg.includes("excelente") || msg.includes("gracias bro")) {
             respuesta = "¡De nada, Barsa! Para eso estamos. Avísame si le añadimos más funciones a la web.";
         } 
-        // Respuesta abierta y variada para cualquier otra cosa que le escribas
         else {
             const opcionesVariadas = [
-                ={`Interesante lo que comentas sobre "${mensaje}", Barsa. ¿Quieres que lo enfoquemos por el lado del código o de las herramientas de la plataforma?`},
-                ={`Entendido, Barsa. Analizando eso de "${mensaje}", lo ideal sería revisar cómo estructurarlo en los scripts o probarlo directamente.`},
-                ={`Claro, te cacho la idea con respecto a "${mensaje}". ¿Qué tal si me das un poco más de detalle para ayudarte a armarlo mejor?`}
+                `Interesante lo que comentas sobre "${mensaje}", Barsa. ¿Quieres que lo enfoquemos por el lado del código o de las herramientas de la plataforma?`,
+                `Entendido, Barsa. Analizando eso de "${mensaje}", lo ideal sería revisar cómo estructurarlo en los scripts o probarlo directamente.`,
+                `Claro, te cacho la idea con respecto a "${mensaje}". ¿Qué tal si me das un poco más de detalle para ayudarte a armarlo mejor?`
             ];
-            // Selecciona una al azar para que nunca suene igual ni robótico
             respuesta = opcionesVariadas[Math.floor(Math.random() * opcionesVariadas.length)];
         }
 
-        // Simulamos un pequeño retraso natural (de medio segundo a 1 segundo) para que parezca que está pensando de verdad
         setTimeout(() => {
             res.json({ response: respuesta });
         }, 800);
