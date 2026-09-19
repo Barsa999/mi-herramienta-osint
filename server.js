@@ -34,10 +34,9 @@ app.post('/api/chat', async (req, res) => {
             return res.json({ response: "¡Hola Barsa! Escribe algo para que comencemos a conversar." });
         }
 
-        // Instrucción de sistema (Personalidad y conocimiento universal)
         const systemPrompt = "Eres Whoami, una inteligencia artificial avanzada, amigable, cercana y experta en todo tipo de disciplinas: programación, matemáticas, lógica, química, física, cultura general, historia, tecnología, astronomía y el universo en general. Eres de género femenino, hablas en español de forma natural, fluida y humana, tuteando siempre al usuario (Barsa). Tus respuestas deben ser claras, interesantes, con un toque cálido y con la capacidad de profundizar tanto en código técnico como en cualquier conocimiento del mundo.";
 
-        const apiKeyGroq = process.env.GEMINI_API_KEY; // Usamos la variable que ya creaste en Render
+        const apiKeyGroq = process.env.GEMINI_API_KEY; 
         
         const responseApi = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
             method: 'POST',
@@ -46,7 +45,7 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKeyGroq}`
             },
             body: JSON.stringify({
-                model: "llama-3.3-70b-versatile", // Modelo potente y gratuito de Groq
+                model: "llama-3.3-70b-versatile",
                 messages: [
                     { role: "system", content: systemPrompt },
                     { role: "user", content: mensaje }
@@ -66,10 +65,12 @@ app.post('/api/chat', async (req, res) => {
             res.json({ response: respuestaIA });
         }, 500);
 
-   } catch (error) {
+    } catch (error) {
         console.error("Error en /api/chat con Groq:", error);
         res.json({ response: "Error técnico detectado: " + error.message });
     }
+});
+
 // --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
