@@ -36,14 +36,14 @@ app.post('/api/chat', async (req, res) => {
 
         const apiKey = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : "";
         
-        const responseApi = await fetch('https://api.openai.com/v1/chat/completions', {
+        const responseApi = await fetch('https://api.mistral.ai/v1/chat/completions', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: "gpt-4o-mini",
+                model: "mistral-small-latest",
                 messages: [
                     { 
                         role: "system", 
