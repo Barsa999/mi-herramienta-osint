@@ -404,10 +404,10 @@ div.barra-busqueda-completa input[type="text"] {
 
         <!-- Barra donde escribes tu pregunta -->
         <div class="barra-busqueda-completa" style="width: 700px; max-width: 95%; background-color: #1e1f20; border-radius: 28px; display: flex; align-items: center; padding: 15px 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
-            <i class="fas fa-terminal" style="color: #4af626; margin-right: 15px; font-size: 18px;"></i>
-            <input type="text" id="input-busqueda" placeholder="" style="background: transparent !important; border: none !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;">
-            <i class="fas fa-paper-plane" id="btn-enviar-ia" style="color: #4af626; margin-left: 15px; font-size: 18px; cursor: pointer;" title="Enviar"></i>
-        </div>
+    <span style="color: #4af626; font-weight: bold; margin-right: 15px; font-size: 18px; font-family: monospace;">>_</span>
+    <input type="text" id="input-busqueda" placeholder="Escribe aquí..." style="background: transparent !important; border: none !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; width: 100%; outline: none; font-size: 15px;">
+    <i class="fas fa-paper-plane" id="btn-enviar-ia" style="color: #4af626; margin-left: 15px; font-size: 18px; cursor: pointer;" title="Enviar"></i>
+</div>
     </div>
 
     <div id="tp-email" class="panel-herramienta" style="display: none;">
@@ -930,24 +930,28 @@ div.barra-busqueda-completa input[type="text"] {
 
 async function enviarMensajeIA() {
     const inputField = document.getElementById('input-busqueda');
+    if (!inputField) return;
+    
     const textoUsuario = inputField.value;
  
+    // Si está vacío, no hace nada
     if (!textoUsuario.trim()) {
-        if (inputField) inputField.value = '';
         return;
     }
-
-    inputField.value = '';
-    inputField.defaultValue = '';
 
     let chatContainer = document.getElementById('whoami-chat-container');
     chatContainer.style.display = 'flex';
 
+    // 1. Mostrar la burbuja del usuario
     const userBubble = document.createElement('div');
     userBubble.style.cssText = "background: #1e1f20; color: #e3e3e3; padding: 12px 20px; border-radius: 20px; max-width: 75%; align-self: flex-end; font-size: 15px; font-family: sans-serif; box-shadow: 0 2px 6px rgba(0,0,0,0.3);";
     userBubble.innerText = textoUsuario;
     chatContainer.appendChild(userBubble);
 
+    // Limpiamos el input inmediatamente después de capturar el texto
+    inputField.value = '';
+
+    // 2. Mostrar la burbuja de carga de la IA ("Pensando respuesta...")
     const aiBubble = document.createElement('div');
     aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
     aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
@@ -970,6 +974,7 @@ async function enviarMensajeIA() {
         const datos = await respuesta.json();
         const textoRespuesta = datos.response || "Sin respuesta del servidor.";
 
+        // Remplazamos el texto de carga por la respuesta real de la IA
         aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
@@ -978,7 +983,7 @@ async function enviarMensajeIA() {
         aiBubble.innerHTML = "<span style='color: #ff4444;'>WHOAMI</span><br><br><span style='color: #ff4444;'>¡Ey Barsa, hubo un problema de conexión con el servidor! Intenta de nuevo en unos segundos.</span>";
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }
-}
+
     // Refuerzo final: Asegura que la barra quede limpia y el cursor libre al terminar
     setTimeout(() => {
         const finalInput = document.getElementById('input-busqueda');
@@ -1000,8 +1005,8 @@ document.getElementById('btn-enviar-ia').addEventListener('click', function() {
 const inputBusqueda = document.querySelector('.barra-busqueda-completa input') || document.getElementById('input-busqueda');
 if (inputBusqueda) {
     inputBusqueda.addEventListener('input', () => {
-        inputBusqueda.style.setProperty('color', '#000000', 'important');
-        inputBusqueda.style.setProperty('-webkit-text-fill-color', '#000000', 'important');
+        inputBusqueda.style.setProperty('color', '#ffffff', 'important');
+        inputBusqueda.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
     });
 }
 
@@ -1025,6 +1030,5 @@ if (barraTarget) {
         barraTarget.value = "";
     }
 }
-</script>
 </body>
 </html>
