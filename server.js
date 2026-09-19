@@ -66,11 +66,10 @@ app.post('/api/chat', async (req, res) => {
             res.json({ response: respuestaIA });
         }, 500);
 
-    } catch (error) {
+   } catch (error) {
         console.error("Error en /api/chat con Groq:", error);
-        res.json({ response: "¡Ey Barsa! Hubo un pequeño chispazo en la conexión neuronal, pero ya andamos activos de nuevo. ¿Qué decías?" });
+        res.json({ response: "Error técnico detectado: " + error.message });
     }
-});
 // --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
