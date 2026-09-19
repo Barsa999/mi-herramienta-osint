@@ -45,7 +45,7 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKeyGroq}`
             },
             body: JSON.stringify({
-                model: "llama-3.3-70b-versatile",
+                model: "llama3-70b-8192", // Modelo compatible y disponible en Groq
                 messages: [
                     { role: "system", content: systemPrompt },
                     { role: "user", content: mensaje }
@@ -56,7 +56,6 @@ app.post('/api/chat', async (req, res) => {
 
         const data = await responseApi.json();
         
-        // Si Groq rechaza la petición, te mostrará el motivo exacto en el chat
         if (!responseApi.ok) {
             return res.json({ response: `⚠️ Error de Groq (${responseApi.status}): ${data.error?.message || JSON.stringify(data)}` });
         }
