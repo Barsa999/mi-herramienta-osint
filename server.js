@@ -31,52 +31,43 @@ app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
         if (!mensaje || !mensaje.trim()) {
-            return res.json({ response: "¡Hola Barsa! Escribe algo para que comencemos a conversar." });
+            return res.json({ response: "¡Hola Barsa! Escribe algo para comenzar." });
         }
 
         const apiKey = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : "";
-        if (!apiKey) {
-            return res.json({ response: "⚠️ Falta configurar la API Key de Gemini en Render." });
-        }
-
-        // Usamos la API oficial y directa de Google Generative Language
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-        const promptSistema = "Eres Whoami, una inteligencia artificial avanzada, amigable, cercana y experta en todo tipo de disciplinas: programación, matemáticas, historia, tecnología y ciencia. Eres de género femenino, hablas en español de forma natural, fluida y humana, tuteando siempre al usuario (Barsa). Responde de forma directa, inteligente y con un toque cálido.";
-
-        const responseApi = await fetch(url, {
+        
+        const responseApi = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
             body: JSON.stringify({
-                contents: [
-                    {
-                        parts: [
-                            { text: `${promptSistema}\n\nUsuario (Barsa): ${mensaje}` }
-                        ]
-                    }
-                ]
+                model: "gpt-4o-mini",
+                messages: [
+                    { 
+                        role: "system", 
+                        content: "Eres Whoami, una inteligencia artificial avanzada, amigable, cercana y experta en programación, matemáticas y tecnología. Eres de género femenino, hablas en español de forma natural y tuteas siempre al usuario (Barsa)." 
+                    },
+                    { role: "user", content: mensaje }
+                ],
+                temperature: 0.7
             })
         });
 
         const data = await responseApi.json();
-
+        
         if (!responseApi.ok) {
-            return res.json({ response: `⚠️ Error de la API (${responseApi.status}): ${data.error?.message || 'Error desconocido'}` });
+            return res.json({ response: `⚠️ Error de la API: ${data.error?.message || 'Revisa tu credencial'}` });
         }
 
-        let respuestaIA = "¡Ey Barsa, me quedé pensando un segundo! ¿Me repites la pregunta?";
-        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-            respuestaIA = data.candidates[0].content.parts[0].text;
-        }
-
+        const respuestaIA = data.choices[0].message.content;
         res.json({ response: respuestaIA });
 
     } catch (error) {
-        console.error("Error en /api/chat:", error);
-        res.json({ response: "⚠️ Error interno en el servidor: " + error.message });
+        res.json({ response: "⚠️ Error en el servidor: " + error.message });
     }
 });
-
 // --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
