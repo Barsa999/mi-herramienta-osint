@@ -932,7 +932,19 @@ div.barra-busqueda-completa input[type="text"] {
 document.addEventListener("DOMContentLoaded", () => {
     const inputField = document.getElementById('input-busqueda');
     const btnEnviar = document.getElementById('btn-enviar-ia');
+    const btnVoz = document.getElementById('btn-voz-ia');
     const chatContainer = document.getElementById('whoami-chat-container');
+
+    // Forzar color de texto blanco desde el inicio y en cada tipeo
+    if (inputField) {
+        inputField.style.setProperty('color', '#ffffff', 'important');
+        inputField.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
+
+        inputField.addEventListener('input', () => {
+            inputField.style.setProperty('color', '#ffffff', 'important');
+            inputField.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
+        });
+    }
 
     // Función principal para enviar el mensaje a la IA
     async function enviarMensajeIA() {
@@ -996,22 +1008,57 @@ document.addEventListener("DOMContentLoaded", () => {
                 enviarMensajeIA();
             }
         });
-
-        // Forzar estilos de texto visible en blanco
-        inputField.addEventListener('input', () => {
-            inputField.style.setProperty('color', '#ffffff', 'important');
-            inputField.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
-        });
     }
 
-    // Evento de clic en el botón de enviar (avión de papel)
+    // Evento de clic en el botón de enviar
     if (btnEnviar) {
         btnEnviar.addEventListener('click', function() {
             enviarMensajeIA();
         });
     }
 
-    // Limpieza inicial por si arrastra texto fantasma
+    // --- INTEGRACIÓN DEL MICRÓFONO (RECONOCIMIENTO DE VOZ) ---
+    if (btnVoz) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'es-ES'; // Configurado en español
+            recognition.interimResults = false;
+
+            btnVoz.addEventListener('click', () => {
+                try {
+                    recognition.start();
+                    btnVoz.style.color = '#ff4444'; // Se pone rojo indicando que está escuchando
+                } catch (e) {
+                    console.error(e);
+                }
+            });
+
+            recognition.onresult = (event) => {
+                const speechToText = event.results[0][0].transcript;
+                if (inputField) {
+                    inputField.value = speechToText;
+                    inputField.style.setProperty('color', '#ffffff', 'important');
+                    inputField.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
+                }
+                btnVoz.style.color = '#8ab4f8'; // Regresa a su color azul original
+                // Opcional: Envía el mensaje automáticamente tras hablar
+                enviarMensajeIA();
+            };
+
+            recognition.onerror = () => {
+                btnVoz.style.color = '#8ab4f8';
+            };
+
+            recognition.onspeechend = () => {
+                btnVoz.style.color = '#8ab4f8';
+            };
+        } else {
+            if (btnVoz) btnVoz.style.display = 'none'; // Ocultar si el navegador no soporta voz
+        }
+    }
+
+    // Limpieza inicial
     if (inputField && inputField.value.includes("Hola Barsa")) {
         inputField.value = "";
     }
