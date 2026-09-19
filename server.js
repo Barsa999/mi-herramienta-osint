@@ -26,11 +26,11 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// Ruta de chat conectada a la API ultrarrápida de Groq (Llama 3)
+// Ruta de chat conectada a la API de Groq con el modelo actualizado
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
-        const apiKey = process.env.GEMINI_API_KEY; // Usamos la misma variable de Render para guardar la clave de Groq
+        const apiKey = process.env.GEMINI_API_KEY;
 
         if (!apiKey) {
             return res.status(500).json({ error: "Falta configurar la API Key en el servidor." });
@@ -45,9 +45,10 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-            model: "llama-3.1-8b-instant", // Modelo actual y activo de Groq
-            messages: [{ role: "user", content: mensaje }]
-        })
+                model: "llama-3.1-8b-instant",
+                messages: [{ role: "user", content: mensaje }]
+            })
+        });
 
         const data = await groqResponse.json();
 
@@ -56,7 +57,6 @@ app.post('/api/chat', async (req, res) => {
             return res.status(500).json({ error: data.error?.message || "Error al conectar con la IA" });
         }
 
-        // Extracción correcta de la respuesta para el formato compatible con OpenAI/Groq
         const respuestaTexto = data.choices?.[0]?.message?.content || "Sin respuesta";
         res.json({ response: respuestaTexto });
 
