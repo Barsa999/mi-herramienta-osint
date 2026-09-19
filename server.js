@@ -26,36 +26,46 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// Ruta de chat inteligente integrada y optimizada
+// Ruta de chat conectada directamente a la IA de Groq para conversación natural
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
-        const msgLower = (mensaje || "").toLowerCase();
+        const apiKey = process.env.GEMINI_API_KEY;
 
-        let respuestaTexto = "";
-
-        // Respuestas inteligentes integradas para tu herramienta OSINT
-        if (msgLower.includes("hola") || msgLower.includes("saludos")) {
-            res.json({ response: "¡Hola! Soy tu asistente de Barsa Core Security. ¿Qué herramienta OSINT deseas ejecutar hoy (IP, Email, Teléfono o Enlaces trampa)?" });
-            return;
-        } else if (msgLower.includes("ip")) {
-            res.json({ response: "Para buscar información de una IP, utiliza el módulo lateral de Geolocalización IP ingresando la dirección IPv4 objetivo." });
-            return;
-        } else if (msgLower.includes("email") || msgLower.includes("correo")) {
-            res.json({ response: "El validador de correos en tiempo real analiza la reputación y entrega del email mediante Abstract API en la sección lateral." });
-            return;
-        } else if (msgLower.includes("telefono") || msgLower.includes("phone")) {
-            res.json({ response: "Puedes usar la herramienta de validación telefónica para verificar operadores y países de cualquier número." });
-            return;
-        } else {
-            respuestaTexto = `Análisis completado para la consulta: "${mensaje}". Los sistemas de Barsa Core Security operan con normalidad. ¿Deseas escanear algún vector adicional?`;
+        if (!apiKey) {
+            return res.status(500).json({ error: "Falta configurar la API Key en el servidor." });
         }
 
+        const groqUrl = 'https://api.groq.com/openai/v1/chat/completions';
+
+        const groqResponse = await fetch(groqUrl, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: "llama-3.3-70b-versatile",
+                messages: [
+                    { role: "system", content: "Eres un asistente de ciberseguridad y OSINT amigable, experto y conversacional. Responde de forma natural, clara y servicial." },
+                    { role: "user", content: mensaje }
+                ]
+            })
+        });
+
+        const data = await groqResponse.json();
+
+        if (!groqResponse.ok) {
+            console.error("Error de Groq:", data);
+            return res.status(500).json({ error: data.error?.message || "Error al conectar con la IA" });
+        }
+
+        const respuestaTexto = data.choices?.[0]?.message?.content || "No se obtuvo respuesta de la IA.";
         res.json({ response: respuestaTexto });
 
     } catch (error) {
         console.error("Error en /api/chat:", error);
-        res.json({ response: "Sistema operativo y enlazado correctamente." });
+        res.status(500).json({ error: "Error interno al procesar el mensaje." });
     }
 });
 
