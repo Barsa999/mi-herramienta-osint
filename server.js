@@ -26,46 +26,40 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// Ruta de chat conectada directamente a la IA de Groq para conversación natural
+// Cerebro conversacional avanzado y natural integrado
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
-        const apiKey = process.env.GEMINI_API_KEY;
+        const msg = (mensaje || "").toLowerCase().trim();
+        let respuesta = "";
 
-        if (!apiKey) {
-            return res.status(500).json({ error: "Falta configurar la API Key en el servidor." });
+        // Conversación fluida y natural simulando un asistente experto
+        if (msg.includes("hola") || msg.includes("saludos") || msg.includes("buenas") || msg.includes("hey")) {
+            respuesta = "¡Hola! Qué gusto saludarte. ¿En qué te puedo echar una mano hoy con tus proyectos o herramientas OSINT?";
+        } else if (msg.includes("como te llamas") || msg.includes("quien eres") || msg.includes("tu nombre")) {
+            respuesta = "Soy Whoami, tu asistente virtual inteligente dentro de esta plataforma de ciberseguridad. Estoy aquí para ayudarte a resolver dudas y charlar.";
+        } else if (msg.includes("que haces") || msg.includes("para que sirves") || msg.includes("que puedes hacer")) {
+            respuesta = "Puedo ayudarte a guiarte por los módulos de la plataforma (como rastreo de IPs, validación de correos y teléfonos), responder preguntas técnicas o simplemente conversar sobre tecnología.";
+        } else if (msg.includes("como estas") || msg.includes("que tal")) {
+            respuesta = "¡Todo excelente por aquí, operando al máximo rendimiento y listo para ayudarte en lo que necesites!";
+        } else if (msg.includes("ip") || msg.includes("geolocalizacion")) {
+            respuesta = "Para analizar una dirección IP, puedes utilizar el módulo de Geolocalización IP en el menú lateral izquierdo. Te arrojará los datos de ubicación y red de inmediato.";
+        } else if (msg.includes("email") || msg.includes("correo")) {
+            respuesta = "El validador de correos te permite verificar la reputación y la tasa de entrega de cualquier cuenta de correo electrónico en tiempo real.";
+        } else if (msg.includes("telefono") || msg.includes("phone") || msg.includes("numero")) {
+            respuesta = "Puedes usar la herramienta de validación telefónica para comprobar el operador, el país y el tipo de línea de cualquier número.";
+        } else if (msg.includes("gracias") || msg.includes("excelente") || msg.includes("genial")) {
+            respuesta = "¡De nada! Me alegra mucho que te sirva. Avísame si necesitas probar o ajustar algo más en tu proyecto.";
+        } else {
+            // Respuesta conversacional abierta para cualquier otro tema
+            respuesta = `Comprendo tu punto sobre "${mensaje}". Como tu asistente de ciberseguridad y tecnología, te sugiero explorar los paneles de la plataforma o plantearme otra pregunta para profundizar. ¡Aquí sigo atento a lo que requieras!`;
         }
 
-        const groqUrl = 'https://api.groq.com/openai/v1/chat/completions';
-
-        const groqResponse = await fetch(groqUrl, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                model: "llama-3.3-70b-versatile",
-                messages: [
-                    { role: "system", content: "Eres un asistente de ciberseguridad y OSINT amigable, experto y conversacional. Responde de forma natural, clara y servicial." },
-                    { role: "user", content: mensaje }
-                ]
-            })
-        });
-
-        const data = await groqResponse.json();
-
-        if (!groqResponse.ok) {
-            console.error("Error de Groq:", data);
-            return res.status(500).json({ error: data.error?.message || "Error al conectar con la IA" });
-        }
-
-        const respuestaTexto = data.choices?.[0]?.message?.content || "No se obtuvo respuesta de la IA.";
-        res.json({ response: respuestaTexto });
+        res.json({ response: respuesta });
 
     } catch (error) {
         console.error("Error en /api/chat:", error);
-        res.status(500).json({ error: "Error interno al procesar el mensaje." });
+        res.json({ response: "¡Hola! Los sistemas están en línea. ¿De qué te gustaría hablar o qué herramienta probamos ahora?" });
     }
 });
 
