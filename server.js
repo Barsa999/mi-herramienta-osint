@@ -36,9 +36,9 @@ app.post('/api/chat', async (req, res) => {
 
         const systemPrompt = "Eres Whoami, una inteligencia artificial avanzada, amigable, cercana y experta en todo tipo de disciplinas: programación, matemáticas, lógica, química, física, cultura general, historia, tecnología, astronomía y el universo en general. Eres de género femenino, hablas en español de forma natural, fluida y humana, tuteando siempre al usuario (Barsa). Tus respuestas deben ser claras, interesantes, con un toque cálido y con la capacidad de profundizar tanto en código técnico como en cualquier conocimiento del mundo.";
 
-        const apiKeyGroq = process.env.GEMINI_API_KEY; 
+        const apiKeyGroq = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : "";
         
-        const responseApi = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
+        const responseApi = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
@@ -56,21 +56,23 @@ app.post('/api/chat', async (req, res) => {
 
         const data = await responseApi.json();
         
+        // Si Groq rechaza la petición, te mostrará el motivo exacto en el chat
+        if (!responseApi.ok) {
+            return res.json({ response: `⚠️ Error de Groq (${responseApi.status}): ${data.error?.message || JSON.stringify(data)}` });
+        }
+
         let respuestaIA = "¡Ey Barsa, me quedé pensando un segundo! ¿Me repites la pregunta?";
-        if (data && data.choices && data.choices[0].message.content) {
+        if (data && data.choices && data.choices[0].message && data.choices[0].message.content) {
             respuestaIA = data.choices[0].message.content;
         }
 
-        setTimeout(() => {
-            res.json({ response: respuestaIA });
-        }, 500);
+        res.json({ response: respuestaIA });
 
     } catch (error) {
         console.error("Error en /api/chat con Groq:", error);
-        res.json({ response: "Error técnico detectado: " + error.message });
+        res.json({ response: "⚠️ Error de código en el servidor: " + error.message });
     }
 });
-
 // --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
