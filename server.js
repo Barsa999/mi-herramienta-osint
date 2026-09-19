@@ -30,44 +30,50 @@ app.get('/api/get-logs/:id', (req, res) => {
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
-        const msg = (mensaje || "").toLowerCase().trim();
-
-        if (!msg) {
+        if (!mensaje || !mensaje.trim()) {
             return res.json({ response: "¡Hola Barsa! Escribe algo para que comencemos a conversar." });
         }
 
-        let respuestaIA = "";
-
-        // Respuestas inteligentes y naturales para que cobre vida propia
-        if (msg.includes("hola") || msg.includes("saludos") || msg.includes("hey")) {
-            respuestaIA = "¡Hola Barsa! Qué gusto saludarte. ¿En qué proyecto o investigación andamos metidos hoy?";
-        } else if (msg.includes("como estas") || msg.includes("qué tal") || msg.includes("que tal")) {
-            respuestaIA = "¡Al 100% y con toda la energía, Barsa! Lista para ayudarte con código, cálculos o lo que necesites. ¿Tú qué tal?";
-        } else if (msg.includes("que haces") || msg.includes("qué haces") || msg.includes("en que estas")) {
-            respuestaIA = "Aquí, analizando líneas de código y lista para echarte la mano en lo que estés programando o investigando. ¿Qué me cuentas?";
-        } else if (msg.includes("matematicas") || msg.includes("calculo") || msg.includes("ecuacion") || msg.includes("integral")) {
-            respuestaIA = "¡Las matemáticas son mi fuerte, Barsa! Pásame los datos, la función o el ejercicio y lo resolvemos paso a paso aquí mismo.";
-        } else if (msg.includes("programacion") || msg.includes("codigo") || msg.includes("javascript") || msg.includes("node") || msg.includes("error")) {
-            respuestaIA = "¡Perfecto! Pásame el fragmento de código o cuéntame qué error te está dando para revisarlo y corregirlo al instante.";
-        } else if (msg.includes("espacio") || msg.includes("universo") || msg.includes("astronomia")) {
-            respuestaIA = "El cosmos es fascinante, Barsa. Desde la física cuántica hasta la mecánica celeste, ¿qué misterio del universo exploramos hoy?";
-        } else {
-            // Respuesta dinámica adaptativa para que nunca suene cortada o robótica
-            const opciones = [
-                `¡Vaya, qué temazo, Barsa! Sobre eso de "${mensaje}", te diría que hay que analizarlo tanto por el lado práctico como por la lógica. ¿Cómo te gustaría abordarlo?`,
-                `Interesante punto de vista, Barsa. Si lo vemos desde el aspecto técnico, tiene mucho potencial. ¿Quieres que armemos algo al respecto?`,
-                `¡Claro que sí, Barsa! Eso que mencionas da para bastante debate. ¿Prefieres que lo veamos con un enfoque más teórico o directo a la práctica?`
-            ];
-            respuestaIA = opciones[Math.floor(Math.random() * opciones.length)];
+        const apiKey = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : "";
+        if (!apiKey) {
+            return res.json({ response: "⚠️ Falta configurar la API Key de Gemini en Render." });
         }
 
-        setTimeout(() => {
-            res.json({ response: respuestaIA });
-        }, 300);
+        // Usamos la API oficial y directa de Google Generative Language
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+        const promptSistema = "Eres Whoami, una inteligencia artificial avanzada, amigable, cercana y experta en todo tipo de disciplinas: programación, matemáticas, historia, tecnología y ciencia. Eres de género femenino, hablas en español de forma natural, fluida y humana, tuteando siempre al usuario (Barsa). Responde de forma directa, inteligente y con un toque cálido.";
+
+        const responseApi = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [
+                    {
+                        parts: [
+                            { text: `${promptSistema}\n\nUsuario (Barsa): ${mensaje}` }
+                        ]
+                    }
+                ]
+            })
+        });
+
+        const data = await responseApi.json();
+
+        if (!responseApi.ok) {
+            return res.json({ response: `⚠️ Error de la API (${responseApi.status}): ${data.error?.message || 'Error desconocido'}` });
+        }
+
+        let respuestaIA = "¡Ey Barsa, me quedé pensando un segundo! ¿Me repites la pregunta?";
+        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+            respuestaIA = data.candidates[0].content.parts[0].text;
+        }
+
+        res.json({ response: respuestaIA });
 
     } catch (error) {
-        console.error("Error general:", error);
-        res.json({ response: `¡Ey Barsa! Todo en orden por aquí. Cuéntame en qué te ayudo con tus proyectos.` });
+        console.error("Error en /api/chat:", error);
+        res.json({ response: "⚠️ Error interno en el servidor: " + error.message });
     }
 });
 
