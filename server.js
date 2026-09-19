@@ -32,23 +32,26 @@ app.post('/api/chat', async (req, res) => {
         const { mensaje } = req.body;
         const apiKey = process.env.GEMINI_API_KEY;
 
-       const googleUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`;
+        const googleUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`;
 
         const googleResponse = await fetch(googleUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: mensaje }] }]
+                contents: [{
+                    parts: [{ text: mensaje }]
+                }]
             })
         });
 
         const data = await googleResponse.json();
 
         if (!googleResponse.ok) {
-            console.error("Error de la API de Google:", data);
+            console.error("Error detallado de Google:", data);
             return res.status(500).json({ error: data.error?.message || "Error al conectar con la IA" });
         }
 
+        // Extracción correcta de la respuesta para el modelo gemini-pro en v1
         const respuestaTexto = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sin respuesta";
         res.json({ response: respuestaTexto });
 
