@@ -970,7 +970,7 @@ try {
         }
 
        const datos = await respuesta.json();
-       const textoRespuesta = datos.candidates?.[0]?.content?.parts?.[0]?.text || datos.resultado || datos.mensaje || JSON.stringify(datos);
+      const textoRespuesta = datos.response || JSON.stringify(datos);
 
         aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
         chatContainer.scrollTop = chatContainer.scrollHeight;
