@@ -36,14 +36,14 @@ app.post('/api/chat', async (req, res) => {
 
         const apiKey = process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.trim() : "";
         
-        const responseApi = await fetch('https://api.mistral.ai/v1/chat/completions', {
+        const responseApi = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: "mistral-small-latest",
+                model: "llama3-8b-8192",
                 messages: [
                     { 
                         role: "system", 
