@@ -932,7 +932,7 @@ async function enviarMensajeIA() {
     const inputField = document.getElementById('input-busqueda');
     const textoUsuario = inputField.value;
  
-    if (textoUsuario.includes("Hola Barsa") || !textoUsuario.trim()) {
+    if (!textoUsuario.trim()) {
         if (inputField) inputField.value = '';
         return;
     }
@@ -948,16 +948,14 @@ async function enviarMensajeIA() {
     userBubble.innerText = textoUsuario;
     chatContainer.appendChild(userBubble);
 
-    inputField.value = '';
     const aiBubble = document.createElement('div');
     aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
     aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
     chatContainer.appendChild(aiBubble);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 
-try {
-        // Reemplaza con tu URL real de Render
-       const urlServidor = "https://mi-herramienta-osint.onrender.com/api/chat";
+    try {
+        const urlServidor = "https://mi-herramienta-osint.onrender.com/api/chat";
 
         const respuesta = await fetch(urlServidor, {
             method: 'POST',
@@ -969,16 +967,18 @@ try {
             throw new Error(`Error HTTP: ${respuesta.status}`);
         }
 
-       const datos = await respuesta.json();
-      const textoRespuesta = datos.response || JSON.stringify(datos);
+        const datos = await respuesta.json();
+        const textoRespuesta = datos.response || "Sin respuesta del servidor.";
 
         aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
     } catch (error) {
         console.error("Detalle del error:", error);
-        aiBubble.innerHTML = "<span style='color: #ff4444;'>Error al conectar con la IA.</span>";
+        aiBubble.innerHTML = "<span style='color: #ff4444;'>WHOAMI</span><br><br><span style='color: #ff4444;'>¡Ey Barsa, hubo un problema de conexión con el servidor! Intenta de nuevo en unos segundos.</span>";
+        chatContainer.scrollTop = chatContainer.scrollHeight;
     }
+}
     // Refuerzo final: Asegura que la barra quede limpia y el cursor libre al terminar
     setTimeout(() => {
         const finalInput = document.getElementById('input-busqueda');
