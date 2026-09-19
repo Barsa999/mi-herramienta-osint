@@ -45,7 +45,7 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKeyGroq}`
             },
             body: JSON.stringify({
-                model: "llama3-70b-8192", // Modelo compatible y disponible en Groq
+                model: "llama-3.1-8b-instant", // Modelo oficial y activo en Groq
                 messages: [
                     { role: "system", content: systemPrompt },
                     { role: "user", content: mensaje }
@@ -72,6 +72,7 @@ app.post('/api/chat', async (req, res) => {
         res.json({ response: "⚠️ Error de código en el servidor: " + error.message });
     }
 });
+
 // --- RUTAS DE OSINT ---
 
 app.get('/api/ip/:targetIp', async (req, res) => {
