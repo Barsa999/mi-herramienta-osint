@@ -928,107 +928,116 @@ div.barra-busqueda-completa input[type="text"] {
         }
     }
 
-async function enviarMensajeIA() {
-    const inputField = document.getElementById('input-busqueda');
-    if (!inputField) return;
-    
-    const textoUsuario = inputField.value;
- 
-    // Si está vacío, no hace nada
-    if (!textoUsuario.trim()) {
-        return;
-    }
+document.addEventListener("DOMContentLoaded", () => {
 
-    let chatContainer = document.getElementById('whoami-chat-container');
-    chatContainer.style.display = 'flex';
-
-    // 1. Mostrar la burbuja del usuario
-    const userBubble = document.createElement('div');
-    userBubble.style.cssText = "background: #1e1f20; color: #e3e3e3; padding: 12px 20px; border-radius: 20px; max-width: 75%; align-self: flex-end; font-size: 15px; font-family: sans-serif; box-shadow: 0 2px 6px rgba(0,0,0,0.3);";
-    userBubble.innerText = textoUsuario;
-    chatContainer.appendChild(userBubble);
-
-    // Limpiamos el input inmediatamente después de capturar el texto
-    inputField.value = '';
-
-    // 2. Mostrar la burbuja de carga de la IA ("Pensando respuesta...")
-    const aiBubble = document.createElement('div');
-    aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
-    aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
-    chatContainer.appendChild(aiBubble);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-    try {
-        const urlServidor = "https://mi-herramienta-osint.onrender.com/api/chat";
-
-        const respuesta = await fetch(urlServidor, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ mensaje: textoUsuario })
-        });
-
-        if (!respuesta.ok) {
-            throw new Error(`Error HTTP: ${respuesta.status}`);
+    window.enviarMensajeIA = async function() {
+        const inputField = document.getElementById('input-busqueda');
+        if (!inputField) return;
+        
+        const textoUsuario = inputField.value;
+     
+        // Si está vacío, no hace nada
+        if (!textoUsuario.trim()) {
+            return;
         }
 
-        const datos = await respuesta.json();
-        const textoRespuesta = datos.response || "Sin respuesta del servidor.";
+        let chatContainer = document.getElementById('whoami-chat-container');
+        chatContainer.style.display = 'flex';
 
-        // Remplazamos el texto de carga por la respuesta real de la IA
-        aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
+        // 1. Mostrar la burbuja del usuario
+        const userBubble = document.createElement('div');
+        userBubble.style.cssText = "background: #1e1f20; color: #e3e3e3; padding: 12px 20px; border-radius: 20px; max-width: 75%; align-self: flex-end; font-size: 15px; font-family: sans-serif; box-shadow: 0 2px 6px rgba(0,0,0,0.3);";
+        userBubble.innerText = textoUsuario;
+        chatContainer.appendChild(userBubble);
+
+        // Limpiamos el input inmediatamente después de capturar el texto
+        inputField.value = '';
+
+        // 2. Mostrar la burbuja de carga de la IA ("Pensando respuesta...")
+        const aiBubble = document.createElement('div');
+        aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
+        aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
+        chatContainer.appendChild(aiBubble);
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    } catch (error) {
-        console.error("Detalle del error:", error);
-        aiBubble.innerHTML = "<span style='color: #ff4444;'>WHOAMI</span><br><br><span style='color: #ff4444;'>¡Ey Barsa, hubo un problema de conexión con el servidor! Intenta de nuevo en unos segundos.</span>";
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+        try {
+            const urlServidor = "https://mi-herramienta-osint.onrender.com/api/chat";
+
+            const respuesta = await fetch(urlServidor, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mensaje: textoUsuario })
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(`Error HTTP: ${respuesta.status}`);
+            }
+
+            const datos = await respuesta.json();
+            const textoRespuesta = datos.response || "Sin respuesta del servidor.";
+
+            // Remplazamos el texto de carga por la respuesta real de la IA
+            aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        } catch (error) {
+            console.error("Detalle del error:", error);
+            aiBubble.innerHTML = "<span style='color: #ff4444;'>WHOAMI</span><br><br><span style='color: #ff4444;'>¡Ey Barsa, hubo un problema de conexión con el servidor! Intenta de nuevo en unos segundos.</span>";
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Refuerzo final: Asegura que la barra quede limpia y el cursor libre al terminar
+        setTimeout(() => {
+            const finalInput = document.getElementById('input-busqueda');
+            if (finalInput) finalInput.value = '';
+        }, 50);
+    };
+
+    const inputBusquedaElement = document.getElementById('input-busqueda');
+    if (inputBusquedaElement) {
+        inputBusquedaElement.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                enviarMensajeIA();
+            }
+        });
     }
 
-    // Refuerzo final: Asegura que la barra quede limpia y el cursor libre al terminar
-    setTimeout(() => {
-        const finalInput = document.getElementById('input-busqueda');
-        if (finalInput) finalInput.value = '';
-    }, 50);
-}
-
-document.getElementById('input-busqueda').addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        enviarMensajeIA();
+    const btnEnviar = document.getElementById('btn-enviar-ia');
+    if (btnEnviar) {
+        btnEnviar.addEventListener('click', function() {
+            enviarMensajeIA();
+        });
     }
+
+    const inputBusquedaQuery = document.querySelector('.barra-busqueda-completa input') || document.getElementById('input-busqueda');
+    if (inputBusquedaQuery) {
+        inputBusquedaQuery.addEventListener('input', () => {
+            inputBusquedaQuery.style.setProperty('color', '#ffffff', 'important');
+            inputBusquedaQuery.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
+        });
+    }
+
+    const inputBarra = document.getElementById('input-busqueda');
+    if (inputBarra && inputBarra.value.includes("Hola Barsa")) {
+        inputBarra.value = "";
+    }
+
+    // --- BLINDAJE VIGÍA CONTRA EL TEXTO FANTASMA ---
+    const barraTarget = document.getElementById('input-busqueda');
+    if (barraTarget) {
+        const observerInput = new MutationObserver(() => {
+            if (barraTarget.value.includes("Hola Barsa")) {
+                barraTarget.value = "";
+            }
+        });
+        observerInput.observe(barraTarget, { attributes: true, childList: true, subtree: true });
+        if (barraTarget.value.includes("Hola Barsa")) {
+            barraTarget.value = "";
+        }
+    }
+
 });
-
-document.getElementById('btn-enviar-ia').addEventListener('click', function() {
-    enviarMensajeIA();
-});
-
-const inputBusqueda = document.querySelector('.barra-busqueda-completa input') || document.getElementById('input-busqueda');
-if (inputBusqueda) {
-    inputBusqueda.addEventListener('input', () => {
-        inputBusqueda.style.setProperty('color', '#ffffff', 'important');
-        inputBusqueda.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
-    });
-}
-
-const inputBarra = document.getElementById('input-busqueda');
-if (inputBarra && inputBarra.value.includes("Hola Barsa")) {
-    inputBarra.value = "";
-}
-
-// --- BLINDAJE VIGÍA CONTRA EL TEXTO FANTASMA ---
-const observerInput = new MutationObserver(() => {
-    const barra = document.getElementById('input-busqueda');
-    if (barra && barra.value.includes("Hola Barsa")) {
-        barra.value = "";
-    }
-});
-
-const barraTarget = document.getElementById('input-busqueda');
-if (barraTarget) {
-    observerInput.observe(barraTarget, { attributes: true, childList: true, subtree: true });
-    if (barraTarget.value.includes("Hola Barsa")) {
-        barraTarget.value = "";
-    }
-}
+</script>
 </body>
 </html>
