@@ -929,40 +929,41 @@ div.barra-busqueda-completa input[type="text"] {
     }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const inputField = document.getElementById('input-busqueda');
+    const btnEnviar = document.getElementById('btn-enviar-ia');
+    const chatContainer = document.getElementById('whoami-chat-container');
 
-    window.enviarMensajeIA = async function() {
-        const inputField = document.getElementById('input-busqueda');
+    // Función principal para enviar el mensaje a la IA
+    async function enviarMensajeIA() {
         if (!inputField) return;
         
-        const textoUsuario = inputField.value;
-     
-        // Si está vacío, no hace nada
-        if (!textoUsuario.trim()) {
-            return;
+        const textoUsuario = inputField.value.trim();
+        if (!textoUsuario) return;
+
+        if (chatContainer) {
+            chatContainer.style.display = 'flex';
         }
 
-        let chatContainer = document.getElementById('whoami-chat-container');
-        chatContainer.style.display = 'flex';
-
-        // 1. Mostrar la burbuja del usuario
+        // 1. Burbuja del usuario
         const userBubble = document.createElement('div');
         userBubble.style.cssText = "background: #1e1f20; color: #e3e3e3; padding: 12px 20px; border-radius: 20px; max-width: 75%; align-self: flex-end; font-size: 15px; font-family: sans-serif; box-shadow: 0 2px 6px rgba(0,0,0,0.3);";
         userBubble.innerText = textoUsuario;
-        chatContainer.appendChild(userBubble);
+        if (chatContainer) chatContainer.appendChild(userBubble);
 
-        // Limpiamos el input inmediatamente después de capturar el texto
+        // Limpiar input de inmediato
         inputField.value = '';
 
-        // 2. Mostrar la burbuja de carga de la IA ("Pensando respuesta...")
+        // 2. Burbuja de carga ("Pensando respuesta...")
         const aiBubble = document.createElement('div');
         aiBubble.style.cssText = "background: transparent; color: #c4c7c5; padding: 12px 5px; max-width: 90%; align-self: flex-start; font-family: sans-serif; font-size: 15px; line-height: 1.5;";
         aiBubble.innerHTML = "<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>Pensando respuesta...";
-        chatContainer.appendChild(aiBubble);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
+        if (chatContainer) {
+            chatContainer.appendChild(aiBubble);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
 
         try {
             const urlServidor = "https://mi-herramienta-osint.onrender.com/api/chat";
-
             const respuesta = await fetch(urlServidor, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -976,67 +977,43 @@ document.addEventListener("DOMContentLoaded", () => {
             const datos = await respuesta.json();
             const textoRespuesta = datos.response || "Sin respuesta del servidor.";
 
-            // Remplazamos el texto de carga por la respuesta real de la IA
             aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
 
         } catch (error) {
             console.error("Detalle del error:", error);
             aiBubble.innerHTML = "<span style='color: #ff4444;'>WHOAMI</span><br><br><span style='color: #ff4444;'>¡Ey Barsa, hubo un problema de conexión con el servidor! Intenta de nuevo en unos segundos.</span>";
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
         }
+    }
 
-        // Refuerzo final: Asegura que la barra quede limpia y el cursor libre al terminar
-        setTimeout(() => {
-            const finalInput = document.getElementById('input-busqueda');
-            if (finalInput) finalInput.value = '';
-        }, 50);
-    };
-
-    const inputBusquedaElement = document.getElementById('input-busqueda');
-    if (inputBusquedaElement) {
-        inputBusquedaElement.addEventListener('keydown', function(event) {
+    // Evento de Enter en el teclado
+    if (inputField) {
+        inputField.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 enviarMensajeIA();
             }
         });
+
+        // Forzar estilos de texto visible en blanco
+        inputField.addEventListener('input', () => {
+            inputField.style.setProperty('color', '#ffffff', 'important');
+            inputField.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
+        });
     }
 
-    const btnEnviar = document.getElementById('btn-enviar-ia');
+    // Evento de clic en el botón de enviar (avión de papel)
     if (btnEnviar) {
         btnEnviar.addEventListener('click', function() {
             enviarMensajeIA();
         });
     }
 
-    const inputBusquedaQuery = document.querySelector('.barra-busqueda-completa input') || document.getElementById('input-busqueda');
-    if (inputBusquedaQuery) {
-        inputBusquedaQuery.addEventListener('input', () => {
-            inputBusquedaQuery.style.setProperty('color', '#ffffff', 'important');
-            inputBusquedaQuery.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
-        });
+    // Limpieza inicial por si arrastra texto fantasma
+    if (inputField && inputField.value.includes("Hola Barsa")) {
+        inputField.value = "";
     }
-
-    const inputBarra = document.getElementById('input-busqueda');
-    if (inputBarra && inputBarra.value.includes("Hola Barsa")) {
-        inputBarra.value = "";
-    }
-
-    // --- BLINDAJE VIGÍA CONTRA EL TEXTO FANTASMA ---
-    const barraTarget = document.getElementById('input-busqueda');
-    if (barraTarget) {
-        const observerInput = new MutationObserver(() => {
-            if (barraTarget.value.includes("Hola Barsa")) {
-                barraTarget.value = "";
-            }
-        });
-        observerInput.observe(barraTarget, { attributes: true, childList: true, subtree: true });
-        if (barraTarget.value.includes("Hola Barsa")) {
-            barraTarget.value = "";
-        }
-    }
-
 });
 </script>
 </body>
