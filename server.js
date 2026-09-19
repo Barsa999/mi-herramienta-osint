@@ -26,40 +26,34 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// Cerebro conversacional avanzado y natural integrado
+// Cerebro inteligente personalizado para Barsa
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
         const msg = (mensaje || "").toLowerCase().trim();
         let respuesta = "";
 
-        // Conversación fluida y natural simulando un asistente experto
+        // Saludo personalizado exacto que pediste
         if (msg.includes("hola") || msg.includes("saludos") || msg.includes("buenas") || msg.includes("hey")) {
-            respuesta = "¡Hola! Qué gusto saludarte. ¿En qué te puedo echar una mano hoy con tus proyectos o herramientas OSINT?";
+            respuesta = "¡Hola Barsa, qué tal! ¿En qué te puedo ayudar hoy día?";
         } else if (msg.includes("como te llamas") || msg.includes("quien eres") || msg.includes("tu nombre")) {
-            respuesta = "Soy Whoami, tu asistente virtual inteligente dentro de esta plataforma de ciberseguridad. Estoy aquí para ayudarte a resolver dudas y charlar.";
-        } else if (msg.includes("que haces") || msg.includes("para que sirves") || msg.includes("que puedes hacer")) {
-            respuesta = "Puedo ayudarte a guiarte por los módulos de la plataforma (como rastreo de IPs, validación de correos y teléfonos), responder preguntas técnicas o simplemente conversar sobre tecnología.";
-        } else if (msg.includes("como estas") || msg.includes("que tal")) {
-            respuesta = "¡Todo excelente por aquí, operando al máximo rendimiento y listo para ayudarte en lo que necesites!";
-        } else if (msg.includes("ip") || msg.includes("geolocalizacion")) {
-            respuesta = "Para analizar una dirección IP, puedes utilizar el módulo de Geolocalización IP en el menú lateral izquierdo. Te arrojará los datos de ubicación y red de inmediato.";
-        } else if (msg.includes("email") || msg.includes("correo")) {
-            respuesta = "El validador de correos te permite verificar la reputación y la tasa de entrega de cualquier cuenta de correo electrónico en tiempo real.";
-        } else if (msg.includes("telefono") || msg.includes("phone") || msg.includes("numero")) {
-            respuesta = "Puedes usar la herramienta de validación telefónica para comprobar el operador, el país y el tipo de línea de cualquier número.";
-        } else if (msg.includes("gracias") || msg.includes("excelente") || msg.includes("genial")) {
-            respuesta = "¡De nada! Me alegra mucho que te sirva. Avísame si necesitas probar o ajustar algo más en tu proyecto.";
+            respuesta = "Soy tu asistente virtual personal integrado aquí en tu plataforma, listo para ayudarte con código, ciberseguridad o lo que necesites.";
+        } else if (msg.includes("que haces") || msg.includes("para que sirves")) {
+            respuesta = "Estoy aquí para apoyarte con tus herramientas OSINT, resolver tus dudas técnicas o conversar de cualquier tema sin restricciones.";
+        } else if (msg.includes("como estas")) {
+            respuesta = "¡Todo excelente por aquí Barsa, al 100% y operativo! ¿Qué proyecto o idea vemos ahora?";
+        } else if (msg.includes("gracias")) {
+            respuesta = "¡De nada Barsa! Para eso estamos. Avísame si le movemos algo más a la web.";
         } else {
-            // Respuesta conversacional abierta para cualquier otro tema
-            respuesta = `Comprendo tu punto sobre "${mensaje}". Como tu asistente de ciberseguridad y tecnología, te sugiero explorar los paneles de la plataforma o plantearme otra pregunta para profundizar. ¡Aquí sigo atento a lo que requieras!`;
+            // Respuesta libre y conversacional para cualquier otra duda o pregunta sin límites
+            respuesta = `Entendido, Barsa. Analizando tu consulta sobre "${mensaje}": te comento que puedes abordar este tema integrándolo directamente con las funciones de la plataforma o probando nuevas lógicas en tu código. ¿Te gustaría que profundicemos en algún detalle en específico?`;
         }
 
         res.json({ response: respuesta });
 
     } catch (error) {
         console.error("Error en /api/chat:", error);
-        res.json({ response: "¡Hola! Los sistemas están en línea. ¿De qué te gustaría hablar o qué herramienta probamos ahora?" });
+        res.json({ response: "¡Hola Barsa! Todo en línea por aquí. ¿De qué charlamos ahora?" });
     }
 });
 
