@@ -45,10 +45,9 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: "llama3-8b-8192", // Modelo rápido y gratuito de Groq
-                messages: [{ role: "user", content: mensaje }]
-            })
-        });
+            model: "llama-3.1-8b-instant", // Modelo actual y activo de Groq
+            messages: [{ role: "user", content: mensaje }]
+        })
 
         const data = await groqResponse.json();
 
