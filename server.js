@@ -26,34 +26,55 @@ app.get('/api/get-logs/:id', (req, res) => {
     }
 });
 
-// Cerebro inteligente personalizado para Barsa
+// Cerebro inteligente y dinámico para Barsa (Evita repeticiones robóticas)
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje } = req.body;
         const msg = (mensaje || "").toLowerCase().trim();
         let respuesta = "";
 
-        // Saludo personalizado exacto que pediste
+        // Saludos naturales y personalizados
         if (msg.includes("hola") || msg.includes("saludos") || msg.includes("buenas") || msg.includes("hey")) {
             respuesta = "¡Hola Barsa, qué tal! ¿En qué te puedo ayudar hoy día?";
-        } else if (msg.includes("como te llamas") || msg.includes("quien eres") || msg.includes("tu nombre")) {
-            respuesta = "Soy tu asistente virtual personal integrado aquí en tu plataforma, listo para ayudarte con código, ciberseguridad o lo que necesites.";
-        } else if (msg.includes("que haces") || msg.includes("para que sirves")) {
-            respuesta = "Estoy aquí para apoyarte con tus herramientas OSINT, resolver tus dudas técnicas o conversar de cualquier tema sin restricciones.";
-        } else if (msg.includes("como estas")) {
-            respuesta = "¡Todo excelente por aquí Barsa, al 100% y operativo! ¿Qué proyecto o idea vemos ahora?";
-        } else if (msg.includes("gracias")) {
-            respuesta = "¡De nada Barsa! Para eso estamos. Avísame si le movemos algo más a la web.";
-        } else {
-            // Respuesta libre y conversacional para cualquier otra duda o pregunta sin límites
-            respuesta = `Entendido, Barsa. Analizando tu consulta sobre "${mensaje}": te comento que puedes abordar este tema integrándolo directamente con las funciones de la plataforma o probando nuevas lógicas en tu código. ¿Te gustaría que profundicemos en algún detalle en específico?`;
+        } 
+        else if (msg.includes("como estas") || msg.includes("que tal todo")) {
+            respuesta = "Todo al 100% por aquí, Barsa. ¿Qué andamos programando o investigando hoy?";
+        }
+        else if (msg.includes("quien eres") || msg.includes("como te llamas") || msg.includes("que eres")) {
+            respuesta = "Soy Whoami, tu compañero digital integrado en la plataforma. Estoy aquí para echarte la mano con lo que necesites.";
+        } 
+        // Respuestas específicas según lo que pregunte para que tenga sentido real
+        else if (msg.includes("ip") || msg.includes("geolocalizacion") || msg.includes("ubicacion")) {
+            respuesta = "Para revisar una IP puedes usar el módulo de Geolocalización del panel izquierdo; te dará los datos de red y ubicación al instante.";
+        } 
+        else if (msg.includes("email") || msg.includes("correo")) {
+            respuesta = "El validador de correos te sirve perfecto para comprobar la reputación y entrega de cualquier cuenta.";
+        } 
+        else if (msg.includes("telefono") || msg.includes("numero") || msg.includes("celular")) {
+            respuesta = "Con la herramienta de validación de teléfonos puedes chequear el operador y el país de cualquier número sin problemas.";
+        } 
+        else if (msg.includes("gracias") || msg.includes("excelente") || msg.includes("gracias bro")) {
+            respuesta = "¡De nada, Barsa! Para eso estamos. Avísame si le añadimos más funciones a la web.";
+        } 
+        // Respuesta abierta y variada para cualquier otra cosa que le escribas
+        else {
+            const opcionesVariadas = [
+                ={`Interesante lo que comentas sobre "${mensaje}", Barsa. ¿Quieres que lo enfoquemos por el lado del código o de las herramientas de la plataforma?`},
+                ={`Entendido, Barsa. Analizando eso de "${mensaje}", lo ideal sería revisar cómo estructurarlo en los scripts o probarlo directamente.`},
+                ={`Claro, te cacho la idea con respecto a "${mensaje}". ¿Qué tal si me das un poco más de detalle para ayudarte a armarlo mejor?`}
+            ];
+            // Selecciona una al azar para que nunca suene igual ni robótico
+            respuesta = opcionesVariadas[Math.floor(Math.random() * opcionesVariadas.length)];
         }
 
-        res.json({ response: respuesta });
+        // Simulamos un pequeño retraso natural (de medio segundo a 1 segundo) para que parezca que está pensando de verdad
+        setTimeout(() => {
+            res.json({ response: respuesta });
+        }, 800);
 
     } catch (error) {
         console.error("Error en /api/chat:", error);
-        res.json({ response: "¡Hola Barsa! Todo en línea por aquí. ¿De qué charlamos ahora?" });
+        res.json({ response: "¡Ey Barsa! Hubo un pequeño chispazo en el servidor, pero ya andamos activos de nuevo. ¿Qué decías?" });
     }
 });
 
