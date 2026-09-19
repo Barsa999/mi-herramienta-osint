@@ -45,7 +45,7 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: "llama-3.1-8b-instant",
+                model: "llama3-70b-8192",
                 messages: [{ role: "user", content: mensaje }]
             })
         });
