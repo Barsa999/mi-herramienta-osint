@@ -38,14 +38,14 @@ app.post('/api/chat', async (req, res) => {
 
         const groqUrl = 'https://api.groq.com/openai/v1/chat/completions';
 
-        const groqResponse = await fetch(groqUrl, {
+       const groqResponse = await fetch(groqUrl, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
-                model: "llama3-8b-8192",
+                model: "llama-3.3-70b-versatile", // <-- Cambia el modelo aquí
                 messages: [{ role: "user", content: mensaje }]
             })
         });
