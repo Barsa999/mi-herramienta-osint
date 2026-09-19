@@ -45,7 +45,7 @@ app.post('/api/chat', async (req, res) => {
                 'Authorization': `Bearer ${apiKeyGroq}`
             },
             body: JSON.stringify({
-               model: "llama3-8b-8192",
+                model: "llama-3.3-70b-versatile", // Modelo oficial actual en Groq
                 messages: [
                     { role: "system", content: systemPrompt },
                     { role: "user", content: mensaje }
