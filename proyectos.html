@@ -1042,8 +1042,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const datos = await respuesta.json();
             const textoRespuesta = datos.response || "Sin respuesta del servidor.";
 
-            aiBubble.innerHTML = `<span style='color: #8ab4f8; font-weight: 500;'>WHOAMI</span><br><br>${textoRespuesta.replace(/\n/g, '<br>')}`;
-            if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
+           aiBubble.innerHTML = `
+            <span style="color: #4af626; font-weight: 500; font-size: 12px; font-family: monospace; display: block; margin-bottom: 4px;">WHOAMI</span>
+            <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 16px; border-radius: 12px; color: #e3e3e3;">
+                ${textoRespuesta.replace(/\n/g, '<br>')}
+            </div>
+        `;
+        if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
 
         } catch (error) {
             console.error("Detalle del error:", error);
